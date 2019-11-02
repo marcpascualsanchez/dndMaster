@@ -1,0 +1,40 @@
+.image-triangle {
+    position: relative;
+    border-left: 75px solid transparent;
+    border-bottom: 20vh solid white;
+    float: right;
+}
+
+.level-badge {
+    // level-arrow-up
+    position: absolute;
+    border-left: 75px solid transparent;
+    border-bottom: 50% solid var(--ion-color-primary);
+    float: right;
+}
+
+.profile-image {
+    transform: scale(1.5);
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+}
+
+.character-info {
+    height: 20vh;
+}
+
+.name {
+    font-size: 5vw;
+    font-weight: 700;
+}
+
+.title {
+    font-size: 5vw;
+    font-weight: 500;
+}
+
+.subtitle {
+    display: block;
+    font-size: 3vw;
+}
