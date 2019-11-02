@@ -23,7 +23,7 @@ export interface IBarbarian {
         items: IItem[],
     }
 }
-// caca
+
 export const baseParams: IBarbarian = {
     healthGrowth: 12,
     hitDiceGrowth: 12,
