@@ -20,7 +20,7 @@ export interface IRace {
     name: string;
     statMods: IAbilityScoreModifier;
     skillMods?: string[], // TODO: it marks which skills have proficiency (depends on level)
-    raceHability?: string[],
+    raceAbility?: string[],
     size: string;
     speed: number;
     languages: string[]; //TODO: one more to choose freely

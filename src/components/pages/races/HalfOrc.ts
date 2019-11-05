@@ -15,7 +15,7 @@ export const baseParams: IHalfOrc = {
     speed: 30,
     languages: ['common', 'orc'],
     maxAge: 75,
-    raceHability: ['relentlessEndurance', 'savageAttacks', 'darkvision'],
+    raceAbility: ['relentlessEndurance', 'savageAttacks', 'darkvision'],
     description: {
         short: 'halfOrc are halfOrc',
         long: 'halfOrc are halfOrc halfOrc are halfOrc halfOrc are halfOrc',

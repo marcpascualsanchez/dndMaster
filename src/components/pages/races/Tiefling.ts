@@ -15,7 +15,7 @@ export const baseParams: ITiefling = {
     speed: 30,
     languages: ['common', 'infernal'],
     maxAge: 100,
-    raceHability: ['darkvision', 'hellishResistence', 'infernalLegacy'],
+    raceAbility: ['darkvision', 'hellishResistence', 'infernalLegacy'],
     description: {
         short: 'tiefling are tiefling',
         long: 'tiefling are tiefling tiefling are tiefling tiefling are tiefling',

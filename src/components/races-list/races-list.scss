@@ -20,7 +20,12 @@
     position: absolute;
 }
 
-.character-info {
+.ability-score {
+    max-width: 25vw;
+    margin: 0 auto;
+}
+
+.card-height {
     height: 20vh;
 }
 
@@ -38,3 +43,20 @@
     display: block;
     font-size: 3vw;
 }
+
+.card-extension {
+    background-color: whitesmoke;
+}
+
+.unextended {
+    display: none;
+}
+
+.extended {
+    // animation: EXTEND 1s;
+}
+
+// @keyframes EXTEND {
+//     0%   { transform: scale(0); }
+//     100% { transform: scale(1); }
+//   }
