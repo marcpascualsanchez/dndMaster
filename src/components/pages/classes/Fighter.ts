@@ -3,6 +3,7 @@ export interface IItem {
     amount: number;
 }
 
+// TODO: make interface extend generic Class
 export interface IFighter {
     healthGrowth: number; // plus Constitution modifier
     hitDiceGrowth: number; // dice faces
