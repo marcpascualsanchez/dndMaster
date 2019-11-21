@@ -14,6 +14,7 @@ export namespace Components {
     'name': string;
   }
   interface AppRoot {}
+  interface NewAbilityScore {}
   interface RacesList {}
 }
 
@@ -38,6 +39,12 @@ declare global {
     new (): HTMLAppRootElement;
   };
 
+  interface HTMLNewAbilityScoreElement extends Components.NewAbilityScore, HTMLStencilElement {}
+  var HTMLNewAbilityScoreElement: {
+    prototype: HTMLNewAbilityScoreElement;
+    new (): HTMLNewAbilityScoreElement;
+  };
+
   interface HTMLRacesListElement extends Components.RacesList, HTMLStencilElement {}
   var HTMLRacesListElement: {
     prototype: HTMLRacesListElement;
@@ -47,6 +54,7 @@ declare global {
     'app-home': HTMLAppHomeElement;
     'app-profile': HTMLAppProfileElement;
     'app-root': HTMLAppRootElement;
+    'new-ability-score': HTMLNewAbilityScoreElement;
     'races-list': HTMLRacesListElement;
   }
 }
@@ -57,12 +65,14 @@ declare namespace LocalJSX {
     'name'?: string;
   }
   interface AppRoot {}
+  interface NewAbilityScore {}
   interface RacesList {}
 
   interface IntrinsicElements {
     'app-home': AppHome;
     'app-profile': AppProfile;
     'app-root': AppRoot;
+    'new-ability-score': NewAbilityScore;
     'races-list': RacesList;
   }
 }
@@ -76,6 +86,7 @@ declare module "@stencil/core" {
       'app-home': LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
       'app-profile': LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;
       'app-root': LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+      'new-ability-score': LocalJSX.NewAbilityScore & JSXBase.HTMLAttributes<HTMLNewAbilityScoreElement>;
       'races-list': LocalJSX.RacesList & JSXBase.HTMLAttributes<HTMLRacesListElement>;
     }
   }
