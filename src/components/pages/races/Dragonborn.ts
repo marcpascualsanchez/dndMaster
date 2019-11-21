@@ -17,7 +17,7 @@ export const baseParams: IDragonborn = {
     maxAge: 80,
     draconicAncestry: 'Black',
     description: {
-        short: 'dragonborns are dragonborns',
-        long: 'dragonborns are dragonborns dragonborns are dragonborns dragonborns are dragonborns',
+        short: 'Strong and charismatic, you can also breath fire and get some cool resistances',
+        long: 'Dragonborn are a race with certain advantages thanks to their ancestors, dragons. they are resistant to the element from which they come and also can breath fire. Perfect as Barbarians, Fighters Paladins but algo good as Bards, Sorcerers and Warloks',
     },
 }

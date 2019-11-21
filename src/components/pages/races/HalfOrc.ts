@@ -17,7 +17,7 @@ export const baseParams: IHalfOrc = {
     maxAge: 75,
     raceAbility: ['relentlessEndurance', 'savageAttacks', 'darkvision'],
     description: {
-        short: 'halfOrc are halfOrc',
-        long: 'halfOrc are halfOrc halfOrc are halfOrc halfOrc are halfOrc',
+        short: 'Strong and hardy, the perfect frontline',
+        long: 'Harlf-orcs are hard to kill, nearly impossible to kill. Perfect as Barbarians, Fighters and Paladins',
     },
 }

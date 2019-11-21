@@ -19,7 +19,7 @@ export const baseParams: IHuman = {
     languages: ['common'],
     maxAge: 100,
     description: {
-        short: 'human are human',
-        long: 'human are human human are human human are human',
+        short: 'The most versatile race of all',
+        long: 'Humans are one the most versatile races, it’s equally  good for all classes',
     },
 };
