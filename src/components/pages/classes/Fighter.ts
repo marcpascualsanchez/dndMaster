@@ -33,10 +33,10 @@ export const baseParams: IFighter = {
     healthGrowth: 10, // plus Constitution modifier
     hitDiceGrowth: 10, // dice faces
     armorClass: 10, // plus dexterity modifier
-    classTraits: ['fightingStyle', 'secondWind',],
+    classTraits: ['fighting style', 'second wind',],
     proficiency: {
         skillModsAble: 2, //TODO: choose n skillMods
-        skillMods: ['acrobatics', 'animalhandling', 'athletics', 'history', 'insight', 'intimidation', 'perception', 'survival'],
+        skillMods: ['acrobatics', 'animal handling', 'athletics', 'history', 'insight', 'intimidation', 'perception', 'survival'],
         savingThrows: ['strength', 'constitution'],
         armors: ['light', 'medium', 'heavy', 'shield'],
         weapons: ['simple', 'martial'],
@@ -52,7 +52,7 @@ export const baseParams: IFighter = {
                 amount: 1, //TODO: one if its the first option, two if it’s the second option
             },
             tertiary: {
-                name: 'lightcrossbow', //TODO: in case lightcrosbow is choosen add 20 bolts at the item list
+                name: 'light crossbow', //TODO: in case lightcrosbow is choosen add 20 bolts at the item list
                 amount: 1, //TODO: one if its the first option, two if it’s the second option
             }
         },

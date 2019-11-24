@@ -1,5 +1,10 @@
-.ability-square {
+.ability-input {
     border: solid black;
-    font-size: 7vw;
+    font-size: 7vw !important;
     text-align: center;
+}
+
+.used-throw {
+    text-decoration: line-through;
+    opacity: 0.3;
 }

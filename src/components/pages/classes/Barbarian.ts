@@ -28,13 +28,13 @@ export const baseParams: IBarbarian = {
     healthGrowth: 12,
     hitDiceGrowth: 12,
     armorClass: 10,
-    classTraits: ['unarmoredDefense', 'rage'],
+    classTraits: ['unarmored defense', 'rage'],
     proficiency: {
         skillModsAble: 2, //TODO: choose n skillMods
-        skillMods: ['animalHandling', 'athletics', 'intimidation', 'nature', 'perception', 'survival'],
+        skillMods: ['animal handling', 'athletics', 'intimidation', 'nature', 'perception', 'survival'],
         savingThrows: ['strenght', 'constitution'],
-        armors: ['lightarmor', 'mediumarmor', 'shield'],
-        weapons: ['simpleweapon', 'martialweapon'],
+        armors: ['light armor', 'medium armor', 'shield'],
+        weapons: ['simple weapon', 'martial weapon'],
     },
     equipment: {
         weapon: {
@@ -49,7 +49,7 @@ export const baseParams: IBarbarian = {
         },
         items: [
             {
-                name: 'explorerPack',
+                name: 'explorer pack',
                 amount: 1,
             },
             {
