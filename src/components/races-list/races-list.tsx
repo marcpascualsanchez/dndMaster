@@ -1,4 +1,4 @@
-import { Component, h, State } from '@stencil/core';
+import { Component, h, State, Prop, Event, EventEmitter } from '@stencil/core';
 
 import { baseParams as dragonbornBase } from '../pages/races/Dragonborn';
 import { baseParams as halfOrcBase } from '../pages/races/HalfOrc';
@@ -13,6 +13,16 @@ import { IRace } from '../pages/races/Race';
 export class RacesList {
     public allRaces = [dragonbornBase, halfOrcBase, humanBase, tieflingBase];
 
+    @Event({
+        eventName: 'paramSelected',
+        composed: true,
+        cancelable: true,
+        bubbles: true,
+      }) selectEmitter: EventEmitter;
+
+    @Prop() isCreating: boolean;
+    @Prop() step: string;
+
     @State() selectedRace: string = null;
     public imgBasePath: string = "../../assets/img/raceImages";
     // AbilityScore images from https://chachart.net/radar?lang=en
@@ -24,6 +34,20 @@ export class RacesList {
             const elementId = data.currentTarget.id
             this.selectedRace = elementId;
             // location.href = `#${elementId}`;
+        }
+    }
+
+    getSelectButton(race: IRace) {
+        if (this.isCreating) {
+            const dataToEmit = { step: 'race', param: race };
+            return (
+                <ion-row>
+                    <ion-col text-center size="4" offset="4">
+                        <ion-icon class="select-option" color="primary" onClick={() => this.selectEmitter.emit(dataToEmit)} name="play-circle"></ion-icon>
+                    </ion-col>
+                </ion-row>);
+        } else {
+            return;
         }
     }
 
@@ -75,8 +99,9 @@ export class RacesList {
         );
     }
 
-    getList(races: IRace[]) {
-        return races.map((r) => {
+    render() {
+        console.log(this.isCreating);
+        return this.allRaces.map((r) => {
             return (
                 <ion-card id={r.name} onClick={(e) => this.selectRace(e)}>
                     <ion-card-header no-padding>
@@ -115,26 +140,11 @@ export class RacesList {
                                 </ion-col>
                             </ion-row>
                             {this.getRaceAbilities(r)}
+                            {this.getSelectButton(r)}
                         </ion-grid>
                     </ion-card-content>
                 </ion-card>
             );
         });
-    }
-
-    render() {
-        return [
-            <ion-header>
-                <ion-toolbar color="primary">
-                    <ion-buttons slot="start">
-                        <ion-back-button defaultHref="/" />
-                    </ion-buttons>
-                    <ion-title>Races</ion-title>
-                </ion-toolbar>
-            </ion-header>,
-            <ion-content overflow-scroll="true">
-                {this.getList(this.allRaces)}
-            </ion-content>
-        ];
     }
 }

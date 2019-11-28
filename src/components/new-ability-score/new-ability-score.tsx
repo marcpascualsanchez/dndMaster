@@ -68,38 +68,28 @@ export class NewAbilityScore {
 
     render() {
         return [
-            <ion-header>
-                <ion-toolbar color="primary">
-                    <ion-buttons slot="start">
-                        <ion-back-button defaultHref="/" />
-                    </ion-buttons>
-                    <ion-title>Ability Score</ion-title>
-                </ion-toolbar>
-            </ion-header>,
-            <ion-content overflow-scroll="true">
-                <ion-card>
-                    <ion-card-header>
-                        <ion-card-title>
-                            Throws
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>
+                        Throws
                         </ion-card-title>
-                    </ion-card-header>
-                    <ion-card-content>
-                        <ion-grid>
-                            <ion-row>
-                                {this.dice.getNewCharacterThrows().map(t => <ion-col col-2 class="dice-throws" text-center>{t}</ion-col>)}
-                            </ion-row>
-                        </ion-grid>
-                    </ion-card-content>
-                </ion-card>
-                <ion-card>
-                    <ion-card-header>
-                        <ion-card-title>
-                            Choose the ability score
+                </ion-card-header>
+                <ion-card-content>
+                    <ion-grid>
+                        <ion-row>
+                            {this.dice.getNewCharacterThrows().map(t => <ion-col col-2 class="dice-throws" text-center>{t}</ion-col>)}
+                        </ion-row>
+                    </ion-grid>
+                </ion-card-content>
+            </ion-card>,
+            <ion-card>
+                <ion-card-header>
+                    <ion-card-title>
+                        Choose the ability score
                         </ion-card-title>
-                    </ion-card-header>
-                    {this.getAbilityList()}
-                </ion-card>
-            </ion-content>
+                </ion-card-header>
+                {this.getAbilityList()}
+            </ion-card>
         ];
     }
 }

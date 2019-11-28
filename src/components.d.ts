@@ -14,8 +14,15 @@ export namespace Components {
     'name': string;
   }
   interface AppRoot {}
+  interface CharactersList {}
+  interface CreateNewCharacter {
+    'step': string;
+  }
   interface NewAbilityScore {}
-  interface RacesList {}
+  interface RacesList {
+    'isCreating': boolean;
+    'step': string;
+  }
 }
 
 declare global {
@@ -39,6 +46,18 @@ declare global {
     new (): HTMLAppRootElement;
   };
 
+  interface HTMLCharactersListElement extends Components.CharactersList, HTMLStencilElement {}
+  var HTMLCharactersListElement: {
+    prototype: HTMLCharactersListElement;
+    new (): HTMLCharactersListElement;
+  };
+
+  interface HTMLCreateNewCharacterElement extends Components.CreateNewCharacter, HTMLStencilElement {}
+  var HTMLCreateNewCharacterElement: {
+    prototype: HTMLCreateNewCharacterElement;
+    new (): HTMLCreateNewCharacterElement;
+  };
+
   interface HTMLNewAbilityScoreElement extends Components.NewAbilityScore, HTMLStencilElement {}
   var HTMLNewAbilityScoreElement: {
     prototype: HTMLNewAbilityScoreElement;
@@ -54,6 +73,8 @@ declare global {
     'app-home': HTMLAppHomeElement;
     'app-profile': HTMLAppProfileElement;
     'app-root': HTMLAppRootElement;
+    'characters-list': HTMLCharactersListElement;
+    'create-new-character': HTMLCreateNewCharacterElement;
     'new-ability-score': HTMLNewAbilityScoreElement;
     'races-list': HTMLRacesListElement;
   }
@@ -65,13 +86,23 @@ declare namespace LocalJSX {
     'name'?: string;
   }
   interface AppRoot {}
+  interface CharactersList {}
+  interface CreateNewCharacter {
+    'step'?: string;
+  }
   interface NewAbilityScore {}
-  interface RacesList {}
+  interface RacesList {
+    'isCreating'?: boolean;
+    'onParamSelected'?: (event: CustomEvent<any>) => void;
+    'step'?: string;
+  }
 
   interface IntrinsicElements {
     'app-home': AppHome;
     'app-profile': AppProfile;
     'app-root': AppRoot;
+    'characters-list': CharactersList;
+    'create-new-character': CreateNewCharacter;
     'new-ability-score': NewAbilityScore;
     'races-list': RacesList;
   }
@@ -86,6 +117,8 @@ declare module "@stencil/core" {
       'app-home': LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
       'app-profile': LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;
       'app-root': LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+      'characters-list': LocalJSX.CharactersList & JSXBase.HTMLAttributes<HTMLCharactersListElement>;
+      'create-new-character': LocalJSX.CreateNewCharacter & JSXBase.HTMLAttributes<HTMLCreateNewCharacterElement>;
       'new-ability-score': LocalJSX.NewAbilityScore & JSXBase.HTMLAttributes<HTMLNewAbilityScoreElement>;
       'races-list': LocalJSX.RacesList & JSXBase.HTMLAttributes<HTMLRacesListElement>;
     }
