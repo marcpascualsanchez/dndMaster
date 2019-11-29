@@ -22,7 +22,9 @@ export namespace Components {
   interface CreateNewCharacter {
     'step': string;
   }
-  interface NewAbilityScore {}
+  interface NewAbilityScore {
+    'characterParams': any;
+  }
   interface RacesList {
     'isCreating': boolean;
     'step': string;
@@ -106,7 +108,9 @@ declare namespace LocalJSX {
   interface CreateNewCharacter {
     'step'?: string;
   }
-  interface NewAbilityScore {}
+  interface NewAbilityScore {
+    'characterParams'?: any;
+  }
   interface RacesList {
     'isCreating'?: boolean;
     'onParamSelected'?: (event: CustomEvent<any>) => void;

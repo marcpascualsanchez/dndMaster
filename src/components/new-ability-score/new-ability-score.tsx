@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
 
 import { skills, EAbility } from '../Character';
 import { Dice } from '../Dice';
@@ -9,6 +9,8 @@ import { Dice } from '../Dice';
 })
 export class NewAbilityScore {
     private dice = new Dice();
+
+    @Prop() characterParams: any;
 
     /*  
     *   Remove every selected dice throw class and redo checking all input values
@@ -39,7 +41,16 @@ export class NewAbilityScore {
 
     getProfficencyIcon(skill: string) {
         //TODO: check profficency coming from previous steps
-        return <ion-icon name="radio-button-off"></ion-icon>;
+        let isProficiency = false;
+        Object.keys(this.characterParams).forEach((cp) => {
+            if (
+                this.characterParams[cp].proficiency
+                && this.characterParams[cp].proficiency.skillMods.some((sm) => skill === sm)
+            ) {
+                isProficiency = true;
+            }
+        })
+        return <ion-icon name={isProficiency ? 'radio-button-on' : 'radio-button-off'}></ion-icon>;
     }
 
     getSkillsList(ability: string) {
