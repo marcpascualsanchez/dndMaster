@@ -15,6 +15,10 @@ export namespace Components {
   }
   interface AppRoot {}
   interface CharactersList {}
+  interface ClassesList {
+    'isCreating': boolean;
+    'step': string;
+  }
   interface CreateNewCharacter {
     'step': string;
   }
@@ -52,6 +56,12 @@ declare global {
     new (): HTMLCharactersListElement;
   };
 
+  interface HTMLClassesListElement extends Components.ClassesList, HTMLStencilElement {}
+  var HTMLClassesListElement: {
+    prototype: HTMLClassesListElement;
+    new (): HTMLClassesListElement;
+  };
+
   interface HTMLCreateNewCharacterElement extends Components.CreateNewCharacter, HTMLStencilElement {}
   var HTMLCreateNewCharacterElement: {
     prototype: HTMLCreateNewCharacterElement;
@@ -74,6 +84,7 @@ declare global {
     'app-profile': HTMLAppProfileElement;
     'app-root': HTMLAppRootElement;
     'characters-list': HTMLCharactersListElement;
+    'classes-list': HTMLClassesListElement;
     'create-new-character': HTMLCreateNewCharacterElement;
     'new-ability-score': HTMLNewAbilityScoreElement;
     'races-list': HTMLRacesListElement;
@@ -87,6 +98,11 @@ declare namespace LocalJSX {
   }
   interface AppRoot {}
   interface CharactersList {}
+  interface ClassesList {
+    'isCreating'?: boolean;
+    'onParamSelected'?: (event: CustomEvent<any>) => void;
+    'step'?: string;
+  }
   interface CreateNewCharacter {
     'step'?: string;
   }
@@ -102,6 +118,7 @@ declare namespace LocalJSX {
     'app-profile': AppProfile;
     'app-root': AppRoot;
     'characters-list': CharactersList;
+    'classes-list': ClassesList;
     'create-new-character': CreateNewCharacter;
     'new-ability-score': NewAbilityScore;
     'races-list': RacesList;
@@ -118,6 +135,7 @@ declare module "@stencil/core" {
       'app-profile': LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;
       'app-root': LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
       'characters-list': LocalJSX.CharactersList & JSXBase.HTMLAttributes<HTMLCharactersListElement>;
+      'classes-list': LocalJSX.ClassesList & JSXBase.HTMLAttributes<HTMLClassesListElement>;
       'create-new-character': LocalJSX.CreateNewCharacter & JSXBase.HTMLAttributes<HTMLCreateNewCharacterElement>;
       'new-ability-score': LocalJSX.NewAbilityScore & JSXBase.HTMLAttributes<HTMLNewAbilityScoreElement>;
       'races-list': LocalJSX.RacesList & JSXBase.HTMLAttributes<HTMLRacesListElement>;

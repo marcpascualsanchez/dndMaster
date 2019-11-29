@@ -1,30 +1,11 @@
-export interface IItem {
-    name: string;
-    amount: number;
-}
+import { IClass } from "./Class";
 
-export interface IBarbarian {
-    healthGrowth: number; // plus Constitution modifier
-    hitDiceGrowth: number; // dice faces
-    armorClass: number; // plus dexterity modifier
-    classTraits: string[],
-    proficiency: {
-        skillModsAble: number, //TODO: choose n skillMods
-        skillMods: string[],
-        savingThrows: string[],
-        armors: string[],
-        weapons: string[],
-    },
-    equipment: {
-        weapon: {
-            primary: IItem;
-            secondary: IItem;
-        },
-        items: IItem[],
-    }
+export interface IBarbarian extends IClass {
+    // TODO: add custom props
 }
 
 export const baseParams: IBarbarian = {
+    name: 'barbarian',
     healthGrowth: 12,
     hitDiceGrowth: 12,
     armorClass: 10,
@@ -57,5 +38,9 @@ export const baseParams: IBarbarian = {
                 amount: 4,
             },
         ],
+    },
+    description: {
+        long: 'Barbarians are barbarians',
+        short: 'Barbarians are barbarians Barbarians are barbarians Barbarians are barbarians',
     }
 };

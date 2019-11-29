@@ -1,35 +1,11 @@
-export interface IItem {
-    name: string;
-    amount: number;
-}
+import { IClass } from "./Class";
 
-// TODO: make interface extend generic Class
-export interface IFighter {
-    healthGrowth: number; // plus Constitution modifier
-    hitDiceGrowth: number; // dice faces
-    armorClass: number; // plus dexterity modifier
-    classTraits: string[],
-    proficiency: {
-        skillModsAble: number, //TODO: choose n skillMods
-        skillMods: string[],
-        savingThrows: string[],
-        armors: string[],
-        weapons: string[],
-    },
-    equipment: {
-        weapon: {
-            primary: IItem;
-            secondary?: IItem;
-            tertiary?: IItem;
-        },
-        items: {
-            names: string[],
-            amount: number,
-        }
-    }
+export interface IFighter extends IClass {
+    // TODO: add custom props
 }
 
 export const baseParams: IFighter = {
+    name: 'fighter',
     healthGrowth: 10, // plus Constitution modifier
     hitDiceGrowth: 10, // dice faces
     armorClass: 10, // plus dexterity modifier
@@ -56,9 +32,13 @@ export const baseParams: IFighter = {
                 amount: 1, //TODO: one if its the first option, two if it’s the second option
             }
         },
-        items: {
-            names: ['explorer pack', 'dungeoneer pack'], //TODO: chose only one
+        items: [{
+            name: 'explorer pack',// ['explorer pack', 'dungeoneer pack'], //TODO: chose only one
             amount: 1,
-        },
+        }],
+    },
+    description: {
+        long: 'Fighters are fighters',
+        short: 'Fighters are fighters Fighters are fighters Fighters are fighters',
     }
 }
