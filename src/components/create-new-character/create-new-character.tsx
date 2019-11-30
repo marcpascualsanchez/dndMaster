@@ -14,21 +14,21 @@ export class CharactersList {
     todoCompletedHandler(event: CustomEvent) {
         console.log('Received the custom todoCompleted event: ', event.detail);
         this.previousStep = this.allSteps.find((s, idx) => {
-            if(s === event.detail.step) {
+            if (s === event.detail.step) {
                 this.step = this.allSteps[idx + 1];
                 return true;
             }
         });
         this.characterParams[event.detail.step] = event.detail.param;
+        console.log('step', this.step);
+        if (this.step === this.allSteps[this.allSteps.length - 1]) {
+            // TODO: create new char in mongo & localStorage, add it an id
+            // TODO: navigate to characters/:_id
+            console.log('creating character...', this.characterParams);
+        }
     }
 
     @Prop() public step: string;
-
-    @Watch('step')
-    watchHandler(newValue: string, oldValue: string) {
-        console.log('The new value of step is: ', newValue);
-        console.log('The old value of step was: ', oldValue);
-    }
 
     private characterParams: any = {}; // store params from every step
 
@@ -36,16 +36,16 @@ export class CharactersList {
         let stepComponent;
         switch (this.step) {
             case ('race'):
-                    stepComponent = <races-list isCreating={true}></races-list>
+                stepComponent = <races-list isCreating={true}></races-list>
                 break;
             case ('class'):
-                    stepComponent = <classes-list isCreating={true}></classes-list>
+                stepComponent = <classes-list isCreating={true}></classes-list>
                 break;
             case ('abilities'):
-                    stepComponent = <new-ability-score characterParams={this.characterParams}></new-ability-score>
+                stepComponent = <new-ability-score characterParams={this.characterParams}></new-ability-score>
                 break;
             default:
-                    stepComponent = <races-list isCreating={true}></races-list>
+                stepComponent = <races-list isCreating={true}></races-list>
                 break;
         }
         return stepComponent;

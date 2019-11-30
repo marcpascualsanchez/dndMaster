@@ -86,10 +86,10 @@ export class ClassesList {
         return (
             <ion-item>
                 <ion-grid class="card-height">
-                    <ion-row class="ion--padding-top">
+                    <ion-row padding-top>
                         <ion-text class="name ion-text-capitalize">{charClass.name}</ion-text>
                     </ion-row>
-                    <ion-row class="ion--padding-top">
+                    <ion-row padding-top>
                         <ion-text class="subtitle ion-text-capitalize">{this.getDescription(charClass)}</ion-text>
                     </ion-row>
                 </ion-grid>
@@ -98,7 +98,6 @@ export class ClassesList {
     }
 
     render() {
-        console.log(this.isCreating);
         return this.allClasses.map((c) => {
             return (
                 <ion-card id={c.name} onClick={(e) => this.selectClass(e)}>

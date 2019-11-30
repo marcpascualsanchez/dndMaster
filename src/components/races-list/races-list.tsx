@@ -88,11 +88,11 @@ export class RacesList {
         return (
             <ion-item>
                 <ion-grid class="card-height">
-                    <ion-row class="ion--padding-top">
-                        <ion-text class="name ion--text-capitalize">{race.name}</ion-text>
+                    <ion-row padding-top>
+                        <ion-text class="name ion-text-capitalize">{race.name}</ion-text>
                     </ion-row>
-                    <ion-row class="ion--padding-top">
-                        <ion-text class="subtitle ion--text-capitalize">{this.getDescription(race)}</ion-text>
+                    <ion-row padding-top>
+                        <ion-text class="subtitle ion-text-capitalize">{this.getDescription(race)}</ion-text>
                     </ion-row>
                 </ion-grid>
             </ion-item>
@@ -100,8 +100,7 @@ export class RacesList {
     }
 
     render() {
-        console.log(this.isCreating);
-        return this.allRaces.map((r) => {
+        return this.allRaces.map((r)    => {
             return (
                 <ion-card id={r.name} onClick={(e) => this.selectRace(e)}>
                     <ion-card-header no-padding>

@@ -110,6 +110,7 @@ declare namespace LocalJSX {
   }
   interface NewAbilityScore {
     'characterParams'?: any;
+    'onParamSelected'?: (event: CustomEvent<any>) => void;
   }
   interface RacesList {
     'isCreating'?: boolean;

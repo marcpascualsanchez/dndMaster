@@ -1,4 +1,4 @@
-import { Component, h, Prop } from '@stencil/core';
+import { Component, h, Prop, Event, EventEmitter, State } from '@stencil/core';
 
 import { skills, EAbility } from '../Character';
 import { Dice } from '../Dice';
@@ -10,12 +10,23 @@ import { Dice } from '../Dice';
 export class NewAbilityScore {
     private dice = new Dice();
 
-    @Prop() characterParams: any;
+    private inputs: any[];
 
-    /*  
-    *   Remove every selected dice throw class and redo checking all input values
-    **/
-    onScoreInput() {
+    @Event({
+        eventName: 'paramSelected',
+        composed: true,
+        cancelable: true,
+        bubbles: true,
+    }) selectEmitter: EventEmitter;
+
+    @Prop() characterParams: any;
+    @State() isFormValid: boolean = false;
+
+    componentDidLoad() {
+        this.inputs = Array.from(document.querySelectorAll('.ability-input'));
+    }
+
+    checkUsedThrows() {
         const selectedClass = 'used-throw';
         const diceThrowsElement = Array.from(document.querySelectorAll('.dice-throws'));
         const abilityInputs = Array.from(document.querySelectorAll('.ability-input'));
@@ -30,13 +41,27 @@ export class NewAbilityScore {
         diceThrowsElement.forEach(dt => dt.classList.remove(selectedClass));
         diceThrowsElement.forEach((dt) => {
             const foundUsedThrow = usedThrows.find(ut => dt.innerHTML === ut && !dt.classList.contains(selectedClass))
-            console.log(foundUsedThrow);
             if (foundUsedThrow) {
                 usedThrows.splice(usedThrows.indexOf(foundUsedThrow), 1);
                 dt.classList.add(selectedClass);
-                console.log
             }
         })
+    }
+
+    validateInputs() {
+        if (this.inputs.some(i => i.value === '')) {
+            this.isFormValid = false;
+        } else {
+            this.isFormValid = true;
+        }
+    }
+
+    /*  
+    *   Remove every selected dice throw class and redo checking all input values
+    **/
+    onScoreInput() {
+        this.checkUsedThrows();
+        this.validateInputs();
     }
 
     getProfficencyIcon(skill: string) {
@@ -67,7 +92,7 @@ export class NewAbilityScore {
             <ion-row text-capitalize>
                 <ion-col col-4>
                     <ion-item>
-                        <ion-input onInput={() => this.onScoreInput()} class="ability-input" required inputmode="numeric" type="number" max="18" min="3" placeholder="-"></ion-input>
+                        <ion-input name={ability} onInput={() => this.onScoreInput()} class="ability-input" required inputmode="numeric" type="number" max="18" min="3" placeholder="-"></ion-input>
                     </ion-item>
                 </ion-col>
                 <ion-col col-8>
@@ -75,6 +100,12 @@ export class NewAbilityScore {
                 </ion-col>
             </ion-row>
         ]);
+    }
+
+    confirmScore() {
+        const abilityScores = {};
+        this.inputs.forEach(i => abilityScores[i.name] = i.value);
+        this.selectEmitter.emit({ step: 'abilities', param: abilityScores });
     }
 
     render() {
@@ -100,7 +131,16 @@ export class NewAbilityScore {
                         </ion-card-title>
                 </ion-card-header>
                 {this.getAbilityList()}
-            </ion-card>
+            </ion-card>,
+            <ion-footer>
+                <ion-toolbar>
+                    <ion-buttons slot="end">
+                        <ion-button class="confirm-icon" onClick={() => this.isFormValid ? this.confirmScore() : null}>
+                            <ion-icon name="checkmark-circle" color="success" class={this.isFormValid ? '' : 'disabled'}></ion-icon>
+                        </ion-button>
+                    </ion-buttons>
+                </ion-toolbar>
+            </ion-footer>
         ];
     }
 }
