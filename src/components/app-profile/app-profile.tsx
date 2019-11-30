@@ -1,5 +1,5 @@
 import { Component, Prop, State, h } from '@stencil/core';
-import { sayHello } from '../../helpers/utils';
+import { sayHello } from '../../utils/utils';
 
 @Component({
   tag: 'app-profile',

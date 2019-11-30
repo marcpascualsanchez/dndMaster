@@ -1,8 +1,8 @@
 import { Component, h, State, Prop, Event, EventEmitter } from '@stencil/core';
 
-import { baseParams as fighterBase } from '../pages/classes/Fighter';
-import { baseParams as barbarianBase } from '../pages/classes/Barbarian';
-import { IClass } from '../pages/classes/Class';
+import { baseParams as fighterBase } from '../models/classes/Fighter';
+import { baseParams as barbarianBase } from '../models/classes/Barbarian';
+import { IClass } from '../models/classes/Class';
 
 @Component({
     tag: 'classes-list',

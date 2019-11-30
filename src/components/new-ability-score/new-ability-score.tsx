@@ -1,7 +1,7 @@
 import { Component, h, Prop, Event, EventEmitter, State } from '@stencil/core';
 
-import { skills, EAbility } from '../Character';
-import { Dice } from '../Dice';
+import { skills, EAbility } from '../models/Character';
+import { Dice } from '../../utils/Dice';
 
 @Component({
     tag: 'new-ability-score',
