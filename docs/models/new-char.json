@@ -1,0 +1,95 @@
+[
+    {
+        "race": {
+            "name": "tiefling",
+            "statMods": {
+                "Charisma": 2,
+                "Intelligence": 1
+            },
+            "size": "medium",
+            "speed": 30,
+            "languages": [
+                "common",
+                "infernal"
+            ],
+            "maxAge": 100,
+            "raceAbility": [
+                "darkvision",
+                "hellishResistence",
+                "infernalLegacy"
+            ],
+            "description": {
+                "short": "Charismatic and intelligent and resistant to fire",
+                "long": "Tieflings come from humans but with an infernal legacy. Thanks to this they have fire resistance and know the infernal language. Perfect as Sorcerers and Warloks but also good as Bards, Paladins and Wizards"
+            }
+        },
+        "class": {
+            "name": "barbarian",
+            "healthGrowth": 12,
+            "hitDiceGrowth": 12,
+            "armorClass": 10,
+            "classTraits": [
+                "unarmored defense",
+                "rage"
+            ],
+            "proficiency": {
+                "skillModsAble": 2,
+                "skillMods": [
+                    "animal handling",
+                    "athletics",
+                    "intimidation",
+                    "nature",
+                    "perception",
+                    "survival"
+                ],
+                "savingThrows": [
+                    "strenght",
+                    "constitution"
+                ],
+                "armors": [
+                    "light armor",
+                    "medium armor",
+                    "shield"
+                ],
+                "weapons": [
+                    "simple weapon",
+                    "martial weapon"
+                ]
+            },
+            "equipment": {
+                "weapon": {
+                    "primary": {
+                        "name": "greataxe",
+                        "amount": 1
+                    },
+                    "secondary": {
+                        "name": "handaxe",
+                        "amount": 2
+                    }
+                },
+                "items": [
+                    {
+                        "name": "explorer pack",
+                        "amount": 1
+                    },
+                    {
+                        "name": "javelin",
+                        "amount": 4
+                    }
+                ]
+            },
+            "description": {
+                "long": "Barbarians are barbarians",
+                "short": "Barbarians are barbarians Barbarians are barbarians Barbarians are barbarians"
+            }
+        },
+        "abilities": {
+            "strength": "12",
+            "dexterity": "17",
+            "constitution": "18",
+            "intelligence": "12",
+            "wisdom": "11",
+            "charisma": "6"
+        }
+    }
+]
