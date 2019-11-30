@@ -6,12 +6,11 @@ import { Component, h, Watch, Prop, Listen } from '@stencil/core';
 })
 export class CharactersList {
 
-    // TODO: manage end step
     private allSteps: string[] = ['race', 'class', 'abilities', 'end']; //ordered by appareance
-    private previousStep: string;
+    private previousStep: string; // TODO: manage backbutton
 
     @Listen('paramSelected')
-    todoCompletedHandler(event: CustomEvent) {
+    paramSelectedHandler(event: CustomEvent) {
         console.log('Received the custom todoCompleted event: ', event.detail);
         this.previousStep = this.allSteps.find((s, idx) => {
             if (s === event.detail.step) {
@@ -22,15 +21,28 @@ export class CharactersList {
         this.characterParams[event.detail.step] = event.detail.param;
         console.log('step', this.step);
         if (this.step === this.allSteps[this.allSteps.length - 1]) {
-            // TODO: create new char in mongo & localStorage, add it an id
             // TODO: navigate to characters/:_id
-            console.log('creating character...', this.characterParams);
+            this.createNewCharacter();
         }
     }
 
     @Prop() public step: string;
 
     private characterParams: any = {}; // store params from every step
+
+    createNewCharacter() {
+        // TODO: create new char in mongo & localStorage, add it an id
+        // TODO: navigate to characters/:_id
+        console.log('creating character...', this.characterParams);
+        const charactersItem = localStorage.getItem('characters');
+        if (charactersItem) {
+            const characters = JSON.parse(charactersItem);
+            characters.push(this.characterParams);
+            localStorage.setItem('characters', JSON.stringify(characters));
+        } else {
+            localStorage.setItem('characters', JSON.stringify([this.characterParams]));
+        }
+    }
 
     getStepComponent() {
         let stepComponent;

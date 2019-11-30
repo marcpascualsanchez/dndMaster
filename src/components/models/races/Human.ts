@@ -1,4 +1,4 @@
-import { IRace } from '../races/Race';
+import { IRace } from './Race';
 
 export interface IHuman extends IRace {
     //extra race modifiers

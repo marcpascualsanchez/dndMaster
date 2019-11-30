@@ -1,10 +1,10 @@
 import { Component, h, State, Prop, Event, EventEmitter } from '@stencil/core';
 
-import { baseParams as dragonbornBase } from '../pages/races/Dragonborn';
-import { baseParams as halfOrcBase } from '../pages/races/HalfOrc';
-import { baseParams as humanBase } from '../pages/races/Human';
-import { baseParams as tieflingBase } from '../pages/races/Tiefling';
-import { IRace } from '../pages/races/Race';
+import { baseParams as dragonbornBase } from '../models/races/Dragonborn';
+import { baseParams as halfOrcBase } from '../models/races/HalfOrc';
+import { baseParams as humanBase } from '../models/races/Human';
+import { baseParams as tieflingBase } from '../models/races/Tiefling';
+import { IRace } from '../models/races/Race';
 
 @Component({
     tag: 'races-list',
@@ -18,7 +18,7 @@ export class RacesList {
         composed: true,
         cancelable: true,
         bubbles: true,
-      }) selectEmitter: EventEmitter;
+    }) selectEmitter: EventEmitter;
 
     @Prop() isCreating: boolean;
     @Prop() step: string;
@@ -100,7 +100,7 @@ export class RacesList {
     }
 
     render() {
-        return this.allRaces.map((r)    => {
+        return this.allRaces.map((r) => {
             return (
                 <ion-card id={r.name} onClick={(e) => this.selectRace(e)}>
                     <ion-card-header no-padding>
