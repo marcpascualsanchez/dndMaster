@@ -52,8 +52,8 @@ export class RacesList {
     }
 
     getRaceAbilities(race: IRace) {
-        if (race.raceAbility) {
-            const abilityList = race.raceAbility.map((ability) => {
+        if (race.raceAbilities) {
+            const abilityList = race.raceAbilities.map((ability) => {
                 return <ion-item><ion-text>Special: {ability}</ion-text></ion-item>
             });
 

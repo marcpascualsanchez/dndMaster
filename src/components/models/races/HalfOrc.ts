@@ -17,7 +17,7 @@ export const baseParams: IHalfOrc = {
     speed: 30,
     languages: ['common', 'orc'],
     maxAge: 75,
-    raceAbility: ['relentless endurance', 'savage attacks', 'darkvision'],
+    raceAbilities: ['relentless endurance', 'savage attacks', 'darkvision'],
     description: {
         short: 'Strong and hardy, the perfect frontline',
         long: 'Harlf-orcs are hard to kill, nearly impossible to kill. Perfect as Barbarians, Fighters and Paladins',
