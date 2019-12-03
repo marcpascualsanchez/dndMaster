@@ -1,3 +1,6 @@
+import { IClass } from "./classes/Class";
+import { IRace } from "./races/Race";
+
 export enum EAbility {
     strength = 'strength',
     dexterity = 'dexterity',
@@ -5,6 +8,14 @@ export enum EAbility {
     intelligence = 'intelligence',
     wisdom = 'wisdom',
     charisma = 'charisma',
+}
+
+export interface ICharacterParams {
+    class?: IClass;
+    race?: IRace;
+    abilities?: { [key: string]: EAbility },
+    background?: any; // TODO: create background
+    personal?: any; // TODO: create background
 }
 
 export interface ISkills {
@@ -16,7 +27,7 @@ export interface ISkills {
     charisma: string[],
 }
 
-export interface ICharacter {}
+export interface ICharacter { }
 
 export const skills: ISkills = {
     strength: ['athletics'],

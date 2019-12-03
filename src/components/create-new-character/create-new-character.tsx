@@ -1,4 +1,5 @@
-import { Component, h, Watch, Prop, Listen } from '@stencil/core';
+import { Component, h, Prop, Listen } from '@stencil/core';
+import { ICharacterParams } from '../models/Character';
 
 @Component({
     tag: 'create-new-character',
@@ -6,7 +7,7 @@ import { Component, h, Watch, Prop, Listen } from '@stencil/core';
 })
 export class CharactersList {
 
-    private allSteps: string[] = ['race', 'class', 'abilities', 'end']; //ordered by appareance
+    private allSteps: string[] = ['race', 'class', 'abilities', 'sheet', 'end']; //ordered by appareance
     private previousStep: string; // TODO: manage backbutton
 
     @Listen('paramSelected')
@@ -28,7 +29,7 @@ export class CharactersList {
 
     @Prop() public step: string;
 
-    private characterParams: any = {}; // store params from every step
+    private characterParams: ICharacterParams = {}; // store params from every step
 
     createNewCharacter() {
         // TODO: create new char in mongo & localStorage, add it an id
@@ -55,6 +56,9 @@ export class CharactersList {
                 break;
             case ('abilities'):
                 stepComponent = <new-ability-score characterParams={this.characterParams}></new-ability-score>
+                break;
+            case ('sheet'):
+                stepComponent = <character-sheet characterParams={this.characterParams}></character-sheet>
                 break;
             default:
                 stepComponent = <races-list isCreating={true}></races-list>

@@ -6,7 +6,9 @@
 
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
-
+import {
+  ICharacterParams,
+} from './components/models/Character';
 
 export namespace Components {
   interface AppHome {}
@@ -14,6 +16,12 @@ export namespace Components {
     'name': string;
   }
   interface AppRoot {}
+  interface CharacterSheet {
+    'characterParams': ICharacterParams;
+  }
+  interface CharacterSheet {
+    'characterParams': ICharacterParams;
+  }
   interface CharactersList {}
   interface ClassesList {
     'isCreating': boolean;
@@ -52,6 +60,18 @@ declare global {
     new (): HTMLAppRootElement;
   };
 
+  interface HTMLCharacterSheetElement extends Components.CharacterSheet, HTMLStencilElement {}
+  var HTMLCharacterSheetElement: {
+    prototype: HTMLCharacterSheetElement;
+    new (): HTMLCharacterSheetElement;
+  };
+
+  interface HTMLCharacterSheetElement extends Components.CharacterSheet, HTMLStencilElement {}
+  var HTMLCharacterSheetElement: {
+    prototype: HTMLCharacterSheetElement;
+    new (): HTMLCharacterSheetElement;
+  };
+
   interface HTMLCharactersListElement extends Components.CharactersList, HTMLStencilElement {}
   var HTMLCharactersListElement: {
     prototype: HTMLCharactersListElement;
@@ -85,6 +105,8 @@ declare global {
     'app-home': HTMLAppHomeElement;
     'app-profile': HTMLAppProfileElement;
     'app-root': HTMLAppRootElement;
+    'character-sheet': HTMLCharacterSheetElement;
+    'character-sheet': HTMLCharacterSheetElement;
     'characters-list': HTMLCharactersListElement;
     'classes-list': HTMLClassesListElement;
     'create-new-character': HTMLCreateNewCharacterElement;
@@ -99,6 +121,12 @@ declare namespace LocalJSX {
     'name'?: string;
   }
   interface AppRoot {}
+  interface CharacterSheet {
+    'characterParams'?: ICharacterParams;
+  }
+  interface CharacterSheet {
+    'characterParams'?: ICharacterParams;
+  }
   interface CharactersList {}
   interface ClassesList {
     'isCreating'?: boolean;
@@ -122,6 +150,8 @@ declare namespace LocalJSX {
     'app-home': AppHome;
     'app-profile': AppProfile;
     'app-root': AppRoot;
+    'character-sheet': CharacterSheet;
+    'character-sheet': CharacterSheet;
     'characters-list': CharactersList;
     'classes-list': ClassesList;
     'create-new-character': CreateNewCharacter;
@@ -139,6 +169,8 @@ declare module "@stencil/core" {
       'app-home': LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
       'app-profile': LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;
       'app-root': LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+      'character-sheet': LocalJSX.CharacterSheet & JSXBase.HTMLAttributes<HTMLCharacterSheetElement>;
+      'character-sheet': LocalJSX.CharacterSheet & JSXBase.HTMLAttributes<HTMLCharacterSheetElement>;
       'characters-list': LocalJSX.CharactersList & JSXBase.HTMLAttributes<HTMLCharactersListElement>;
       'classes-list': LocalJSX.ClassesList & JSXBase.HTMLAttributes<HTMLClassesListElement>;
       'create-new-character': LocalJSX.CreateNewCharacter & JSXBase.HTMLAttributes<HTMLCreateNewCharacterElement>;
