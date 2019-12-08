@@ -19,7 +19,7 @@ export namespace Components {
   interface CharacterSheet {
     'characterParams': ICharacterParams;
   }
-  interface CharacterSheet {
+  interface CharacterSheetOld {
     'characterParams': ICharacterParams;
   }
   interface CharactersList {}
@@ -66,10 +66,10 @@ declare global {
     new (): HTMLCharacterSheetElement;
   };
 
-  interface HTMLCharacterSheetElement extends Components.CharacterSheet, HTMLStencilElement {}
-  var HTMLCharacterSheetElement: {
-    prototype: HTMLCharacterSheetElement;
-    new (): HTMLCharacterSheetElement;
+  interface HTMLCharacterSheetOldElement extends Components.CharacterSheetOld, HTMLStencilElement {}
+  var HTMLCharacterSheetOldElement: {
+    prototype: HTMLCharacterSheetOldElement;
+    new (): HTMLCharacterSheetOldElement;
   };
 
   interface HTMLCharactersListElement extends Components.CharactersList, HTMLStencilElement {}
@@ -106,7 +106,7 @@ declare global {
     'app-profile': HTMLAppProfileElement;
     'app-root': HTMLAppRootElement;
     'character-sheet': HTMLCharacterSheetElement;
-    'character-sheet': HTMLCharacterSheetElement;
+    'character-sheet-old': HTMLCharacterSheetOldElement;
     'characters-list': HTMLCharactersListElement;
     'classes-list': HTMLClassesListElement;
     'create-new-character': HTMLCreateNewCharacterElement;
@@ -124,7 +124,7 @@ declare namespace LocalJSX {
   interface CharacterSheet {
     'characterParams'?: ICharacterParams;
   }
-  interface CharacterSheet {
+  interface CharacterSheetOld {
     'characterParams'?: ICharacterParams;
   }
   interface CharactersList {}
@@ -151,7 +151,7 @@ declare namespace LocalJSX {
     'app-profile': AppProfile;
     'app-root': AppRoot;
     'character-sheet': CharacterSheet;
-    'character-sheet': CharacterSheet;
+    'character-sheet-old': CharacterSheetOld;
     'characters-list': CharactersList;
     'classes-list': ClassesList;
     'create-new-character': CreateNewCharacter;
@@ -170,7 +170,7 @@ declare module "@stencil/core" {
       'app-profile': LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;
       'app-root': LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
       'character-sheet': LocalJSX.CharacterSheet & JSXBase.HTMLAttributes<HTMLCharacterSheetElement>;
-      'character-sheet': LocalJSX.CharacterSheet & JSXBase.HTMLAttributes<HTMLCharacterSheetElement>;
+      'character-sheet-old': LocalJSX.CharacterSheetOld & JSXBase.HTMLAttributes<HTMLCharacterSheetOldElement>;
       'characters-list': LocalJSX.CharactersList & JSXBase.HTMLAttributes<HTMLCharactersListElement>;
       'classes-list': LocalJSX.ClassesList & JSXBase.HTMLAttributes<HTMLClassesListElement>;
       'create-new-character': LocalJSX.CreateNewCharacter & JSXBase.HTMLAttributes<HTMLCreateNewCharacterElement>;

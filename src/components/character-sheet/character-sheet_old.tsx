@@ -2,8 +2,8 @@ import { Component, Prop, h } from '@stencil/core';
 import { skills, EAbility, ICharacterParams } from '../models/Character';
 
 @Component({
-  tag: 'character-sheet',
-  styleUrl: 'character-sheet.scss',
+  tag: 'character-sheet-old',
+  styleUrl: 'character-sheet-old.scss',
 })
 export class CharacterSheet {
 

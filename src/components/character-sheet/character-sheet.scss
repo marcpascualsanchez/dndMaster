@@ -1,3 +1,46 @@
-ion-row, ion-col {
+ion-row, ion-col, ion-grid {
   border: solid black 1px;
+  background-color: white;
+}
+
+.image-col {
+  overflow: hidden;
+}
+
+.left-triangle {
+  position: relative;
+  border-right: 20vw solid transparent;
+  border-bottom: 20vh solid white;
+  float: left;
+  z-index: 1;
+}
+
+.right-triangle {
+  position: relative;
+  border-left: 20vw solid transparent;
+  border-bottom: 20vh solid white;
+  float: right;
+  z-index: 1;
+}
+
+.profile-image {
+  transform: scale(1.5);
+  margin-left: auto;
+  margin-right: auto;
+  position: absolute;
+}
+
+.icon-value {
+  position: absolute;
+  z-index: 1;
+}
+
+.profile-icon {
+  // position: absolute;
+  color: green;
+  font-size: 55px;
+}
+
+.icon-container {
+  min-height: 70px;
 }

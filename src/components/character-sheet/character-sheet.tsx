@@ -6,8 +6,10 @@ import { skills, EAbility, ICharacterParams } from '../models/Character';
   styleUrl: 'character-sheet.scss',
 })
 export class CharacterSheet {
+  private mockChar = JSON.parse('{"race":{"name":"halfOrc","statMods":{"Strength":2,"Constitution":1},"proficiency":{"skillMods":["intimidation"]},"size":"medium","speed":30,"languages":["common","orc"],"maxAge":75,"raceAbilities":["relentless endurance","savage attacks","darkvision"],"description":{"short":"Strong and hardy, the perfect frontline","long":"Harlf-orcs are hard to kill, nearly impossible to kill. Perfect as Barbarians, Fighters and Paladins"}},"class":{"name":"barbarian","healthGrowth":12,"hitDiceGrowth":12,"armorClass":10,"classTraits":["unarmored defense","rage"],"proficiency":{"skillModsAble":2,"skillMods":["animal handling","athletics","intimidation","nature","perception","survival"],"savingThrows":["strenght","constitution"],"armors":["light armor","medium armor","shield"],"weapons":["simple weapon","martial weapon"]},"equipment":{"weapon":{"primary":{"name":"greataxe","amount":1},"secondary":{"name":"handaxe","amount":2}},"items":[{"name":"explorer pack","amount":1},{"name":"javelin","amount":4}]},"description":{"long":"Barbarians are barbarians","short":"Barbarians are barbarians Barbarians are barbarians Barbarians are barbarians"}},"abilities":{"strength":"12","dexterity":"13","constitution":"16","intelligence":"10","wisdom":"10","charisma":"14"}}');
+  private mockImgPath: string = '../../assets/img/profileImages/PaladinElf.jpg';
 
-  @Prop() characterParams: ICharacterParams;
+  @Prop() characterParams: ICharacterParams = this.mockChar;
 
   getProfficencyIcon(skill: string) {
     //TODO: check profficency coming from previous steps
@@ -45,40 +47,38 @@ export class CharacterSheet {
   render() {
     console.log('baseParams', this.characterParams);
     return (
-      <ion-grid>
-        <ion-row>
-          <ion-col size="4">Nom</ion-col>
-          <ion-col size="8">
-            <ion-grid>
-              <ion-row>
-                <ion-col size="4">{this.characterParams.class.name}</ion-col>
-                <ion-col size="4">{this.characterParams.race.name}</ion-col>
-                <ion-col size="4">lvl 1</ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col size="4">Armor: {this.characterParams.class.armorClass}</ion-col>
-                <ion-col size="4">Health: {this.characterParams.class.healthGrowth * 1}</ion-col>
-                <ion-col size="4">Speed: {this.characterParams.race.speed}</ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="4">percepció</ion-col>
-          <ion-col size="4">iniciativa</ion-col>
-          <ion-col size="4">inspiració</ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="6">
+      <ion-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col class="image-col" no-padding offset="2" size="8">
+              <div class="left-triangle">
+              </div>
+              <ion-img class="profile-image" src={this.mockImgPath} no-padding />
+              <div class="right-triangle">
+              </div>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col class="icon-container" text-center size="4">
+              <ion-icon class="profile-icon" name="help-buoy"></ion-icon>
+              <span class="icon-value">{this.characterParams.class.armorClass}</span>
+            </ion-col>
+            <ion-col class="icon-container" text-center size="4">
+              <ion-icon class="profile-icon" name="heart"></ion-icon>
+              <span class="icon-value">{this.characterParams.class.healthGrowth * 1}</span>
+            </ion-col>
+            <ion-col class="icon-container" text-center size="4">
+              <ion-icon class="profile-icon" name="walk"></ion-icon>
+              <span class="icon-value">{this.characterParams.race.speed}</span>
+            </ion-col>
+          </ion-row>
+          <ion-row>
             <ion-grid no-padding>
               {this.getAbilities()}
             </ion-grid>
-          </ion-col>
-          <ion-col size="6">
-            <ion-grid></ion-grid>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+          </ion-row>
+        </ion-grid>
+      </ion-content>
     );
   }
 
