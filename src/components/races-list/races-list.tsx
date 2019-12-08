@@ -106,7 +106,7 @@ export class RacesList {
                     <ion-card-header no-padding>
                         <ion-grid no-padding>
                             <ion-row>
-                                <ion-col size="4" no-padding>
+                                <ion-col class="image-col" size="4" no-padding>
                                     <div class="race-image">{this.getImage(r.name)}</div>
                                     <div class="image-triangle"></div>
                                 </ion-col>

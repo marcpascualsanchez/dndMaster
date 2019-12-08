@@ -76,7 +76,7 @@ export class CharactersList {
                     <ion-card-content class="ion-no-padding">
                         <ion-grid class="ion-no-padding">
                             <ion-row>
-                                <ion-col size="4" class="ion-no-padding">
+                                <ion-col size="4" class="ion-no-padding image-col">
                                     <div class="profile-image">{this.getCharacterImage(ch.image)}</div>
                                     {this.getCharacterLevelBadge(ch.level)}
                                 </ion-col>
