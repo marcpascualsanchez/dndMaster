@@ -12,22 +12,25 @@ export class NewAbilityScore {
     private inputs: any[];
     private abilityScore: any;
 
-    constructor() {
-        this.throwDices();
-        this.abilityScore = {};
-        Object.keys(EAbility).forEach((ability) => this.abilityScore[ability] = undefined);
-    }
-
     @Event({
         eventName: 'paramSelected',
         composed: true,
         cancelable: true,
         bubbles: true,
     }) selectEmitter: EventEmitter;
-
     @Prop() characterParams: any;
     @State() isFormValid: boolean = false;
     @State() diceThrows: any[];
+
+    constructor() {
+        this.initialize();
+    }
+
+    initialize() {
+        this.throwDices();
+        this.abilityScore = {};
+        Object.keys(EAbility).forEach((ability) => this.abilityScore[ability] = undefined);
+    }
 
     componentDidLoad() {
         this.inputs = Array.from(document.querySelectorAll('.ability-input'));
@@ -114,9 +117,7 @@ export class NewAbilityScore {
     }
 
     confirmScore() {
-        const abilityScores = {};
-        this.inputs.forEach(i => abilityScores[i.name] = i.value);
-        this.selectEmitter.emit({ step: 'abilities', param: abilityScores });
+        this.selectEmitter.emit({ step: 'abilities', param: this.abilityScore });
     }
 
     throwDices() {
@@ -131,7 +132,10 @@ export class NewAbilityScore {
                 <ion-card-header>
                     <ion-card-title>
                         Throws
-                        </ion-card-title>
+                        <ion-icons>
+                            <ion-icon onClick={() => { this.initialize() }} name="refresh-circle" color="primary" slot="end"></ion-icon>
+                        </ion-icons>
+                    </ion-card-title>
                 </ion-card-header>
                 <ion-card-content>
                     <ion-grid>
