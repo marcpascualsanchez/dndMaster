@@ -9,8 +9,14 @@ import { Dice } from '../../utils/Dice';
 })
 export class NewAbilityScore {
     private dice = new Dice();
-
     private inputs: any[];
+    private abilityScore: any;
+
+    constructor() {
+        this.throwDices();
+        this.abilityScore = {};
+        Object.keys(EAbility).forEach((ability) => this.abilityScore[ability] = undefined);
+    }
 
     @Event({
         eventName: 'paramSelected',
@@ -21,35 +27,36 @@ export class NewAbilityScore {
 
     @Prop() characterParams: any;
     @State() isFormValid: boolean = false;
+    @State() diceThrows: any[];
 
     componentDidLoad() {
         this.inputs = Array.from(document.querySelectorAll('.ability-input'));
     }
 
-    checkUsedThrows() {
-        const selectedClass = 'used-throw';
-        const diceThrowsElement = Array.from(document.querySelectorAll('.dice-throws'));
-        const abilityInputs = Array.from(document.querySelectorAll('.ability-input'));
+    setUsedThrows() {
+        // Get used values for every input
         let usedThrows = [];
-
-        abilityInputs.forEach((ai: any) => {
+        this.inputs.forEach((ai: any) => {
             if (ai.value) {
                 usedThrows.push(ai.value);
             }
         });
 
-        diceThrowsElement.forEach(dt => dt.classList.remove(selectedClass));
-        diceThrowsElement.forEach((dt) => {
-            const foundUsedThrow = usedThrows.find(ut => dt.innerHTML === ut && !dt.classList.contains(selectedClass))
-            if (foundUsedThrow) {
+        // Check which input values are used and changes State
+        this.diceThrows = this.diceThrows.map((dt) => {
+            const foundUsedThrow = usedThrows.find(ut => dt.value === ut);
+            if (foundUsedThrow && foundUsedThrow !== 0) {
+                dt.isUsed = true;
                 usedThrows.splice(usedThrows.indexOf(foundUsedThrow), 1);
-                dt.classList.add(selectedClass);
+            } else {
+                dt.isUsed = false;
             }
-        })
+            return dt;
+        });
     }
 
     validateInputs() {
-        if (this.inputs.some(i => i.value === '')) {
+        if (this.inputs.some(i => !i.value)) {
             this.isFormValid = false;
         } else {
             this.isFormValid = true;
@@ -59,8 +66,10 @@ export class NewAbilityScore {
     /*  
     *   Remove every selected dice throw class and redo checking all input values
     **/
-    onScoreInput() {
-        this.checkUsedThrows();
+    onScoreInput(event) {
+        console.log(event);
+        this.abilityScore[event.target.name] = event.detail.value;
+        this.setUsedThrows();
         this.validateInputs();
     }
 
@@ -83,7 +92,7 @@ export class NewAbilityScore {
     }
 
     getAbilityList() {
-        return Object.keys(EAbility).map((ability) => [
+        return Object.keys(this.abilityScore).map((ability) => [
             <ion-row>
                 <ion-item>
                     <h3 text-capitalize>{ability}</h3>
@@ -92,7 +101,9 @@ export class NewAbilityScore {
             <ion-row text-capitalize>
                 <ion-col col-4>
                     <ion-item>
-                        <ion-input name={ability} onInput={() => this.onScoreInput()} class="ability-input" required inputmode="numeric" type="number" max="18" min="3" placeholder="-"></ion-input>
+                        <ion-select name={ability} onIonChange={(e) => this.onScoreInput(e)} class="ability-input" placeholder="-" value={this.abilityScore[ability]}>
+                            {this.diceThrows.map(d => <ion-select-option value={d.value} disabled={d.isUsed}>{d.value}</ion-select-option>)}
+                        </ion-select>
                     </ion-item>
                 </ion-col>
                 <ion-col col-8>
@@ -108,7 +119,13 @@ export class NewAbilityScore {
         this.selectEmitter.emit({ step: 'abilities', param: abilityScores });
     }
 
+    throwDices() {
+        this.diceThrows = this.dice.getNewCharacterThrows().map(dt => ({ value: dt, isUsed: false }));
+    }
+
     render() {
+        console.log('rendered now', this.abilityScore);
+        console.log('input values', this.inputs);
         return [
             <ion-card>
                 <ion-card-header>
@@ -119,7 +136,7 @@ export class NewAbilityScore {
                 <ion-card-content>
                     <ion-grid>
                         <ion-row>
-                            {this.dice.getNewCharacterThrows().map(t => <ion-col col-2 class="dice-throws" text-center>{t}</ion-col>)}
+                            {this.diceThrows.map(dt => <ion-col col-2 class={`dice-throws ${dt.isUsed ? 'used-throw' : ''}`} text-center>{dt.value}</ion-col>)}
                         </ion-row>
                     </ion-grid>
                 </ion-card-content>
