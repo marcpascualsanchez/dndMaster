@@ -77,9 +77,9 @@ export class ClassesList {
 
     getDescription(charClass) {
         if (charClass.name === this.selectedClass) {
-            return charClass.description.long;
+            return charClass.description.short;
         }
-        return charClass.description.short;
+        return charClass.description.long;
     }
 
     getClassCard(charClass: IClass) {
