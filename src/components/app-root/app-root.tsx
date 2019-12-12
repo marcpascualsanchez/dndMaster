@@ -16,6 +16,7 @@ export class AppRoot {
           <ion-route url="/new-ability-score" component="new-ability-score" />
           <ion-route url="/create-new-character" component="create-new-character" />
           <ion-route url="/character-sheet" component="character-sheet" />
+          <ion-route url="/character-personal-data" component="character-personal-data" />
         </ion-router>
         <ion-nav />
       </ion-app>

@@ -57,6 +57,9 @@ export class CharactersList {
             case ('abilities'):
                 stepComponent = <new-ability-score characterParams={this.characterParams}></new-ability-score>
                 break;
+            case ('personal'):
+                stepComponent = <character-personal-data></character-personal-data>
+                break;
             case ('sheet'):
                 stepComponent = <character-sheet characterParams={this.characterParams}></character-sheet>
                 break;

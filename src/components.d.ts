@@ -16,6 +16,7 @@ export namespace Components {
     'name': string;
   }
   interface AppRoot {}
+  interface CharacterPersonalData {}
   interface CharacterSheet {
     'characterParams': ICharacterParams;
   }
@@ -58,6 +59,12 @@ declare global {
   var HTMLAppRootElement: {
     prototype: HTMLAppRootElement;
     new (): HTMLAppRootElement;
+  };
+
+  interface HTMLCharacterPersonalDataElement extends Components.CharacterPersonalData, HTMLStencilElement {}
+  var HTMLCharacterPersonalDataElement: {
+    prototype: HTMLCharacterPersonalDataElement;
+    new (): HTMLCharacterPersonalDataElement;
   };
 
   interface HTMLCharacterSheetElement extends Components.CharacterSheet, HTMLStencilElement {}
@@ -105,6 +112,7 @@ declare global {
     'app-home': HTMLAppHomeElement;
     'app-profile': HTMLAppProfileElement;
     'app-root': HTMLAppRootElement;
+    'character-personal-data': HTMLCharacterPersonalDataElement;
     'character-sheet': HTMLCharacterSheetElement;
     'character-sheet-old': HTMLCharacterSheetOldElement;
     'characters-list': HTMLCharactersListElement;
@@ -121,6 +129,9 @@ declare namespace LocalJSX {
     'name'?: string;
   }
   interface AppRoot {}
+  interface CharacterPersonalData {
+    'onParamSelected'?: (event: CustomEvent<any>) => void;
+  }
   interface CharacterSheet {
     'characterParams'?: ICharacterParams;
   }
@@ -150,6 +161,7 @@ declare namespace LocalJSX {
     'app-home': AppHome;
     'app-profile': AppProfile;
     'app-root': AppRoot;
+    'character-personal-data': CharacterPersonalData;
     'character-sheet': CharacterSheet;
     'character-sheet-old': CharacterSheetOld;
     'characters-list': CharactersList;
@@ -169,6 +181,7 @@ declare module "@stencil/core" {
       'app-home': LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
       'app-profile': LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;
       'app-root': LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+      'character-personal-data': LocalJSX.CharacterPersonalData & JSXBase.HTMLAttributes<HTMLCharacterPersonalDataElement>;
       'character-sheet': LocalJSX.CharacterSheet & JSXBase.HTMLAttributes<HTMLCharacterSheetElement>;
       'character-sheet-old': LocalJSX.CharacterSheetOld & JSXBase.HTMLAttributes<HTMLCharacterSheetOldElement>;
       'characters-list': LocalJSX.CharactersList & JSXBase.HTMLAttributes<HTMLCharactersListElement>;
