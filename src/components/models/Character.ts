@@ -11,11 +11,13 @@ export enum EAbility {
 }
 
 export interface ICharacterParams {
+    _id: string;
     class?: IClass;
     race?: IRace;
     abilities?: { [key: string]: EAbility },
     background?: any; // TODO: create background
-    personal?: any; // TODO: create background
+    personal?: any;
+    state?: any; // TODO: design how to manage current state of char
 }
 
 export interface ISkills {
