@@ -7,29 +7,33 @@ import { ICharacterParams } from '../models/Character';
 })
 export class CharactersList {
 
-    private allSteps: string[] = ['race', 'class', 'abilities', 'sheet', 'end']; //ordered by appareance
+    private allSteps: string[] = ['race', 'class', 'abilities', 'personal']; //ordered by appareance
     private previousStep: string; // TODO: manage backbutton
+    private characterParams: ICharacterParams;
 
+    @Prop() public step: string;
     @Listen('paramSelected')
     paramSelectedHandler(event: CustomEvent) {
-        console.log('Received the custom todoCompleted event: ', event.detail);
+        this.characterParams[event.detail.step] = event.detail.param;
+        if (this.step === this.allSteps[this.allSteps.length - 1]) {
+            this.createNewCharacter();
+            window.location.href = `/character-sheet/${this.characterParams._id}`;
+            return;  // ends flow
+        }
         this.previousStep = this.allSteps.find((s, idx) => {
             if (s === event.detail.step) {
                 this.step = this.allSteps[idx + 1];
                 return true;
             }
         });
-        this.characterParams[event.detail.step] = event.detail.param;
-        console.log('step', this.step);
-        if (this.step === this.allSteps[this.allSteps.length - 1]) {
-            // TODO: navigate to characters/:_id
-            this.createNewCharacter();
-        }
     }
-
-    @Prop() public step: string;
-
-    private characterParams: ICharacterParams = {}; // store params from every step
+    
+    constructor() {
+        this.characterParams = { // store params from every step
+            _id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+            state: { level: 1 },
+        };
+    }
 
     createNewCharacter() {
         // TODO: create new char in mongo & localStorage, add it an id
@@ -60,9 +64,6 @@ export class CharactersList {
             case ('personal'):
                 stepComponent = <character-personal-data></character-personal-data>
                 break;
-            case ('sheet'):
-                stepComponent = <character-sheet characterParams={this.characterParams}></character-sheet>
-                break;
             default:
                 stepComponent = <races-list isCreating={true}></races-list>
                 break;
@@ -77,7 +78,7 @@ export class CharactersList {
                     <ion-buttons slot="start">
                         <ion-back-button defaultHref="/" />
                     </ion-buttons>
-                    <ion-title>New character</ion-title>
+                    <ion-title>{this.characterParams.personal ? this.characterParams.personal.name : 'New character'}</ion-title>
                 </ion-toolbar>
             </ion-header>,
             <ion-content class="ion-padding">

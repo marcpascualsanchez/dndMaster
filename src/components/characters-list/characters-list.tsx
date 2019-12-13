@@ -1,43 +1,20 @@
 import { Component, h } from '@stencil/core';
-
-interface ICharacter {
-    id: string;
-    level: number;
-    name: string;
-    title?: string;
-    class: string;
-    race: string;
-    image: string;
-}
-
-const mockChars: ICharacter[] = [
-    {
-        id: '000',
-        level: 69,
-        name: 'marcus',
-        title: 'the First',
-        class: 'druid',
-        race: 'half-orc',
-        image: 'DruidHalf-Orc',
-    },
-    {
-        id: '001',
-        level: 420,
-        name: 'sergios',
-        title: 'the bastard',
-        class: 'paladin',
-        race: 'elf',
-        image: 'PaladinElf',
-    },
-]
+import { ICharacterParams } from '../models/Character';
 
 @Component({
     tag: 'characters-list',
     styleUrl: 'characters-list.scss'
 })
 export class CharactersList {
+    private characters: ICharacterParams[];
+
+    constructor() {
+        this.characters = JSON.parse(localStorage.getItem('characters')) || [];
+        console.log(this.characters);
+    }
+
     getCharacterImage(name: string) {
-        const path = `../../assets/img/profileImages/${name}.jpg`;
+        const path = `../../assets/img/profileImages/${name}`;
         return (
             <ion-img src={path} no-padding />
         );
@@ -53,32 +30,32 @@ export class CharactersList {
         );
     }
 
-    getCharacterCard(character: ICharacter) {
+    getCharacterCard(character: ICharacterParams) {
         return (
             <ion-item>
                 <ion-grid class="character-info">
                     <ion-row class="ion-padding-top">
-                        <ion-text class="name ion-text-capitalize">{character.name},&nbsp;</ion-text>
-                        <ion-text class="title ion-text-capitalize">{character.title}</ion-text>
+                        <ion-text class="name ion-text-capitalize">{character.personal.name},&nbsp;</ion-text>
+                        <ion-text class="title ion-text-capitalize">{character.personal.title}</ion-text>
                     </ion-row>
                     <ion-row class="ion-padding-top">
-                        <ion-text class="subtitle ion-text-capitalize">{character.class}&nbsp;{character.race}</ion-text>
+                        <ion-text class="subtitle ion-text-capitalize">{character.class.name}&nbsp;{character.race.name}</ion-text>
                     </ion-row>
                 </ion-grid>
             </ion-item>
         );
     }
 
-    getHtml(characters: ICharacter[]) {
+    getCharacterCards(characters: ICharacterParams[]) {
         return characters.map((ch) => {
             return (
-                <ion-card key={ch.id}>
+                <ion-card key={ch._id} href={`character-sheet/${ch._id}`}>
                     <ion-card-content class="ion-no-padding">
                         <ion-grid class="ion-no-padding">
                             <ion-row>
                                 <ion-col size="4" class="ion-no-padding image-col">
-                                    <div class="profile-image">{this.getCharacterImage(ch.image)}</div>
-                                    {this.getCharacterLevelBadge(ch.level)}
+                                    <div class="profile-image">{this.getCharacterImage(ch.personal.image)}</div>
+                                    {this.getCharacterLevelBadge(ch.state.level)}
                                 </ion-col>
                                 <ion-col size="8" class="ion-no-padding info-col character-info">
                                     {this.getCharacterCard(ch)}
@@ -92,18 +69,15 @@ export class CharactersList {
     }
 
     render() {
-        const charactersHtml = this.getHtml(mockChars);
-
-        return (
+        return ([
             <ion-content class="ion-padding">
-                {charactersHtml}
-
+                {this.getCharacterCards(this.characters)}
                 <ion-fab vertical="bottom" horizontal="end" slot="fixed">
                     <ion-fab-button href="/create-new-character">
                         <ion-icon name="add" />
                     </ion-fab-button>
                 </ion-fab>
-            </ion-content>
-        );
+            </ion-content>,
+        ]);
     };
 }
