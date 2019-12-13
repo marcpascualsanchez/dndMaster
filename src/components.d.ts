@@ -18,7 +18,7 @@ export namespace Components {
   interface AppRoot {}
   interface CharacterPersonalData {}
   interface CharacterSheet {
-    'characterParams': ICharacterParams;
+    'characterId': string;
   }
   interface CharacterSheetOld {
     'characterParams': ICharacterParams;
@@ -133,7 +133,7 @@ declare namespace LocalJSX {
     'onParamSelected'?: (event: CustomEvent<any>) => void;
   }
   interface CharacterSheet {
-    'characterParams'?: ICharacterParams;
+    'characterId'?: string;
   }
   interface CharacterSheetOld {
     'characterParams'?: ICharacterParams;
