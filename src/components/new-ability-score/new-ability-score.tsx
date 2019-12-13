@@ -70,7 +70,6 @@ export class NewAbilityScore {
     *   Remove every selected dice throw class and redo checking all input values
     **/
     onScoreInput(event) {
-        console.log(event);
         this.abilityScore[event.target.name] = event.detail.value;
         this.setUsedThrows();
         this.validateInputs();
@@ -125,8 +124,6 @@ export class NewAbilityScore {
     }
 
     render() {
-        console.log('rendered now', this.abilityScore);
-        console.log('input values', this.inputs);
         return [
             <ion-card>
                 <ion-card-header>
