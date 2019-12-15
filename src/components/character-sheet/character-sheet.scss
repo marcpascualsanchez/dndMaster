@@ -6,8 +6,25 @@
   z-index: 2;
   position: absolute;
   background-color: green;
+  color: white;
   height: 5vh;
   width: 35vw;
+}
+
+.ability-container {
+  background-color: green;
+  padding-left: 5px;
+}
+
+.ability-label {
+  color: white;
+  font-weight: bold;
+}
+
+.ability-mod {
+  background-color: white;
+  font-weight: bold;
+  float: right;
 }
 
 .static-info.left-up {

@@ -11,9 +11,9 @@ export class CharacterSheet {
 
   @Prop() characterId: string;
   @State() characterParams: ICharacterParams;
+  @State() selectedAbility: EAbility;
 
   constructor() {
-    console.log(this.characterId);
     const characters = JSON.parse(localStorage.getItem('characters'));
     this.characterParams = characters.find(c => c._id === this.characterId);
   }
@@ -33,26 +33,107 @@ export class CharacterSheet {
   }
 
   getSkillsList(ability: string) {
-    return skills[ability].map((s) => <p>{this.getProfficencyIcon(s)}{s}</p>);
+    return skills[ability].map((s) => <ion-col size="6">{this.getProfficencyIcon(s)}{s}</ion-col>);
+  }
+
+  getSelectedAbilitySkills() {
+    if (!this.selectedAbility) {
+      return null;
+    } else {
+      const skillList = this.getSkillsList(this.selectedAbility);
+      if (skillList.length > 0) {
+        return (
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                {skillList}
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        );
+      }
+    }
+  }
+
+  setSelectedAbility(ability: EAbility) {
+    if (this.selectedAbility === ability) {
+      this.selectedAbility = null;
+    } else {
+      this.selectedAbility = ability;
+    }
   }
 
   getAbilities() {
-    const abilitiesHTML = Object.keys(EAbility).map((ability) => {
-      return (
-        <ion-row no-padding>
-          <ion-col size="6" no-padding>
-            <span>{ability}:</span>
-            <span>{this.characterParams.abilities[ability]}</span>
-          </ion-col>
-          <ion-col size="6" no-padding>{this.getSkillsList(ability)}</ion-col>
-        </ion-row>
-      );
-    });
-    return abilitiesHTML;
+    return (
+      <ion-row>
+        <ion-card>
+          <ion-card-content class="ion-no-padding">
+            <ion-grid no-padding>
+              <ion-row no-padding>
+                {Object.keys(EAbility).map((ability) => {
+                  return (
+                    <ion-col size="4">
+                      <div class="ability-container" onClick={() => this.setSelectedAbility(EAbility[ability])}>
+                        <span class="ability-label">{ability.substr(0, 3).toUpperCase()}</span>
+                        <span class="ability-mod">+3</span>
+                        <div class="right-down-triangle"></div>
+                      </div>
+                    </ion-col>
+                  );
+                })}
+                {/* <ion-col size="6" no-padding>
+                <span>{ability}:</span>
+                <span>{this.characterParams.abilities[ability]}</span>
+              </ion-col>
+              <ion-col size="6" no-padding>{this.getSkillsList(ability)}</ion-col> */}
+              </ion-row>
+            </ion-grid>
+            {this.getSelectedAbilitySkills()}
+          </ion-card-content>
+        </ion-card>
+      </ion-row>
+    );
+  }
+
+  getProfile() {
+    return (
+      <ion-row padding-top>
+        <ion-col no-padding size="3">
+          <div class="static-info left-up">
+            <span>{this.characterParams.state.level}</span>
+            <div class="right-down-triangle"></div>
+          </div>
+          <div class="static-info left-down ion-text-capitalize">
+            <span>{this.characterParams.class.name}</span>
+            <div class="right-up-triangle"></div>
+          </div>
+        </ion-col>
+        <ion-col class="image-col" no-padding size="6">
+          <ion-img class="profile-image" src={this.mockImgPath} no-padding />
+          <div class="triangles">
+            <div class="rhomb-left-up-triangle"></div>
+            <div class="rhomb-right-up-triangle"></div>
+          </div>
+          <div class="triangles">
+            <div class="rhomb-left-down-triangle"></div>
+            <div class="rhomb-right-down-triangle"></div>
+          </div>
+        </ion-col>
+        <ion-col no-padding size="3">
+          <div class="static-info right-up ion-text-capitalize">
+            <span>{this.characterParams.personal.name}</span>
+            <div class="left-down-triangle"></div>
+          </div>
+          <div class="static-info right-down ion-text-capitalize">
+            <span>{this.characterParams.race.name}</span>
+            <div class="left-up-triangle"></div>
+          </div>
+        </ion-col>
+      </ion-row>
+    );
   }
 
   render() {
-    console.log('baseParams', this.characterParams);
     return ([
       <ion-header>
         <ion-toolbar color="primary">
@@ -64,39 +145,10 @@ export class CharacterSheet {
       </ion-header>,
       <ion-content>
         <ion-grid no-padding>
-          <ion-row padding-top>
-            <ion-col no-padding size="3">
-              <div class="static-info left-up">
-                <span>{this.characterParams.state.level}</span>
-                <div class="right-down-triangle"></div>
-              </div>
-              <div class="static-info left-down">
-                <span>{this.characterParams.class.name}</span>
-                <div class="right-up-triangle"></div>
-              </div>
-            </ion-col>
-            <ion-col class="image-col" no-padding size="6">
-              <ion-img class="profile-image" src={this.mockImgPath} no-padding />
-              <div class="triangles">
-                <div class="rhomb-left-up-triangle"></div>
-                <div class="rhomb-right-up-triangle"></div>
-              </div>
-              <div class="triangles">
-                <div class="rhomb-left-down-triangle"></div>
-                <div class="rhomb-right-down-triangle"></div>
-              </div>
-            </ion-col>
-            <ion-col no-padding size="3">
-              <div class="static-info right-up">
-                <span>{this.characterParams.personal.name}</span>
-                <div class="left-down-triangle"></div>
-              </div>
-              <div class="static-info right-down">
-                <span>{this.characterParams.race.name}</span>
-                <div class="left-up-triangle"></div>
-              </div>
-            </ion-col>
-          </ion-row>
+          {this.getProfile()}
+
+          {this.getAbilities()}
+
           <ion-row>
             <ion-col class="icon-container" text-center size="4">
               <ion-icon class="profile-icon" name="help-buoy"></ion-icon>
@@ -110,11 +162,6 @@ export class CharacterSheet {
               <ion-icon class="profile-icon" name="walk"></ion-icon>
               <span class="icon-value">{this.characterParams.race.speed}</span>
             </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-grid no-padding>
-              {this.getAbilities()}
-            </ion-grid>
           </ion-row>
         </ion-grid>
       </ion-content>
