@@ -63,13 +63,37 @@ export class CharacterSheet {
         </ion-toolbar>
       </ion-header>,
       <ion-content>
-        <ion-grid>
-          <ion-row>
-            <ion-col class="image-col" no-padding offset="2" size="8">
-              <div class="left-triangle">
+        <ion-grid no-padding>
+          <ion-row padding-top>
+            <ion-col no-padding size="3">
+              <div class="static-info left-up">
+                <span>{this.characterParams.state.level}</span>
+                <div class="right-down-triangle"></div>
               </div>
+              <div class="static-info left-down">
+                <span>{this.characterParams.class.name}</span>
+                <div class="right-up-triangle"></div>
+              </div>
+            </ion-col>
+            <ion-col class="image-col" no-padding size="6">
               <ion-img class="profile-image" src={this.mockImgPath} no-padding />
-              <div class="right-triangle">
+              <div class="triangles">
+                <div class="rhomb-left-up-triangle"></div>
+                <div class="rhomb-right-up-triangle"></div>
+              </div>
+              <div class="triangles">
+                <div class="rhomb-left-down-triangle"></div>
+                <div class="rhomb-right-down-triangle"></div>
+              </div>
+            </ion-col>
+            <ion-col no-padding size="3">
+              <div class="static-info right-up">
+                <span>{this.characterParams.personal.name}</span>
+                <div class="left-down-triangle"></div>
+              </div>
+              <div class="static-info right-down">
+                <span>{this.characterParams.race.name}</span>
+                <div class="left-up-triangle"></div>
               </div>
             </ion-col>
           </ion-row>

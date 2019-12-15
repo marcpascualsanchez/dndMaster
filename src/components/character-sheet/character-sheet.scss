@@ -1,24 +1,98 @@
-ion-row, ion-col, ion-grid {
-  border: solid black 1px;
-  background-color: white;
-}
-
 .image-col {
   overflow: hidden;
 }
 
-.left-triangle {
+.static-info {
+  z-index: 2;
+  position: absolute;
+  background-color: green;
+  height: 5vh;
+  width: 35vw;
+}
+
+.static-info.left-up {
+  right: -15vw;
+}
+
+.static-info.left-down {
+  right: -15vw;
+  bottom: 0;
+}
+
+.static-info.right-up {
+  left: -15vw;
+}
+
+.static-info.right-down {
+  left: -15vw;
+  bottom: 0;
+}
+
+.right-down-triangle {
   position: relative;
-  border-right: 20vw solid transparent;
-  border-bottom: 20vh solid white;
+  border-left: 10vw solid transparent;
+  border-bottom: 5vh solid white;
+  float: right;
+  z-index: 1;
+}
+
+.right-up-triangle {
+  position: relative;
+  border-left: 10vw solid transparent;
+  border-top: 5vh solid white;
+  float: right;
+  z-index: 1;
+}
+
+.left-down-triangle {
+  position: relative;
+  border-right: 10vw solid transparent;
+  border-bottom: 5vh solid white;
   float: left;
   z-index: 1;
 }
 
-.right-triangle {
+.left-up-triangle {
   position: relative;
-  border-left: 20vw solid transparent;
-  border-bottom: 20vh solid white;
+  border-right: 10vw solid transparent;
+  border-top: 5vh solid white;
+  float: left;
+  z-index: 1;
+}
+
+/*Profile rhomb*/
+.triangles {
+  display: flow-root;
+}
+
+.rhomb-left-up-triangle {
+  position: relative;
+  border-right: 25vw solid transparent;
+  border-top: 15vh solid white;
+  float: left;
+  z-index: 1;
+}
+
+.rhomb-left-down-triangle {
+  position: relative;
+  border-right: 25vw solid transparent;
+  border-bottom: 15vh solid white;
+  float: left;
+  z-index: 1;
+}
+
+.rhomb-right-up-triangle {
+  position: relative;
+  border-left: 25vw solid transparent;
+  border-top: 15vh solid white;
+  float: right;
+  z-index: 1;
+}
+
+.rhomb-right-down-triangle {
+  position: relative;
+  border-left: 25vw solid transparent;
+  border-bottom: 15vh solid white;
   float: right;
   z-index: 1;
 }
@@ -29,6 +103,7 @@ ion-row, ion-col, ion-grid {
   margin-right: auto;
   position: absolute;
 }
+/*Profile rhomb*/
 
 .icon-value {
   position: absolute;
