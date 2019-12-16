@@ -1,5 +1,5 @@
 import { Component, Prop, h, State } from '@stencil/core';
-import { skills, EAbility, ICharacterParams } from '../models/Character';
+import { skills, EAbility, ICharacterParams, calculateAbilityModifier } from '../models/Character';
 
 @Component({
   tag: 'character-sheet',
@@ -75,7 +75,7 @@ export class CharacterSheet {
                     <ion-col size="4">
                       <div class="ability-container" onClick={() => this.setSelectedAbility(EAbility[ability])}>
                         <span class="ability-label">{ability.substr(0, 3).toUpperCase()}</span>
-                        <span class="ability-mod">+3</span>
+                        <span class="ability-mod">{calculateAbilityModifier(this.characterParams.abilities[ability])}</span>
                         <div class="right-down-triangle"></div>
                       </div>
                     </ion-col>

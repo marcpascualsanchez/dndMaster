@@ -6,9 +6,7 @@
 
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
-import {
-  ICharacterParams,
-} from './components/models/Character';
+
 
 export namespace Components {
   interface AppHome {}
@@ -19,9 +17,6 @@ export namespace Components {
   interface CharacterPersonalData {}
   interface CharacterSheet {
     'characterId': string;
-  }
-  interface CharacterSheetOld {
-    'characterParams': ICharacterParams;
   }
   interface CharactersList {}
   interface ClassesList {
@@ -73,12 +68,6 @@ declare global {
     new (): HTMLCharacterSheetElement;
   };
 
-  interface HTMLCharacterSheetOldElement extends Components.CharacterSheetOld, HTMLStencilElement {}
-  var HTMLCharacterSheetOldElement: {
-    prototype: HTMLCharacterSheetOldElement;
-    new (): HTMLCharacterSheetOldElement;
-  };
-
   interface HTMLCharactersListElement extends Components.CharactersList, HTMLStencilElement {}
   var HTMLCharactersListElement: {
     prototype: HTMLCharactersListElement;
@@ -114,7 +103,6 @@ declare global {
     'app-root': HTMLAppRootElement;
     'character-personal-data': HTMLCharacterPersonalDataElement;
     'character-sheet': HTMLCharacterSheetElement;
-    'character-sheet-old': HTMLCharacterSheetOldElement;
     'characters-list': HTMLCharactersListElement;
     'classes-list': HTMLClassesListElement;
     'create-new-character': HTMLCreateNewCharacterElement;
@@ -134,9 +122,6 @@ declare namespace LocalJSX {
   }
   interface CharacterSheet {
     'characterId'?: string;
-  }
-  interface CharacterSheetOld {
-    'characterParams'?: ICharacterParams;
   }
   interface CharactersList {}
   interface ClassesList {
@@ -163,7 +148,6 @@ declare namespace LocalJSX {
     'app-root': AppRoot;
     'character-personal-data': CharacterPersonalData;
     'character-sheet': CharacterSheet;
-    'character-sheet-old': CharacterSheetOld;
     'characters-list': CharactersList;
     'classes-list': ClassesList;
     'create-new-character': CreateNewCharacter;
@@ -183,7 +167,6 @@ declare module "@stencil/core" {
       'app-root': LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
       'character-personal-data': LocalJSX.CharacterPersonalData & JSXBase.HTMLAttributes<HTMLCharacterPersonalDataElement>;
       'character-sheet': LocalJSX.CharacterSheet & JSXBase.HTMLAttributes<HTMLCharacterSheetElement>;
-      'character-sheet-old': LocalJSX.CharacterSheetOld & JSXBase.HTMLAttributes<HTMLCharacterSheetOldElement>;
       'characters-list': LocalJSX.CharactersList & JSXBase.HTMLAttributes<HTMLCharactersListElement>;
       'classes-list': LocalJSX.ClassesList & JSXBase.HTMLAttributes<HTMLClassesListElement>;
       'create-new-character': LocalJSX.CreateNewCharacter & JSXBase.HTMLAttributes<HTMLCreateNewCharacterElement>;
