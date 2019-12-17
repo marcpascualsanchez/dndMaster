@@ -12,6 +12,7 @@ export class CharacterSheet {
   @Prop() characterId: string;
   @State() characterParams: ICharacterParams;
   @State() selectedAbility: EAbility;
+  @State() currentTabName: string;
 
   constructor() {
     const characters = JSON.parse(localStorage.getItem('characters'));
@@ -81,11 +82,6 @@ export class CharacterSheet {
                     </ion-col>
                   );
                 })}
-                {/* <ion-col size="6" no-padding>
-                <span>{ability}:</span>
-                <span>{this.characterParams.abilities[ability]}</span>
-              </ion-col>
-              <ion-col size="6" no-padding>{this.getSkillsList(ability)}</ion-col> */}
               </ion-row>
             </ion-grid>
             {this.getSelectedAbilitySkills()}
@@ -133,6 +129,53 @@ export class CharacterSheet {
     );
   }
 
+  getStaticUI() {
+    return (
+      <ion-grid no-padding>
+        {this.getProfile()}
+
+        {this.getAbilities()}
+
+        <ion-row>
+          <ion-col class="icon-container" text-center size="4">
+            <ion-icon class="profile-icon" name="help-buoy"></ion-icon>
+            <span class="icon-value">{this.characterParams.class.armorClass}</span>
+          </ion-col>
+          <ion-col class="icon-container" text-center size="4">
+            <ion-icon class="profile-icon" name="heart"></ion-icon>
+            <span class="icon-value">{this.characterParams.class.healthGrowth * 1}</span>
+          </ion-col>
+          <ion-col class="icon-container" text-center size="4">
+            <ion-icon class="profile-icon" name="walk"></ion-icon>
+            <span class="icon-value">{this.characterParams.race.speed}</span>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    );
+  }
+
+  getCurrentTabUI(tabName: string) {
+    let tabComponent;
+    switch (tabName) {
+      case ('profile'):
+        tabComponent = <profile-tab></profile-tab>;
+        break;
+      case ('fight'):
+        tabComponent = <fight-tab></fight-tab>;
+        break;
+      case ('magic'):
+        tabComponent = <magic-tab></magic-tab>;
+        break;
+      case ('misc'):
+        tabComponent = <misc-tab></misc-tab>;
+        break;
+      default:
+        tabComponent = <profile-tab></profile-tab>;
+        break;
+    }
+    return tabComponent;
+  }
+
   render() {
     return ([
       <ion-header>
@@ -144,27 +187,31 @@ export class CharacterSheet {
         </ion-toolbar>
       </ion-header>,
       <ion-content>
-        <ion-grid no-padding>
-          {this.getProfile()}
-
-          {this.getAbilities()}
-
-          <ion-row>
-            <ion-col class="icon-container" text-center size="4">
-              <ion-icon class="profile-icon" name="help-buoy"></ion-icon>
-              <span class="icon-value">{this.characterParams.class.armorClass}</span>
-            </ion-col>
-            <ion-col class="icon-container" text-center size="4">
-              <ion-icon class="profile-icon" name="heart"></ion-icon>
-              <span class="icon-value">{this.characterParams.class.healthGrowth * 1}</span>
-            </ion-col>
-            <ion-col class="icon-container" text-center size="4">
-              <ion-icon class="profile-icon" name="walk"></ion-icon>
-              <span class="icon-value">{this.characterParams.race.speed}</span>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-content>
+        {this.getStaticUI()}
+        <ion-card>
+          {this.getCurrentTabUI(this.currentTabName)}
+        </ion-card>
+      </ion-content>,
+      <ion-footer>
+        <ion-segment onIonChange={(e) => this.currentTabName = e.detail.value} value="profile">
+          <ion-segment-button value="profile">
+            <ion-icon name="person"></ion-icon>
+            <ion-label text-capitalize>Profile</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="fight">
+            <ion-icon name="fitness"></ion-icon>
+            <ion-label text-capitalize>Fight</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="magic">
+            <ion-icon name="flame"></ion-icon>
+            <ion-label text-capitalize>Magic</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="misc">
+            <ion-icon name="apps"></ion-icon>
+            <ion-label text-capitalize>Misc</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-footer>
     ]);
   }
 
