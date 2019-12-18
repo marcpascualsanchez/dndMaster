@@ -6,7 +6,10 @@
 
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
-
+import {
+  Character,
+  ICharacter,
+} from './components/models/Character';
 
 export namespace Components {
   interface AppHome {}
@@ -16,6 +19,7 @@ export namespace Components {
   interface AppRoot {}
   interface CharacterPersonalData {}
   interface CharacterSheet {
+    'character': Character;
     'characterId': string;
   }
   interface CharactersList {}
@@ -32,7 +36,9 @@ export namespace Components {
   interface NewAbilityScore {
     'characterParams': any;
   }
-  interface ProfileTab {}
+  interface ProfileTab {
+    'character': ICharacter;
+  }
   interface RacesList {
     'isCreating': boolean;
     'step': string;
@@ -153,6 +159,7 @@ declare namespace LocalJSX {
     'onParamSelected'?: (event: CustomEvent<any>) => void;
   }
   interface CharacterSheet {
+    'character'?: Character;
     'characterId'?: string;
   }
   interface CharactersList {}
@@ -171,7 +178,9 @@ declare namespace LocalJSX {
     'characterParams'?: any;
     'onParamSelected'?: (event: CustomEvent<any>) => void;
   }
-  interface ProfileTab {}
+  interface ProfileTab {
+    'character'?: ICharacter;
+  }
   interface RacesList {
     'isCreating'?: boolean;
     'onParamSelected'?: (event: CustomEvent<any>) => void;

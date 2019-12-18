@@ -7,17 +7,17 @@ export interface IHalfOrc extends IRace {
 export const baseParams: IHalfOrc = {
     name: 'halfOrc',
     statMods: {
-        Strength: 2,
-        Constitution: 1,
+        strength: 2,
+        constitution: 1,
     },
-    proficiency:{
+    proficiency: {
         skillMods: ['intimidation'], // TODO: it marks which skills have proficiency (depends on level)
     },
     size: 'medium',
     speed: 30,
     languages: ['common', 'orc'],
     maxAge: 75,
-    raceAbilities: ['relentless endurance', 'savage attacks', 'darkvision'],
+    specialAbilities: ['relentless endurance', 'savage attacks', 'darkvision'],
     description: {
         short: 'Strong and hardy, the perfect frontline',
         long: 'Harlf-orcs are hard to kill, nearly impossible to kill. Perfect as Barbarians, Fighters and Paladins',

@@ -1,5 +1,5 @@
 import { Component, h, Prop, Listen } from '@stencil/core';
-import { ICharacterParams } from '../models/Character';
+import { ICharacterParams, Character } from '../models/Character';
 
 @Component({
     tag: 'create-new-character',
@@ -16,8 +16,8 @@ export class CharactersList {
     paramSelectedHandler(event: CustomEvent) {
         this.characterParams[event.detail.step] = event.detail.param;
         if (this.step === this.allSteps[this.allSteps.length - 1]) {
-            this.createNewCharacter();
-            window.location.href = `/character-sheet/${this.characterParams._id}`;
+            const newCharId = this.createNewCharacter();
+            window.location.href = `/character-sheet/${newCharId}`;
             return;  // ends flow
         }
         this.previousStep = this.allSteps.find((s, idx) => {
@@ -29,24 +29,14 @@ export class CharactersList {
     }
     
     constructor() {
-        this.characterParams = { // store params from every step
-            _id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
-            state: { level: 1 },
-        };
+        this.characterParams = {}; // store params from every step
     }
 
     createNewCharacter() {
-        // TODO: create new char in mongo & localStorage, add it an id
-        // TODO: navigate to characters/:_id
-        console.log('creating character...', this.characterParams);
-        const charactersItem = localStorage.getItem('characters');
-        if (charactersItem) {
-            const characters = JSON.parse(charactersItem);
-            characters.push(this.characterParams);
-            localStorage.setItem('characters', JSON.stringify(characters));
-        } else {
-            localStorage.setItem('characters', JSON.stringify([this.characterParams]));
-        }
+        const newCharacter = new Character();
+        newCharacter.setCharacterByBaseParams(this.characterParams);
+        newCharacter.saveLocalCharacter();
+        return newCharacter._id;
     }
 
     getStepComponent() {

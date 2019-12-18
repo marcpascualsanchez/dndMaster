@@ -8,21 +8,21 @@
 // }
 
 export interface IAbilityScoreModifier {
-    Strength?: number;
-    Dexterity?: number;
-    Constitution?: number;
-    Intelligence?: number;
-    Wisdom?: number;
-    Charisma?: number;
+    strength?: number;
+    dexterity?: number;
+    constitution?: number;
+    intelligence?: number;
+    wisdom?: number;
+    charisma?: number;
 }
 
 export interface IRace {
     name: string;
     statMods: IAbilityScoreModifier;
-    proficiency?: {
-        skillMods?: string[], // TODO: it marks which skills have proficiency (depends on level)
+    proficiency: {
+        skillMods: string[], // TODO: it marks which skills have proficiency (depends on level)
     },
-    raceAbilities?: string[],
+    specialAbilities?: string[],
     size: string;
     speed: number;
     languages: string[]; //TODO: one more to choose freely

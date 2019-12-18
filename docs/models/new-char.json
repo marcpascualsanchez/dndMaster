@@ -13,7 +13,7 @@
                 "infernal"
             ],
             "maxAge": 100,
-            "raceAbilities": [
+            "specialAbilities": [
                 "darkvision",
                 "hellishResistence",
                 "infernalLegacy"

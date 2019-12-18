@@ -8,8 +8,11 @@ export interface IDragonborn extends IRace {
 export const baseParams: IDragonborn = {
     name: 'dragonborn',
     statMods: {
-        Strength: 2,
-        Charisma: 1,
+        strength: 2,
+        charisma: 1,
+    },
+    proficiency: {
+        skillMods: [],
     },
     size: 'medium',
     speed: 30,

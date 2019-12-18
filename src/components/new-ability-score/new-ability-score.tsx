@@ -75,8 +75,8 @@ export class NewAbilityScore {
         this.validateInputs();
     }
 
-    getProfficencyIcon(skill: string) {
-        //TODO: check profficency coming from previous steps
+    getSkillProficiencyIcon(skill: string) {
+        //TODO: check proficiency coming from previous steps
         let isProficiency = false;
         Object.keys(this.characterParams).forEach((cp) => {
             if (
@@ -90,7 +90,7 @@ export class NewAbilityScore {
     }
 
     getSkillsList(ability: string) {
-        return skills[ability].map((s) => <p>{this.getProfficencyIcon(s)}{s}</p>);
+        return skills[ability].map((s) => <p>{this.getSkillProficiencyIcon(s)}{s}</p>);
     }
 
     getAbilityList() {
