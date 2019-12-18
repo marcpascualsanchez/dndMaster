@@ -20,12 +20,12 @@ export class CharacterSheet {
   }
 
   getSkillProficiencyIcon(skill: string) {
-    const isProficiency = this.character.proficiency.skillMods.indexOf(skill);
+    const isProficiency = this.character.proficiency.skillMods.indexOf(skill) > -1;
     return <ion-icon name={isProficiency ? 'radio-button-on' : 'radio-button-off'}></ion-icon>;
   }
 
   getSavingThrowProficiencyIcon(ability: string) {
-    const isProficiency = this.character.proficiency.savingThrows.indexOf(ability);
+    const isProficiency = this.character.proficiency.savingThrows.indexOf(ability) > -1;
     return <ion-icon name={isProficiency ? 'battery-charging' : 'battery-dead'}></ion-icon>;
   }
 
