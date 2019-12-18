@@ -165,7 +165,7 @@ export class CharacterSheet {
           <ion-buttons slot="start">
             <ion-back-button defaultHref="/" />
           </ion-buttons>
-          <ion-title>{this.character.personal.name}</ion-title>
+          <ion-title text-capitalize>{this.character.personal.name}</ion-title>
         </ion-toolbar>
       </ion-header>,
       <ion-content>
