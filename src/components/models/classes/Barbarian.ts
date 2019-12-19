@@ -6,7 +6,7 @@ export interface IBarbarian extends IClass {
 
 export const baseParams: IBarbarian = {
     name: 'barbarian',
-    healthGrowth: 12,
+    baseHealth: 12,
     hitDiceGrowth: 12,
     armorClass: 10,
     classTraits: ['unarmored defense', 'rage'],

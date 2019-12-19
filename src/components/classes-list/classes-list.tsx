@@ -120,7 +120,7 @@ export class ClassesList {
                                 <ion-col offset="1" size="10">
                                     <ion-list>
                                         <ion-item>
-                                            <ion-text>healthGrowth: {c.healthGrowth}</ion-text>
+                                            <ion-text>baseHealth: {c.baseHealth}</ion-text>
                                         </ion-item>
                                         <ion-item>
                                             <ion-text>armorClass: {c.armorClass}</ion-text>

@@ -5,7 +5,7 @@ export interface IItem {
 
 export interface IClass {
     name: string;
-    healthGrowth: number;
+    baseHealth: number;
     hitDiceGrowth: number;
     armorClass: number;
     classTraits: string[],

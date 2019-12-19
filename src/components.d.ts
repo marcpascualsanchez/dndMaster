@@ -30,9 +30,15 @@ export namespace Components {
   interface CreateNewCharacter {
     'step': string;
   }
-  interface FightTab {}
-  interface MagicTab {}
-  interface MiscTab {}
+  interface FightTab {
+    'character': ICharacter;
+  }
+  interface MagicTab {
+    'character': ICharacter;
+  }
+  interface MiscTab {
+    'character': ICharacter;
+  }
   interface NewAbilityScore {
     'characterParams': any;
   }
@@ -171,9 +177,15 @@ declare namespace LocalJSX {
   interface CreateNewCharacter {
     'step'?: string;
   }
-  interface FightTab {}
-  interface MagicTab {}
-  interface MiscTab {}
+  interface FightTab {
+    'character'?: ICharacter;
+  }
+  interface MagicTab {
+    'character'?: ICharacter;
+  }
+  interface MiscTab {
+    'character'?: ICharacter;
+  }
   interface NewAbilityScore {
     'characterParams'?: any;
     'onParamSelected'?: (event: CustomEvent<any>) => void;

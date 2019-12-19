@@ -6,7 +6,7 @@ export interface IFighter extends IClass {
 
 export const baseParams: IFighter = {
     name: 'fighter',
-    healthGrowth: 10, // plus Constitution modifier
+    baseHealth: 10, // plus Constitution modifier
     hitDiceGrowth: 10, // dice faces
     armorClass: 10, // plus dexterity modifier
     classTraits: ['fighting style', 'second wind',],

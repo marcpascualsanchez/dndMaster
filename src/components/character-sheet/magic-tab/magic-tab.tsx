@@ -1,4 +1,5 @@
-import { Component, h } from '@stencil/core';
+import { Component, h, Prop } from '@stencil/core';
+import { ICharacter } from '../../models/Character';
 
 @Component({
   tag: 'magic-tab',
@@ -6,6 +7,8 @@ import { Component, h } from '@stencil/core';
   shadow: true
 })
 export class MagicTab {
+
+  @Prop() character: ICharacter;
 
   render() {
     return (
