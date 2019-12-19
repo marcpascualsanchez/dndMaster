@@ -28,6 +28,7 @@ export interface ICharacterParams {
     background?: any; // TODO: create background
     personal?: any;
     state?: any; // TODO: design how to manage current state of char
+    items?: any;
 }
 
 export interface ISkills {
@@ -76,6 +77,7 @@ export interface ICharacter {
     items: any;
     languages: any[];
     speed: number;
+    weapons: any[];
     saveLocalCharacter: Function;
     calculateAbilityModifier: Function;
 }
@@ -105,6 +107,7 @@ export class Character implements ICharacter {
     public items: any;
     public languages: any[];
     public speed: number;
+    public weapons: any[];
 
     constructor() { }
 
@@ -123,6 +126,7 @@ export class Character implements ICharacter {
         this.equipment = base.class.equipment;
         this.languages = base.race.languages;
         this.speed = base.race.speed;
+        this.weapons = base.items.weapons;
     }
 
     public setCharacter(character: ICharacter) {
@@ -140,6 +144,7 @@ export class Character implements ICharacter {
         this.items = character.items;
         this.languages = character.languages;
         this.speed = character.speed;
+        this.weapons = character.weapons;
     }
 
     public setCharacterById(_id: string) {
