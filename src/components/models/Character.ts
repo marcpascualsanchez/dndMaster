@@ -224,7 +224,7 @@ export class Character implements ICharacter {
         return isReturnString ? resultModifier : parseInt(resultModifier);
     }
 
-    // calculateProficiencyModifier(level: number) {
-    //     return 1 * Math.floor(level % 4); //WIP
-    // }
+    calculateProficiencyModifier(level: number) {
+        return (((level - 1) / 4) | 0) + 2;
+    }
 }

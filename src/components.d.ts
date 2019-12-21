@@ -23,6 +23,14 @@ export namespace Components {
     'characterId': string;
   }
   interface CharactersList {}
+  interface ChooseList {
+    'elementList': any[];
+    'maxChosen': number;
+    'minChosen': number;
+    'title': string;
+    'valueAttribute': string;
+    'visible': boolean;
+  }
   interface ClassesList {
     'isCreating': boolean;
     'step': string;
@@ -90,6 +98,12 @@ declare global {
     new (): HTMLCharactersListElement;
   };
 
+  interface HTMLChooseListElement extends Components.ChooseList, HTMLStencilElement {}
+  var HTMLChooseListElement: {
+    prototype: HTMLChooseListElement;
+    new (): HTMLChooseListElement;
+  };
+
   interface HTMLClassesListElement extends Components.ClassesList, HTMLStencilElement {}
   var HTMLClassesListElement: {
     prototype: HTMLClassesListElement;
@@ -144,6 +158,7 @@ declare global {
     'character-personal-data': HTMLCharacterPersonalDataElement;
     'character-sheet': HTMLCharacterSheetElement;
     'characters-list': HTMLCharactersListElement;
+    'choose-list': HTMLChooseListElement;
     'classes-list': HTMLClassesListElement;
     'create-new-character': HTMLCreateNewCharacterElement;
     'fight-tab': HTMLFightTabElement;
@@ -169,6 +184,14 @@ declare namespace LocalJSX {
     'characterId'?: string;
   }
   interface CharactersList {}
+  interface ChooseList {
+    'elementList'?: any[];
+    'maxChosen'?: number;
+    'minChosen'?: number;
+    'title'?: string;
+    'valueAttribute'?: string;
+    'visible'?: boolean;
+  }
   interface ClassesList {
     'isCreating'?: boolean;
     'onParamSelected'?: (event: CustomEvent<any>) => void;
@@ -206,6 +229,7 @@ declare namespace LocalJSX {
     'character-personal-data': CharacterPersonalData;
     'character-sheet': CharacterSheet;
     'characters-list': CharactersList;
+    'choose-list': ChooseList;
     'classes-list': ClassesList;
     'create-new-character': CreateNewCharacter;
     'fight-tab': FightTab;
@@ -229,6 +253,7 @@ declare module "@stencil/core" {
       'character-personal-data': LocalJSX.CharacterPersonalData & JSXBase.HTMLAttributes<HTMLCharacterPersonalDataElement>;
       'character-sheet': LocalJSX.CharacterSheet & JSXBase.HTMLAttributes<HTMLCharacterSheetElement>;
       'characters-list': LocalJSX.CharactersList & JSXBase.HTMLAttributes<HTMLCharactersListElement>;
+      'choose-list': LocalJSX.ChooseList & JSXBase.HTMLAttributes<HTMLChooseListElement>;
       'classes-list': LocalJSX.ClassesList & JSXBase.HTMLAttributes<HTMLClassesListElement>;
       'create-new-character': LocalJSX.CreateNewCharacter & JSXBase.HTMLAttributes<HTMLCreateNewCharacterElement>;
       'fight-tab': LocalJSX.FightTab & JSXBase.HTMLAttributes<HTMLFightTabElement>;

@@ -169,6 +169,7 @@ export class CharacterSheet {
         </ion-toolbar>
       </ion-header>,
       <ion-content>
+        <choose-list id="choose-list" elementList={[]}></choose-list>
         {this.getStaticUI()}
         <ion-card>
           {this.getCurrentTabUI(this.currentTabName)}
