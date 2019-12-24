@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { ICharacter } from '../../models/Character';
+import { ICharacter, IWeapon } from '../../models/Character';
 
 @Component({
   tag: 'fight-tab',
@@ -9,27 +9,36 @@ import { ICharacter } from '../../models/Character';
 export class FightTab {
 
   @Prop() character: ICharacter;
-  private mockWeapons: any[] = [{ name: 'sword', damage: '1d6', type: 'punxeta' }, { name: 'porra', damage: '3d4', type: 'pupita' }, { name: 'sword', damage: '1d6', type: 'punxeta' }, { name: 'porra', damage: '3d4', type: 'pupita' },{ name: 'sword', damage: '1d6', type: 'punxeta' }, { name: 'porra', damage: '3d4', type: 'pupita' }, { name: 'sword', damage: '1d6', type: 'punxeta' }, { name: 'porra', damage: '3d4', type: 'pupita' },{ name: 'sword', damage: '1d6', type: 'punxeta' }, { name: 'porra', damage: '3d4', type: 'pupita' }, { name: 'sword', damage: '1d6', type: 'punxeta' }, { name: 'porra', damage: '3d4', type: 'pupita' },{ name: 'sword', damage: '1d6', type: 'punxeta' }, { name: 'porra', damage: '3d4', type: 'pupita' }, { name: 'sword', damage: '1d6', type: 'punxeta' }, { name: 'porra', damage: '3d4', type: 'pupita' }, { name: 'sword', damage: '1d6', type: 'punxeta' }, { name: 'porra', damage: '3d4', type: 'pupita' }, { name: 'sword', damage: '1d6', type: 'punxeta' }, { name: 'porra', damage: '3d4', type: 'pupita' }, { name: 'sword', damage: '1d6', type: 'punxeta' }, { name: 'porra', damage: '3d4', type: 'pupita' }];
+  private mockWeapons: IWeapon[] = [{ name: 'sword', bonus: '+1', damage: '1d6', type: 'punxeta' }, { name: 'porra', bonus: '+0', damage: '3d4', type: 'pupita' }];
 
-  getWeaponsList() {
-    this.character.weapons = this.mockWeapons;
-    return this.character.weapons.map((w) =>
+  constructor() {
+    // this.character.equipment.weapons = this.mockWeapons;
+  }
+
+  getWeaponsList(weapons: IWeapon[]) {
+    return weapons.map((w) =>
       <ion-row custom-value={w}>
         <ion-col size="3">{w.name}</ion-col>
-        <ion-col size="3">bonus</ion-col>
+        <ion-col size="3">{w.bonus}</ion-col>
         <ion-col size="3">{w.damage}</ion-col>
         <ion-col size="3">{w.type}</ion-col>
       </ion-row>
     );
   }
 
+  /**
+   * Show weapon choose-list with only weapons that are not owned by character
+   */
   showWeaponModal() {
+    const ownedWeaponsNames: string[] = this.character.equipment.weapons.map(w => w.name);
+    const nonownedWeapons = this.mockWeapons.filter(w => ownedWeaponsNames.indexOf(w.name) < 0);
     const chooseListElement = document.querySelector('#choose-list');
-    chooseListElement['elementList'] = this.getWeaponsList();
-    chooseListElement['minChosen'] = 1;
-    chooseListElement['maxChosen'] = 1;
+    chooseListElement['elementList'] = this.getWeaponsList(nonownedWeapons);
     chooseListElement['title'] = 'Choose a weapon';
     chooseListElement['visible'] = true;
+    chooseListElement['cb'] = (result: IWeapon[]) => {
+      this.character.equipment.weapons = this.character.equipment.weapons.concat(result);
+    }
   }
 
   render() {
@@ -47,11 +56,11 @@ export class FightTab {
             </ion-row>
             <ion-row>
               <ion-col size="3">Name</ion-col>
-              <ion-col size="3">Attack bonus</ion-col>
+              <ion-col size="3">Bonus</ion-col>
               <ion-col size="3">Damage</ion-col>
               <ion-col size="3">Type</ion-col>
             </ion-row>
-            {this.getWeaponsList()}
+            {this.getWeaponsList(this.character.equipment.weapons)}
           </ion-grid>
         </ion-row>
       </ion-grid>

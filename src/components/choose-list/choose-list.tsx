@@ -13,6 +13,7 @@ export class ChooseList {
   @Prop() public title: string;
   @Prop() public visible: boolean = false;
   @Prop() public valueAttribute: string = 'custom-value';
+  @Prop() public cb: Function = () => {};
   @State() private isValid: boolean;
 
   public chosenElements: any[] = [];
@@ -36,15 +37,19 @@ export class ChooseList {
   }
 
   checkChosenElements() {
-    if (this.chosenElements.length <= this.maxChosen && this.chosenElements.length >= this.minChosen) {
+    if (!this.maxChosen || !this.minChosen) {
       this.isValid = true;
     } else {
-      this.isValid = false;
+      if (this.chosenElements.length <= this.maxChosen && this.chosenElements.length >= this.minChosen) {
+        this.isValid = true;
+      } else {
+        this.isValid = false;
+      }
     }
   }
 
   confirm() {
-    // xTODO: emit event w value
+    this.cb(this.chosenElements);
   }
 
   reset() {
@@ -54,6 +59,7 @@ export class ChooseList {
     this.minChosen = null;
     this.isValid = false;
     this.valueAttribute = this.defaultValueAttribute;
+    this.cb = () => {};
   }
 
   cancel() {

@@ -14,7 +14,7 @@ export class CharactersList {
     }
 
     getCharacterImage(name: string) {
-        const path = `../../assets/img/profileImages/${name}`;
+        const path = `../../assets/img/profile/${name}`;
         return (
             <ion-img src={path} no-padding />
         );

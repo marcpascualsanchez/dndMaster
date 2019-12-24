@@ -1,4 +1,4 @@
-import { Component, h, Event, EventEmitter, State } from '@stencil/core';
+import { Component, h, Event, EventEmitter, State, Prop } from '@stencil/core';
 
 @Component({
   tag: 'character-personal-data',
@@ -13,10 +13,11 @@ export class CharacterPersonalData {
     bubbles: true,
   }) selectEmitter: EventEmitter;
   @State() isFormValid: boolean = false;
+  @Prop() characterParams: any;
+
   private genders: string[];
   private alignments: string[];
   private inputs: any[];
-  private isCustomImage: boolean = false;
 
   constructor() {
     this.genders = ['Female', 'Male', 'Non-binary', 'Genderfluid', 'Agender'];
@@ -30,7 +31,7 @@ export class CharacterPersonalData {
   confirmPersonal() {
     const personalData: any = {};
     this.inputs.forEach(i => personalData[i.name] = i.value);
-    personalData.image = this.isCustomImage ? 'custom.jpg' : 'PaladinElf.jpg'; // TODO: set custom image
+    personalData.image = `${this.characterParams.race.name}.jpg`;
     this.selectEmitter.emit({ step: 'personal', param: personalData });
   }
 

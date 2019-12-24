@@ -16,14 +16,16 @@ export interface IClass {
         armors: string[];
         weapons: string[];
     },
-    equipment: {// TODO: define equipment interface
-        weapon: {
+    equipment?: {// TODO: define equipment interface
+        weapon?: {
             primary: IItem;
             secondary?: IItem;
             tertiary?: IItem;
         },
-        items: IItem[],
+        items?: IItem[],
     },
+    equipmentOptions?:{
+    }
     description: {
         long: string;
         short: string;

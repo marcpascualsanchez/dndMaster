@@ -7,7 +7,6 @@ import { skills, EAbility, Character } from '../models/Character';
 })
 export class CharacterSheet {
   // private mockChar = JSON.parse('{"race":{"name":"halfOrc","statMods":{"Strength":2,"Constitution":1},"proficiency":{"skillMods":["intimidation"]},"size":"medium","speed":30,"languages":["common","orc"],"maxAge":75,"specialAbilities":["relentless endurance","savage attacks","darkvision"],"description":{"short":"Strong and hardy, the perfect frontline","long":"Harlf-orcs are hard to kill, nearly impossible to kill. Perfect as Barbarians, Fighters and Paladins"}},"class":{"name":"barbarian","baseHealth":12,"hitDiceGrowth":12,"armorClass":10,"classTraits":["unarmored defense","rage"],"proficiency":{"skillModsAble":2,"skillMods":["animal handling","athletics","intimidation","nature","perception","survival"],"savingThrows":["strenght","constitution"],"armors":["light armor","medium armor","shield"],"weapons":["simple weapon","martial weapon"]},"equipment":{"weapon":{"primary":{"name":"greataxe","amount":1},"secondary":{"name":"handaxe","amount":2}},"items":[{"name":"explorer pack","amount":1},{"name":"javelin","amount":4}]},"description":{"long":"Barbarians are barbarians","short":"Barbarians are barbarians Barbarians are barbarians Barbarians are barbarians"}},"abilities":{"strength":"12","dexterity":"13","constitution":"16","intelligence":"10","wisdom":"10","charisma":"14"}}');
-  private mockImgPath: string = '../../assets/img/profileImages/PaladinElf.jpg';
 
   @Prop() character: Character;
   @Prop() characterId: string;
@@ -90,6 +89,7 @@ export class CharacterSheet {
   }
 
   getProfile() {
+    // TODO: set custom image
     return (
       <ion-row padding-top>
         <ion-col no-padding size="3">
@@ -103,7 +103,7 @@ export class CharacterSheet {
           </div>
         </ion-col>
         <ion-col class="image-col" no-padding size="6">
-          <ion-img class="profile-image" src={this.mockImgPath} no-padding />
+          <ion-img class="profile-image" src={`../../assets/img/profile/${this.character.personal.image}`} no-padding />
           <div class="triangles">
             <div class="rhomb-left-up-triangle"></div>
             <div class="rhomb-right-up-triangle"></div>

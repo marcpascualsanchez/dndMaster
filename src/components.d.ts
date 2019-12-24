@@ -17,13 +17,16 @@ export namespace Components {
     'name': string;
   }
   interface AppRoot {}
-  interface CharacterPersonalData {}
+  interface CharacterPersonalData {
+    'characterParams': any;
+  }
   interface CharacterSheet {
     'character': Character;
     'characterId': string;
   }
   interface CharactersList {}
   interface ChooseList {
+    'cb': Function;
     'elementList': any[];
     'maxChosen': number;
     'minChosen': number;
@@ -177,6 +180,7 @@ declare namespace LocalJSX {
   }
   interface AppRoot {}
   interface CharacterPersonalData {
+    'characterParams'?: any;
     'onParamSelected'?: (event: CustomEvent<any>) => void;
   }
   interface CharacterSheet {
@@ -185,6 +189,7 @@ declare namespace LocalJSX {
   }
   interface CharactersList {}
   interface ChooseList {
+    'cb'?: Function;
     'elementList'?: any[];
     'maxChosen'?: number;
     'minChosen'?: number;

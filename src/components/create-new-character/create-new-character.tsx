@@ -52,7 +52,7 @@ export class CharactersList {
                 stepComponent = <new-ability-score characterParams={this.characterParams}></new-ability-score>
                 break;
             case ('personal'):
-                stepComponent = <character-personal-data></character-personal-data>
+                stepComponent = <character-personal-data characterParams={this.characterParams}></character-personal-data>
                 break;
             default:
                 stepComponent = <races-list isCreating={true}></races-list>

@@ -17,17 +17,18 @@ export const baseParams: IBarbarian = {
         armors: ['light armor', 'medium armor', 'shield'],
         weapons: ['simple weapon', 'martial weapon'],
     },
-    equipment: {
-        weapon: {
-            primary: {
-                name: 'greataxe', // TODO: choose between a type of weapon
+    equipment: {},
+    equipmentOptions: {
+        weapons: [
+            {
+                name: 'greataxe',
                 amount: 1,
             },
-            secondary: {
-                name: 'handaxe', // TODO: choose between a type of weapon
+            {
+                name: 'handaxe',
                 amount: 2,
             },
-        },
+        ],
         items: [
             {
                 name: 'explorer pack',

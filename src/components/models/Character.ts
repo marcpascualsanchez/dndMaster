@@ -57,6 +57,18 @@ export interface ICharacterProficiency {
     weapons: string[];
 }
 
+export interface IWeapon {
+    name: string;
+    damage: string;
+    bonus: string;
+    type: string;
+    amount?: number;
+}
+
+export interface IEquipment {
+    weapons: IWeapon[];
+}
+
 export interface ICharacter {
     _id: string;
     abilities: IAbilities;
@@ -73,7 +85,7 @@ export interface ICharacter {
         armors: string[];
         weapons: string[];
     },
-    equipment: any;
+    equipment: IEquipment;
     items: any;
     languages: any[];
     speed: number;
@@ -107,7 +119,7 @@ export class Character implements ICharacter {
     public items: any;
     public languages: any[];
     public speed: number;
-    public weapons: any[];
+    public weapons: IWeapon[];
 
     constructor() { }
 
