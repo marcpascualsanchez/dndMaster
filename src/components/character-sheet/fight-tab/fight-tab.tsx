@@ -1,5 +1,5 @@
-import { Component, h, Prop } from '@stencil/core';
-import { ICharacter, IWeapon } from '../../models/Character';
+import { Component, h, Prop, State } from '@stencil/core';
+import { ICharacter, IWeapon, IEquipment } from '../../models/Character';
 
 @Component({
   tag: 'fight-tab',
@@ -8,11 +8,15 @@ import { ICharacter, IWeapon } from '../../models/Character';
 })
 export class FightTab {
 
-  @Prop() character: ICharacter;
+  @Prop({
+    mutable: true,
+    reflect: true,
+  }) character: ICharacter;
+  @State() weapons: IWeapon[];
   private mockWeapons: IWeapon[] = [{ name: 'sword', bonus: '+1', damage: '1d6', type: 'punxeta' }, { name: 'porra', bonus: '+0', damage: '3d4', type: 'pupita' }];
 
   constructor() {
-    // this.character.equipment.weapons = this.mockWeapons;
+    this.weapons = this.character.equipment.weapons;
   }
 
   getWeaponsList(weapons: IWeapon[]) {
@@ -30,14 +34,15 @@ export class FightTab {
    * Show weapon choose-list with only weapons that are not owned by character
    */
   showWeaponModal() {
-    const ownedWeaponsNames: string[] = this.character.equipment.weapons.map(w => w.name);
-    const nonownedWeapons = this.mockWeapons.filter(w => ownedWeaponsNames.indexOf(w.name) < 0);
+    const ownedWeaponsNames: string[] = this.weapons.map(w => w.name);
+    const nonownedWeapons = this.mockWeapons.filter(w => ownedWeaponsNames.indexOf(w.name) < 0); // replace mock w real weapons
     const chooseListElement = document.querySelector('#choose-list');
     chooseListElement['elementList'] = this.getWeaponsList(nonownedWeapons);
     chooseListElement['title'] = 'Choose a weapon';
     chooseListElement['visible'] = true;
-    chooseListElement['cb'] = (result: IWeapon[]) => {
-      this.character.equipment.weapons = this.character.equipment.weapons.concat(result);
+    chooseListElement['cb'] = (chosenWeapons: IWeapon[]) => {
+      this.weapons = this.weapons.concat(chosenWeapons);
+      this.character.equipment.weapons = this.weapons;
     }
   }
 

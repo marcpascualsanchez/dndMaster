@@ -48,11 +48,18 @@ export class ChooseList {
     }
   }
 
+  closeModal() {
+    this.visible = false;
+    setTimeout(() => this.reset(), 250); // it takes 0.25 to finish the animation
+  }
+
   confirm() {
     this.cb(this.chosenElements);
+    this.closeModal();
   }
 
   reset() {
+    this.chosenElements = [];
     this.elementList = [];
     this.title = null;
     this.maxChosen = null;
@@ -63,8 +70,7 @@ export class ChooseList {
   }
 
   cancel() {
-    this.visible = false;
-    setTimeout(() => this.reset(), 250); // it takes 0.25 to finish the animation
+    this.closeModal();
   }
 
   render() {

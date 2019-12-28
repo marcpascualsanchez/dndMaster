@@ -90,10 +90,8 @@ export interface ICharacter {
         weapons: string[];
     },
     equipment: IEquipment;
-    items: any;
     languages: any[];
     speed: number;
-    weapons: any[];
     saveLocalCharacter: Function;
     calculateAbilityModifier: Function;
 }
