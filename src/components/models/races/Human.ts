@@ -20,6 +20,7 @@ export const baseParams: IHuman = {
     size: 'medium',
     speed: 30,
     languages: ['common'],
+    specialAbilities: [],
     maxAge: 100,
     description: {
         short: 'The most versatile race of all',

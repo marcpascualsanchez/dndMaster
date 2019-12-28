@@ -18,6 +18,7 @@ export const baseParams: IDragonborn = {
     speed: 30,
     languages: ['common', 'draconic'],
     maxAge: 80,
+    specialAbilities: [],
     draconicAncestry: 'Black',
     description: {
         short: 'Strong and charismatic, you can also breath fire and get some cool resistances',
