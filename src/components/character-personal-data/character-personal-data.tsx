@@ -1,4 +1,5 @@
 import { Component, h, Event, EventEmitter, State, Prop } from '@stencil/core';
+import { ICharacterParams } from '../models/Character';
 
 @Component({
   tag: 'character-personal-data',
@@ -13,7 +14,7 @@ export class CharacterPersonalData {
     bubbles: true,
   }) selectEmitter: EventEmitter;
   @State() isFormValid: boolean = false;
-  @Prop() characterParams: any;
+  @Prop() characterParams: ICharacterParams;
 
   private genders: string[];
   private alignments: string[];

@@ -17,29 +17,44 @@ export const baseParams: IBarbarian = {
         armors: ['light armor', 'medium armor', 'shield'],
         weapons: ['simple weapon', 'martial weapon'],
     },
-    equipment: {},
-    equipmentOptions: {
-        weapons: [
-            {
-                name: 'greataxe',
-                amount: 1,
-            },
-            {
-                name: 'handaxe',
-                amount: 2,
-            },
-        ],
-        items: [
-            {
-                name: 'explorer pack',
-                amount: 1,
-            },
-            {
-                name: 'javelin',
-                amount: 4,
-            },
-        ],
-    },
+    equipmentOptions: [
+        {
+            list: [
+                [
+                    {
+                        name: 'greataxe',
+                        amount: 1,
+                        equipmentType: 'weapons',
+                    },
+                ],
+                [
+                    {
+                        name: 'handaxe',
+                        amount: 2,
+                        equipmentType: 'weapons',
+                    }
+                ],
+            ]
+        },
+        {
+            list: [
+                [
+                    {
+                        name: 'explorer pack',
+                        amount: 1,
+                        equipmentType: 'items',
+                    }
+                ],
+                [
+                    {
+                        name: 'javelin',
+                        amount: 4,
+                        equipmentType: 'weapons',
+                    }
+                ],
+            ],
+        },
+    ],
     description: {
         long: 'Barbarians are barbarians',
         short: 'Barbarians are barbarians Barbarians are barbarians Barbarians are barbarians',

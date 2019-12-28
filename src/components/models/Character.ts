@@ -1,4 +1,4 @@
-import { IClass } from "./classes/Class";
+import { IClass, IChoosableEquipment } from "./classes/Class";
 import { IRace } from "./races/Race";
 import { mergeObjects } from "../../utils/utils";
 
@@ -29,6 +29,8 @@ export interface ICharacterParams {
     personal?: any;
     state?: any; // TODO: design how to manage current state of char
     items?: any;
+    equipmentOptions?: IChoosableEquipment[]; // only used on the char creation to fill equipment
+    equipment?: IEquipment;
 }
 
 export interface ISkills {
@@ -67,6 +69,8 @@ export interface IWeapon {
 
 export interface IEquipment {
     weapons: IWeapon[];
+    armors: any[];
+    items: any[];
 }
 
 export interface ICharacter {
@@ -115,11 +119,9 @@ export class Character implements ICharacter {
     public baseHealth: number;
     public hitDiceGrowth: number;
     public armorClass: number;
-    public equipment: any;
-    public items: any;
+    public equipment: IEquipment;
     public languages: any[];
     public speed: number;
-    public weapons: IWeapon[];
 
     constructor() { }
 
@@ -135,10 +137,9 @@ export class Character implements ICharacter {
         this.baseHealth = base.class.baseHealth;
         this.hitDiceGrowth = base.class.hitDiceGrowth;
         this.armorClass = base.class.armorClass;
-        this.equipment = base.class.equipment;
         this.languages = base.race.languages;
         this.speed = base.race.speed;
-        this.weapons = base.items.weapons;
+        this.equipment = base.equipment;
     }
 
     public setCharacter(character: ICharacter) {
@@ -153,10 +154,9 @@ export class Character implements ICharacter {
         this.hitDiceGrowth = character.hitDiceGrowth;
         this.armorClass = character.armorClass;
         this.equipment = character.equipment;
-        this.items = character.items;
         this.languages = character.languages;
         this.speed = character.speed;
-        this.weapons = character.weapons;
+        this.equipment = character.equipment;
     }
 
     public setCharacterById(_id: string) {

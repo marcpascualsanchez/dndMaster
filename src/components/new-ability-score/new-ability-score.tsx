@@ -1,6 +1,6 @@
 import { Component, h, Prop, Event, EventEmitter, State } from '@stencil/core';
 
-import { skills, EAbility } from '../models/Character';
+import { skills, EAbility, ICharacterParams } from '../models/Character';
 import { Dice } from '../../utils/Dice';
 
 @Component({
@@ -18,7 +18,7 @@ export class NewAbilityScore {
         cancelable: true,
         bubbles: true,
     }) selectEmitter: EventEmitter;
-    @Prop() characterParams: any;
+    @Prop() characterParams: ICharacterParams;
     @State() isFormValid: boolean = false;
     @State() diceThrows: any[];
 

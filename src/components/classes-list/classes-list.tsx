@@ -3,6 +3,7 @@ import { Component, h, State, Prop, Event, EventEmitter } from '@stencil/core';
 import { baseParams as fighterBase } from '../models/classes/Fighter';
 import { baseParams as barbarianBase } from '../models/classes/Barbarian';
 import { IClass } from '../models/classes/Class';
+import { ICharacterParams } from '../models/Character';
 
 @Component({
     tag: 'classes-list',
@@ -16,14 +17,14 @@ export class ClassesList {
         composed: true,
         cancelable: true,
         bubbles: true,
-      }) selectEmitter: EventEmitter;
+    }) selectEmitter: EventEmitter;
 
     @Prop() isCreating: boolean;
+    @Prop() characterParams: ICharacterParams;
     @Prop() step: string;
 
     @State() selectedClass: string = null;
     public imgBasePath: string = "../../assets/img/classImages";
-    // AbilityScore images from https://chachart.net/radar?lang=en
 
     selectClass(data: any) {
         if (this.selectedClass === data.currentTarget.id) {
@@ -31,17 +32,21 @@ export class ClassesList {
         } else {
             const elementId = data.currentTarget.id
             this.selectedClass = elementId;
-            // location.href = `#${elementId}`;
         }
+    }
+
+    confirmClass(characterClass: IClass) {
+        this.characterParams.equipmentOptions = this.characterParams.equipmentOptions.concat(characterClass.equipmentOptions);
+        const dataToEmit = { step: 'class', param: characterClass };
+        this.selectEmitter.emit(dataToEmit); // this ends flow
     }
 
     getSelectButton(charClass: IClass) {
         if (this.isCreating) {
-            const dataToEmit = { step: 'class', param: charClass };
             return (
                 <ion-row>
                     <ion-col text-center size="4" offset="4">
-                        <ion-icon class="select-option" color="primary" onClick={() => this.selectEmitter.emit(dataToEmit)} name="play-circle"></ion-icon>
+                        <ion-icon class="select-option" color="primary" onClick={() => this.confirmClass(charClass)} name="play-circle"></ion-icon>
                     </ion-col>
                 </ion-row>);
         } else {

@@ -7,7 +7,7 @@ import { ICharacterParams, Character } from '../models/Character';
 })
 export class CharactersList {
 
-    private allSteps: string[] = ['race', 'class', 'abilities', 'personal']; //ordered by appareance
+    private allSteps: string[] = ['race', 'class', 'equipment', 'abilities', 'personal']; //ordered by appareance
     private previousStep: string; // TODO: manage backbutton
     private characterParams: ICharacterParams;
 
@@ -27,9 +27,9 @@ export class CharactersList {
             }
         });
     }
-    
+
     constructor() {
-        this.characterParams = {}; // store params from every step
+        this.characterParams = { equipmentOptions: [] }; // store params from every step
     }
 
     createNewCharacter() {
@@ -46,10 +46,13 @@ export class CharactersList {
                 stepComponent = <races-list isCreating={true}></races-list>
                 break;
             case ('class'):
-                stepComponent = <classes-list isCreating={true}></classes-list>
+                stepComponent = <classes-list isCreating={true} characterParams={this.characterParams}></classes-list>
                 break;
             case ('abilities'):
                 stepComponent = <new-ability-score characterParams={this.characterParams}></new-ability-score>
+                break;
+            case ('equipment'):
+                stepComponent = <new-equipment characterParams={this.characterParams}></new-equipment>
                 break;
             case ('personal'):
                 stepComponent = <character-personal-data characterParams={this.characterParams}></character-personal-data>

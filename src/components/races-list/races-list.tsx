@@ -33,7 +33,6 @@ export class RacesList {
         } else {
             const elementId = data.currentTarget.id
             this.selectedRace = elementId;
-            // location.href = `#${elementId}`;
         }
     }
 

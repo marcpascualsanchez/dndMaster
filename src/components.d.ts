@@ -9,6 +9,7 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
   Character,
   ICharacter,
+  ICharacterParams,
 } from './components/models/Character';
 
 export namespace Components {
@@ -18,7 +19,7 @@ export namespace Components {
   }
   interface AppRoot {}
   interface CharacterPersonalData {
-    'characterParams': any;
+    'characterParams': ICharacterParams;
   }
   interface CharacterSheet {
     'character': Character;
@@ -35,6 +36,7 @@ export namespace Components {
     'visible': boolean;
   }
   interface ClassesList {
+    'characterParams': ICharacterParams;
     'isCreating': boolean;
     'step': string;
   }
@@ -51,7 +53,10 @@ export namespace Components {
     'character': ICharacter;
   }
   interface NewAbilityScore {
-    'characterParams': any;
+    'characterParams': ICharacterParams;
+  }
+  interface NewEquipment {
+    'characterParams': ICharacterParams;
   }
   interface ProfileTab {
     'character': ICharacter;
@@ -143,6 +148,12 @@ declare global {
     new (): HTMLNewAbilityScoreElement;
   };
 
+  interface HTMLNewEquipmentElement extends Components.NewEquipment, HTMLStencilElement {}
+  var HTMLNewEquipmentElement: {
+    prototype: HTMLNewEquipmentElement;
+    new (): HTMLNewEquipmentElement;
+  };
+
   interface HTMLProfileTabElement extends Components.ProfileTab, HTMLStencilElement {}
   var HTMLProfileTabElement: {
     prototype: HTMLProfileTabElement;
@@ -168,6 +179,7 @@ declare global {
     'magic-tab': HTMLMagicTabElement;
     'misc-tab': HTMLMiscTabElement;
     'new-ability-score': HTMLNewAbilityScoreElement;
+    'new-equipment': HTMLNewEquipmentElement;
     'profile-tab': HTMLProfileTabElement;
     'races-list': HTMLRacesListElement;
   }
@@ -180,7 +192,7 @@ declare namespace LocalJSX {
   }
   interface AppRoot {}
   interface CharacterPersonalData {
-    'characterParams'?: any;
+    'characterParams'?: ICharacterParams;
     'onParamSelected'?: (event: CustomEvent<any>) => void;
   }
   interface CharacterSheet {
@@ -198,6 +210,7 @@ declare namespace LocalJSX {
     'visible'?: boolean;
   }
   interface ClassesList {
+    'characterParams'?: ICharacterParams;
     'isCreating'?: boolean;
     'onParamSelected'?: (event: CustomEvent<any>) => void;
     'step'?: string;
@@ -215,7 +228,11 @@ declare namespace LocalJSX {
     'character'?: ICharacter;
   }
   interface NewAbilityScore {
-    'characterParams'?: any;
+    'characterParams'?: ICharacterParams;
+    'onParamSelected'?: (event: CustomEvent<any>) => void;
+  }
+  interface NewEquipment {
+    'characterParams'?: ICharacterParams;
     'onParamSelected'?: (event: CustomEvent<any>) => void;
   }
   interface ProfileTab {
@@ -241,6 +258,7 @@ declare namespace LocalJSX {
     'magic-tab': MagicTab;
     'misc-tab': MiscTab;
     'new-ability-score': NewAbilityScore;
+    'new-equipment': NewEquipment;
     'profile-tab': ProfileTab;
     'races-list': RacesList;
   }
@@ -265,6 +283,7 @@ declare module "@stencil/core" {
       'magic-tab': LocalJSX.MagicTab & JSXBase.HTMLAttributes<HTMLMagicTabElement>;
       'misc-tab': LocalJSX.MiscTab & JSXBase.HTMLAttributes<HTMLMiscTabElement>;
       'new-ability-score': LocalJSX.NewAbilityScore & JSXBase.HTMLAttributes<HTMLNewAbilityScoreElement>;
+      'new-equipment': LocalJSX.NewEquipment & JSXBase.HTMLAttributes<HTMLNewEquipmentElement>;
       'profile-tab': LocalJSX.ProfileTab & JSXBase.HTMLAttributes<HTMLProfileTabElement>;
       'races-list': LocalJSX.RacesList & JSXBase.HTMLAttributes<HTMLRacesListElement>;
     }
