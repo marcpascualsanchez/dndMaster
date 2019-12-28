@@ -1,4 +1,4 @@
-import { Component, Prop, h, State } from '@stencil/core';
+import { Component, Prop, h, State, Watch } from '@stencil/core';
 import { skills, EAbility, Character } from '../models/Character';
 
 @Component({
@@ -12,6 +12,10 @@ export class CharacterSheet {
   @Prop({mutable: true}) character: Character;
   @State() selectedAbility: EAbility;
   @State() currentTabName: string;
+
+  @Watch('character') onCharacterChange() {
+    this.character.saveLocalCharacter();
+  }
 
   constructor() {
     this.character = new Character();

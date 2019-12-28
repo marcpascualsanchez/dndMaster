@@ -43,6 +43,7 @@ export class FightTab {
     chooseListElement['cb'] = (chosenWeapons: IWeapon[]) => {
       this.weapons = this.weapons.concat(chosenWeapons);
       this.character.equipment.weapons = this.weapons;
+      this.character.saveLocalCharacter();
     }
   }
 

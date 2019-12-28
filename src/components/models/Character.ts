@@ -203,10 +203,14 @@ export class Character implements ICharacter {
     public saveLocalCharacter() {
         const charactersItem = localStorage.getItem('characters');
         if (charactersItem) {
-            const characters = JSON.parse(charactersItem);
-            characters.push(this);
+            let characters: ICharacter[] = JSON.parse(charactersItem);
+            const prevCharacter = characters.find(ch => ch._id === this._id);
+            if (prevCharacter) {
+                characters = characters.filter(ch => ch._id !== this._id);
+            }
+            characters.unshift(this);
             localStorage.setItem('characters', JSON.stringify(characters));
-        } else {
+        } else { // if character local storage was empty
             localStorage.setItem('characters', JSON.stringify([this]));
         }
     }
