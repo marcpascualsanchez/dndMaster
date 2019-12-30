@@ -1,3 +1,5 @@
+import { IChoosableLanguage } from "../Character";
+
 // export interface IAbilityScore {
 //     Strength: number;
 //     Dexterity: number;
@@ -25,7 +27,8 @@ export interface IRace {
     specialAbilities?: string[],
     size: string;
     speed: number;
-    languages: string[]; //TODO: one more to choose freely
+    languagesOptions: IChoosableLanguage[];
+    languages: string[];
     maxAge?: number;
     description: {
         long: string;

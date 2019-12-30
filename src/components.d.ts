@@ -35,10 +35,16 @@ export namespace Components {
     'valueAttribute': string;
     'visible': boolean;
   }
+  interface ChooseOptions {
+    'characterParams': ICharacterParams;
+  }
   interface ClassesList {
     'characterParams': ICharacterParams;
     'isCreating': boolean;
     'step': string;
+  }
+  interface CreateAbilityScore {
+    'characterParams': ICharacterParams;
   }
   interface CreateNewCharacter {
     'step': string;
@@ -52,16 +58,11 @@ export namespace Components {
   interface MiscTab {
     'character': ICharacter;
   }
-  interface NewAbilityScore {
-    'characterParams': ICharacterParams;
-  }
-  interface NewEquipment {
-    'characterParams': ICharacterParams;
-  }
   interface ProfileTab {
     'character': ICharacter;
   }
   interface RacesList {
+    'characterParams': ICharacterParams;
     'isCreating': boolean;
     'step': string;
   }
@@ -112,10 +113,22 @@ declare global {
     new (): HTMLChooseListElement;
   };
 
+  interface HTMLChooseOptionsElement extends Components.ChooseOptions, HTMLStencilElement {}
+  var HTMLChooseOptionsElement: {
+    prototype: HTMLChooseOptionsElement;
+    new (): HTMLChooseOptionsElement;
+  };
+
   interface HTMLClassesListElement extends Components.ClassesList, HTMLStencilElement {}
   var HTMLClassesListElement: {
     prototype: HTMLClassesListElement;
     new (): HTMLClassesListElement;
+  };
+
+  interface HTMLCreateAbilityScoreElement extends Components.CreateAbilityScore, HTMLStencilElement {}
+  var HTMLCreateAbilityScoreElement: {
+    prototype: HTMLCreateAbilityScoreElement;
+    new (): HTMLCreateAbilityScoreElement;
   };
 
   interface HTMLCreateNewCharacterElement extends Components.CreateNewCharacter, HTMLStencilElement {}
@@ -142,18 +155,6 @@ declare global {
     new (): HTMLMiscTabElement;
   };
 
-  interface HTMLNewAbilityScoreElement extends Components.NewAbilityScore, HTMLStencilElement {}
-  var HTMLNewAbilityScoreElement: {
-    prototype: HTMLNewAbilityScoreElement;
-    new (): HTMLNewAbilityScoreElement;
-  };
-
-  interface HTMLNewEquipmentElement extends Components.NewEquipment, HTMLStencilElement {}
-  var HTMLNewEquipmentElement: {
-    prototype: HTMLNewEquipmentElement;
-    new (): HTMLNewEquipmentElement;
-  };
-
   interface HTMLProfileTabElement extends Components.ProfileTab, HTMLStencilElement {}
   var HTMLProfileTabElement: {
     prototype: HTMLProfileTabElement;
@@ -173,13 +174,13 @@ declare global {
     'character-sheet': HTMLCharacterSheetElement;
     'characters-list': HTMLCharactersListElement;
     'choose-list': HTMLChooseListElement;
+    'choose-options': HTMLChooseOptionsElement;
     'classes-list': HTMLClassesListElement;
+    'create-ability-score': HTMLCreateAbilityScoreElement;
     'create-new-character': HTMLCreateNewCharacterElement;
     'fight-tab': HTMLFightTabElement;
     'magic-tab': HTMLMagicTabElement;
     'misc-tab': HTMLMiscTabElement;
-    'new-ability-score': HTMLNewAbilityScoreElement;
-    'new-equipment': HTMLNewEquipmentElement;
     'profile-tab': HTMLProfileTabElement;
     'races-list': HTMLRacesListElement;
   }
@@ -209,11 +210,19 @@ declare namespace LocalJSX {
     'valueAttribute'?: string;
     'visible'?: boolean;
   }
+  interface ChooseOptions {
+    'characterParams'?: ICharacterParams;
+    'onParamSelected'?: (event: CustomEvent<any>) => void;
+  }
   interface ClassesList {
     'characterParams'?: ICharacterParams;
     'isCreating'?: boolean;
     'onParamSelected'?: (event: CustomEvent<any>) => void;
     'step'?: string;
+  }
+  interface CreateAbilityScore {
+    'characterParams'?: ICharacterParams;
+    'onParamSelected'?: (event: CustomEvent<any>) => void;
   }
   interface CreateNewCharacter {
     'step'?: string;
@@ -227,18 +236,11 @@ declare namespace LocalJSX {
   interface MiscTab {
     'character'?: ICharacter;
   }
-  interface NewAbilityScore {
-    'characterParams'?: ICharacterParams;
-    'onParamSelected'?: (event: CustomEvent<any>) => void;
-  }
-  interface NewEquipment {
-    'characterParams'?: ICharacterParams;
-    'onParamSelected'?: (event: CustomEvent<any>) => void;
-  }
   interface ProfileTab {
     'character'?: ICharacter;
   }
   interface RacesList {
+    'characterParams'?: ICharacterParams;
     'isCreating'?: boolean;
     'onParamSelected'?: (event: CustomEvent<any>) => void;
     'step'?: string;
@@ -252,13 +254,13 @@ declare namespace LocalJSX {
     'character-sheet': CharacterSheet;
     'characters-list': CharactersList;
     'choose-list': ChooseList;
+    'choose-options': ChooseOptions;
     'classes-list': ClassesList;
+    'create-ability-score': CreateAbilityScore;
     'create-new-character': CreateNewCharacter;
     'fight-tab': FightTab;
     'magic-tab': MagicTab;
     'misc-tab': MiscTab;
-    'new-ability-score': NewAbilityScore;
-    'new-equipment': NewEquipment;
     'profile-tab': ProfileTab;
     'races-list': RacesList;
   }
@@ -277,13 +279,13 @@ declare module "@stencil/core" {
       'character-sheet': LocalJSX.CharacterSheet & JSXBase.HTMLAttributes<HTMLCharacterSheetElement>;
       'characters-list': LocalJSX.CharactersList & JSXBase.HTMLAttributes<HTMLCharactersListElement>;
       'choose-list': LocalJSX.ChooseList & JSXBase.HTMLAttributes<HTMLChooseListElement>;
+      'choose-options': LocalJSX.ChooseOptions & JSXBase.HTMLAttributes<HTMLChooseOptionsElement>;
       'classes-list': LocalJSX.ClassesList & JSXBase.HTMLAttributes<HTMLClassesListElement>;
+      'create-ability-score': LocalJSX.CreateAbilityScore & JSXBase.HTMLAttributes<HTMLCreateAbilityScoreElement>;
       'create-new-character': LocalJSX.CreateNewCharacter & JSXBase.HTMLAttributes<HTMLCreateNewCharacterElement>;
       'fight-tab': LocalJSX.FightTab & JSXBase.HTMLAttributes<HTMLFightTabElement>;
       'magic-tab': LocalJSX.MagicTab & JSXBase.HTMLAttributes<HTMLMagicTabElement>;
       'misc-tab': LocalJSX.MiscTab & JSXBase.HTMLAttributes<HTMLMiscTabElement>;
-      'new-ability-score': LocalJSX.NewAbilityScore & JSXBase.HTMLAttributes<HTMLNewAbilityScoreElement>;
-      'new-equipment': LocalJSX.NewEquipment & JSXBase.HTMLAttributes<HTMLNewEquipmentElement>;
       'profile-tab': LocalJSX.ProfileTab & JSXBase.HTMLAttributes<HTMLProfileTabElement>;
       'races-list': LocalJSX.RacesList & JSXBase.HTMLAttributes<HTMLRacesListElement>;
     }

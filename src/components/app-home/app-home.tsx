@@ -25,7 +25,7 @@ export class AppHome {
         <ion-button href="/profile/ionic" expand="block">Profile page</ion-button>
         <ion-button href="/races" expand="block">Races page</ion-button>
         <ion-button href="/new-ability-score" expand="block">New ability score page</ion-button>
-        <new-ability-score></new-ability-score>
+        <create-ability-score></create-ability-score>
       </ion-content>
     ];
   }

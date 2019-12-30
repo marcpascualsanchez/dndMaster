@@ -20,6 +20,11 @@ export const baseParams: IHuman = {
     size: 'medium',
     speed: 30,
     languages: ['common'],
+    languagesOptions: [
+        {
+            list: 'all',
+        }
+    ],
     specialAbilities: [],
     maxAge: 100,
     description: {

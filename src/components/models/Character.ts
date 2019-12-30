@@ -1,6 +1,6 @@
 import { IClass, IChoosableEquipment } from "./classes/Class";
 import { IRace } from "./races/Race";
-import { mergeObjects } from "../../utils/utils";
+import { mergeObjects, getUniqueValuesArray } from "../../utils/utils";
 
 export enum EAbility {
     strength = 'strength',
@@ -20,6 +20,10 @@ export interface IAbilities {
     charisma: string;
 }
 
+export interface IChoosableLanguage {
+    list: any; // string | string[]; // array of languages, or 'all' for all, or 'exotic' for exotic
+}
+
 export interface ICharacterParams {
     _id?: string;
     class?: IClass;
@@ -31,6 +35,8 @@ export interface ICharacterParams {
     items?: any;
     equipmentOptions?: IChoosableEquipment[]; // only used on the char creation to fill equipment
     equipment?: IEquipment;
+    languages?: string[];
+    languagesOptions?: IChoosableLanguage[];
 }
 
 export interface ISkills {
@@ -105,6 +111,16 @@ export const skills: ISkills = {
     charisma: ['deception', 'intimidation', 'performance', 'persuasion'],
 };
 
+export interface ILanguages {
+    all: string[];
+    exotic: string[];
+}
+
+export const languages: ILanguages = {
+    all: ["abyssal", "aquan", "auran", "celestial", "common", "deep speech", "draconic", "druidic", "dwarvish", "elvish", "giant", "gnomish", "goblin", "gnoll", "halfling", "ignan", "infernal", "orc", "primordial", "sylvan", "terran", "undercommon"],
+    exotic: ["abyssal", "celestial", "draconic", "deep speech", "infernal", "primordial", "sylvan", "undercommon", "druidic"],
+}
+
 export class Character implements ICharacter {
 
     public _id: string;
@@ -135,7 +151,7 @@ export class Character implements ICharacter {
         this.baseHealth = base.class.baseHealth;
         this.hitDiceGrowth = base.class.hitDiceGrowth;
         this.armorClass = base.class.armorClass;
-        this.languages = base.race.languages;
+        this.languages = getUniqueValuesArray(base.languages);
         this.speed = base.race.speed;
         this.equipment = base.equipment;
     }

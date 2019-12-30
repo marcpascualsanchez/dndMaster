@@ -5,6 +5,7 @@ import { baseParams as halfOrcBase } from '../models/races/HalfOrc';
 import { baseParams as humanBase } from '../models/races/Human';
 import { baseParams as tieflingBase } from '../models/races/Tiefling';
 import { IRace } from '../models/races/Race';
+import { ICharacterParams } from '../models/Character';
 
 @Component({
     tag: 'races-list',
@@ -22,6 +23,7 @@ export class RacesList {
 
     @Prop() isCreating: boolean;
     @Prop() step: string;
+    @Prop() characterParams: ICharacterParams;
 
     @State() selectedRace: string = null;
     public imgBasePath: string = "../../assets/img/raceImages";
@@ -36,13 +38,19 @@ export class RacesList {
         }
     }
 
+    confirmRace(race: IRace) {
+        this.characterParams.languagesOptions = this.characterParams.languagesOptions.concat(race.languagesOptions);
+        this.characterParams.languages = this.characterParams.languages.concat(race.languages);
+        const dataToEmit = { step: 'race', param: race };
+        this.selectEmitter.emit(dataToEmit);
+    }
+
     getSelectButton(race: IRace) {
         if (this.isCreating) {
-            const dataToEmit = { step: 'race', param: race };
             return (
                 <ion-row>
                     <ion-col text-center size="4" offset="4">
-                        <ion-icon class="select-option" color="primary" onClick={() => this.selectEmitter.emit(dataToEmit)} name="play-circle"></ion-icon>
+                        <ion-icon class="select-option" color="primary" onClick={() => this.confirmRace(race)} name="play-circle"></ion-icon>
                     </ion-col>
                 </ion-row>);
         } else {

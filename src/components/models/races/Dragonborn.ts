@@ -16,6 +16,7 @@ export const baseParams: IDragonborn = {
     },
     size: 'medium',
     speed: 30,
+    languagesOptions: [],
     languages: ['common', 'draconic'],
     maxAge: 80,
     specialAbilities: [],

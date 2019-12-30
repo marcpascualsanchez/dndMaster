@@ -7,7 +7,7 @@ import { ICharacterParams, Character } from '../models/Character';
 })
 export class CharactersList {
 
-    private allSteps: string[] = ['race', 'class', 'equipment', 'abilities', 'personal']; //ordered by appareance
+    private allSteps: string[] = ['race', 'class', 'personal', 'abilities', 'options']; //ordered by appareance
     private previousStep: string; // TODO: manage backbutton
     private characterParams: ICharacterParams;
 
@@ -29,7 +29,7 @@ export class CharactersList {
     }
 
     constructor() {
-        this.characterParams = { equipmentOptions: [] }; // store params from every step
+        this.characterParams = { equipmentOptions: [], languagesOptions: [], languages: [] }; // store params from every step
     }
 
     createNewCharacter() {
@@ -43,22 +43,22 @@ export class CharactersList {
         let stepComponent;
         switch (this.step) {
             case ('race'):
-                stepComponent = <races-list isCreating={true}></races-list>
+                stepComponent = <races-list isCreating={true} characterParams={this.characterParams}></races-list>
                 break;
             case ('class'):
                 stepComponent = <classes-list isCreating={true} characterParams={this.characterParams}></classes-list>
                 break;
             case ('abilities'):
-                stepComponent = <new-ability-score characterParams={this.characterParams}></new-ability-score>
+                stepComponent = <create-ability-score characterParams={this.characterParams}></create-ability-score>
                 break;
-            case ('equipment'):
-                stepComponent = <new-equipment characterParams={this.characterParams}></new-equipment>
+            case ('options'):
+                stepComponent = <choose-options characterParams={this.characterParams}></choose-options>
                 break;
             case ('personal'):
                 stepComponent = <character-personal-data characterParams={this.characterParams}></character-personal-data>
                 break;
             default:
-                stepComponent = <races-list isCreating={true}></races-list>
+                stepComponent = <races-list isCreating={true} characterParams={this.characterParams}></races-list>
                 break;
         }
         return stepComponent;

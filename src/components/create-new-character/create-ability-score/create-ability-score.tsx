@@ -1,13 +1,13 @@
 import { Component, h, Prop, Event, EventEmitter, State } from '@stencil/core';
 
-import { skills, EAbility, ICharacterParams } from '../models/Character';
-import { Dice } from '../../utils/Dice';
+import { skills, EAbility, ICharacterParams } from '../../models/Character';
+import { Dice } from '../../../utils/Dice';
 
 @Component({
-    tag: 'new-ability-score',
-    styleUrl: 'new-ability-score.scss'
+    tag: 'create-ability-score',
+    styleUrl: 'create-ability-score.scss'
 })
-export class NewAbilityScore {
+export class CreateAbilityScore {
     private dice = new Dice();
     private inputs: any[];
     private abilityScore: any;

@@ -16,6 +16,7 @@ export const baseParams: ITiefling = {
     },
     size: 'medium',
     speed: 30,
+    languagesOptions: [],
     languages: ['common', 'infernal'],
     maxAge: 100,
     specialAbilities: ['darkvision', 'hellishResistence', 'infernalLegacy'],

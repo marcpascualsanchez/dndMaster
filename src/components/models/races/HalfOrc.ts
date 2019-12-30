@@ -15,6 +15,7 @@ export const baseParams: IHalfOrc = {
     },
     size: 'medium',
     speed: 30,
+    languagesOptions: [],
     languages: ['common', 'orc'],
     maxAge: 75,
     specialAbilities: ['relentless endurance', 'savage attacks', 'darkvision'],

@@ -1,5 +1,8 @@
 import { Component, h, Event, EventEmitter, State, Prop } from '@stencil/core';
 import { ICharacterParams } from '../models/Character';
+import { Acolyte } from '../models/backgrounds/Acolyte';
+import { Soldier } from '../models/backgrounds/Soldier';
+import { IBackground } from '../models/backgrounds/Background';
 
 @Component({
   tag: 'character-personal-data',
@@ -18,11 +21,13 @@ export class CharacterPersonalData {
 
   private genders: string[];
   private alignments: string[];
+  private backgrounds: IBackground[];
   private inputs: any[];
 
   constructor() {
     this.genders = ['Female', 'Male', 'Non-binary', 'Genderfluid', 'Agender'];
     this.alignments = ['Lawful good', 'Neutral good', 'Chaotic good', 'Lawful neutral', 'Neutral', 'Chaotic neutral', 'Lawful evil', 'Neutral evil', 'Chaotic evil'];
+    this.backgrounds = [Acolyte, Soldier];
   }
 
   componentDidLoad() {
@@ -33,6 +38,9 @@ export class CharacterPersonalData {
     const personalData: any = {};
     this.inputs.forEach(i => personalData[i.name] = i.value);
     personalData.image = `${this.characterParams.race.name}.jpg`;
+    const selectedBackground = this.backgrounds.find(b => b.name === personalData.background);
+    this.characterParams.equipmentOptions = this.characterParams.equipmentOptions.concat(selectedBackground.equipmentOptions);
+    this.characterParams.languagesOptions = this.characterParams.languagesOptions.concat(selectedBackground.languagesOptions);
     this.selectEmitter.emit({ step: 'personal', param: personalData });
   }
 
@@ -87,7 +95,13 @@ export class CharacterPersonalData {
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Title</ion-label>
-          <ion-input onIonChange={() => this.validateInputs()} class="personal-data-input" name="title"></ion-input>
+          <ion-input name="title"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Background</ion-label>
+          <ion-select onIonChange={() => this.validateInputs()} class="personal-data-input" name="background">
+            {this.backgrounds.map(b => <ion-select-option value={b.name}>{b.name}</ion-select-option>)}
+          </ion-select>
         </ion-item>
       </ion-list>,
       this.getSelectButton(),
