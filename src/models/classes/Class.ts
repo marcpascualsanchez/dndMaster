@@ -1,4 +1,4 @@
-import { IEquipment } from "../Character";
+import { IEquipment, IChoosableSkill, ICharacterProficiency } from "../Character";
 
 export interface IChoosableItemList {
     name: string;
@@ -21,13 +21,8 @@ export interface IClass {
     hitDiceGrowth: number;
     armorClass: number;
     classTraits: string[];
-    proficiency: { // TODO: define proficiency interface
-        skillModsAble: number; //TODO: choose n skillMods
-        skillMods: string[];
-        savingThrows: string[];
-        armors: string[];
-        weapons: string[];
-    };
+    proficiency: ICharacterProficiency;
+    skillsOptions: IChoosableSkill[];
     equipment?: IEquipment; // constant equipment
     equipmentOptions?: IChoosableEquipment[]; // equipment to choose
     description: {

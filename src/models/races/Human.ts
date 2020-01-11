@@ -15,6 +15,9 @@ export const baseParams: IHuman = {
         charisma: 1,
     },
     proficiency: {
+        savingThrows: [],
+        armors: [],
+        weapons: [],
         skillMods: [],
     },
     size: 'medium',

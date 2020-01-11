@@ -1,6 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { ICharacterParams, ICharacter } from '../../models/Character';
-import { concatUniqueValuesArray, getUniqueValuesArray } from '../../../utils/utils';
+import { ICharacter } from '../../../models/Character';
 
 @Component({
   tag: 'profile-tab',

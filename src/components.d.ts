@@ -10,7 +10,7 @@ import {
   Character,
   ICharacter,
   ICharacterParams,
-} from './components/models/Character';
+} from './models/Character';
 
 export namespace Components {
   interface AppHome {}
@@ -18,6 +18,11 @@ export namespace Components {
     'name': string;
   }
   interface AppRoot {}
+  interface BackgroundsList {
+    'characterParams': ICharacterParams;
+    'isCreating': boolean;
+    'step': string;
+  }
   interface CharacterPersonalData {
     'characterParams': ICharacterParams;
   }
@@ -87,6 +92,12 @@ declare global {
   var HTMLAppRootElement: {
     prototype: HTMLAppRootElement;
     new (): HTMLAppRootElement;
+  };
+
+  interface HTMLBackgroundsListElement extends Components.BackgroundsList, HTMLStencilElement {}
+  var HTMLBackgroundsListElement: {
+    prototype: HTMLBackgroundsListElement;
+    new (): HTMLBackgroundsListElement;
   };
 
   interface HTMLCharacterPersonalDataElement extends Components.CharacterPersonalData, HTMLStencilElement {}
@@ -170,6 +181,7 @@ declare global {
     'app-home': HTMLAppHomeElement;
     'app-profile': HTMLAppProfileElement;
     'app-root': HTMLAppRootElement;
+    'backgrounds-list': HTMLBackgroundsListElement;
     'character-personal-data': HTMLCharacterPersonalDataElement;
     'character-sheet': HTMLCharacterSheetElement;
     'characters-list': HTMLCharactersListElement;
@@ -192,6 +204,12 @@ declare namespace LocalJSX {
     'name'?: string;
   }
   interface AppRoot {}
+  interface BackgroundsList {
+    'characterParams'?: ICharacterParams;
+    'isCreating'?: boolean;
+    'onParamSelected'?: (event: CustomEvent<any>) => void;
+    'step'?: string;
+  }
   interface CharacterPersonalData {
     'characterParams'?: ICharacterParams;
     'onParamSelected'?: (event: CustomEvent<any>) => void;
@@ -250,6 +268,7 @@ declare namespace LocalJSX {
     'app-home': AppHome;
     'app-profile': AppProfile;
     'app-root': AppRoot;
+    'backgrounds-list': BackgroundsList;
     'character-personal-data': CharacterPersonalData;
     'character-sheet': CharacterSheet;
     'characters-list': CharactersList;
@@ -275,6 +294,7 @@ declare module "@stencil/core" {
       'app-home': LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
       'app-profile': LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;
       'app-root': LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+      'backgrounds-list': LocalJSX.BackgroundsList & JSXBase.HTMLAttributes<HTMLBackgroundsListElement>;
       'character-personal-data': LocalJSX.CharacterPersonalData & JSXBase.HTMLAttributes<HTMLCharacterPersonalDataElement>;
       'character-sheet': LocalJSX.CharacterSheet & JSXBase.HTMLAttributes<HTMLCharacterSheetElement>;
       'characters-list': LocalJSX.CharactersList & JSXBase.HTMLAttributes<HTMLCharactersListElement>;

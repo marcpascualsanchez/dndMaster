@@ -1,11 +1,11 @@
 import { Component, h, State, Prop, Event, EventEmitter } from '@stencil/core';
 
-import { baseParams as dragonbornBase } from '../models/races/Dragonborn';
-import { baseParams as halfOrcBase } from '../models/races/HalfOrc';
-import { baseParams as humanBase } from '../models/races/Human';
-import { baseParams as tieflingBase } from '../models/races/Tiefling';
-import { IRace } from '../models/races/Race';
-import { ICharacterParams } from '../models/Character';
+import { baseParams as dragonbornBase } from '../../models/races/Dragonborn';
+import { baseParams as halfOrcBase } from '../../models/races/HalfOrc';
+import { baseParams as humanBase } from '../../models/races/Human';
+import { baseParams as tieflingBase } from '../../models/races/Tiefling';
+import { IRace } from '../../models/races/Race';
+import { ICharacterParams } from '../../models/Character';
 
 @Component({
     tag: 'races-list',
@@ -26,7 +26,7 @@ export class RacesList {
     @Prop() characterParams: ICharacterParams;
 
     @State() selectedRace: string = null;
-    public imgBasePath: string = "../../assets/img/raceImages";
+    public imgBasePath: string = "../../assets/img/race";
     // AbilityScore images from https://chachart.net/radar?lang=en
 
     selectRace(data: any) {

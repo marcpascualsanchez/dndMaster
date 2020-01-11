@@ -12,6 +12,9 @@ export const baseParams: ITiefling = {
         intelligence: 1,
     },
     proficiency: {
+        savingThrows: [],
+        armors: [],
+        weapons: [],
         skillMods: [],
     },
     size: 'medium',

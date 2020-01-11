@@ -16,4 +16,15 @@ export const Soldier: IBackground = {
         },
     ],
     languagesOptions: [],
+    proficiency: {
+        savingThrows: [],
+        armors: [],
+        weapons: [],
+        skillMods: ['athletics', 'intimidation'],
+    },
+    skillsOptions: [],
+    description: {
+        short: 'soldiers are soldiers',
+        long: 'soldiers are soldiers soldiers are soldiers soldiers are soldiers',
+    },
 }

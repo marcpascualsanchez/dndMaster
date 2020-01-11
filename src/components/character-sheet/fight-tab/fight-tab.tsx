@@ -1,5 +1,5 @@
 import { Component, h, Prop, State } from '@stencil/core';
-import { ICharacter, IWeapon, IEquipment } from '../../models/Character';
+import { ICharacter, IWeapon, IEquipment } from '../../../models/Character';
 
 @Component({
   tag: 'fight-tab',

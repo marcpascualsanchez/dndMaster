@@ -1,5 +1,5 @@
 import { Component, h, Prop } from '@stencil/core';
-import { ICharacter } from '../../models/Character';
+import { ICharacter } from '../../../models/Character';
 
 @Component({
   tag: 'misc-tab',

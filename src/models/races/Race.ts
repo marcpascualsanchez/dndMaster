@@ -1,4 +1,4 @@
-import { IChoosableLanguage } from "../Character";
+import { IChoosableLanguage, ICharacterProficiency } from "../Character";
 
 // export interface IAbilityScore {
 //     Strength: number;
@@ -21,10 +21,8 @@ export interface IAbilityScoreModifier {
 export interface IRace {
     name: string;
     statMods: IAbilityScoreModifier;
-    proficiency: {
-        skillMods: string[], // TODO: it marks which skills have proficiency (depends on level)
-    },
-    specialAbilities?: string[],
+    proficiency: ICharacterProficiency;
+    specialAbilities?: string[];
     size: string;
     speed: number;
     languagesOptions: IChoosableLanguage[];

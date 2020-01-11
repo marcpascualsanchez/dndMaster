@@ -1,7 +1,7 @@
 import { Component, h, Prop, State, EventEmitter, Event } from '@stencil/core';
-import { ICharacterParams, IEquipment } from '../../models/Character';
-import { IChoosableItemList } from '../../models/classes/Class';
-import { languages } from '../../models/Character'
+import { ICharacterParams, IEquipment } from '../../../models/Character';
+import { IChoosableItemList } from '../../../models/classes/Class';
+import { languages } from '../../../models/Character'
 
 @Component({
   tag: 'choose-options',
@@ -22,11 +22,12 @@ export class ChooseOptions {
   private equipment: IEquipment;
   private equipmentInputs: any[];
   private languagesInputs: any[];
+  private skillInputs: any[];
 
   componentDidLoad() {
     this.equipmentInputs = Array.from(document.querySelectorAll('.equipment-options'));
     this.languagesInputs = Array.from(document.querySelectorAll('.languages-options'));
-    console.log('inps', this.languagesInputs);
+    this.skillInputs = Array.from(document.querySelectorAll('.skill-options'));
   }
 
   setEquipment() {
@@ -45,14 +46,19 @@ export class ChooseOptions {
 
   setLanguages() {
     const chosenList: string[] = this.languagesInputs.map(i => i.value).filter(v => v);
-    console.log(chosenList);
     this.characterParams.languages = this.characterParams.languages.concat(chosenList);
+  }
+
+  setSkills() {
+    const chosenList: string[] = this.skillInputs.map(i => i.value).filter(v => v);
+    this.characterParams.proficiency.skillMods = this.characterParams.proficiency.skillMods.concat(chosenList);
   }
 
   confirmEquipment() {
     this.setEquipment();
     this.setLanguages();
-    this.selectEmitter.emit({ step: 'options', param: null });
+    this.setSkills();
+    this.selectEmitter.emit({ step: 'options', param: {} });
   }
 
   getEquipmentOptions() {
@@ -80,7 +86,16 @@ export class ChooseOptions {
   }
 
   getSkillsOptions() {
-
+    return this.characterParams.skillsOptions.map(option => {
+      let list: string[] = option.list;
+      return <ion-card>
+        <ion-item>
+          <ion-select placeholder="Choose a skill..." class="skill-options">
+            {list.map(l => <ion-select-option value={l}>{l}</ion-select-option>)}
+          </ion-select>
+        </ion-item>
+      </ion-card>
+    });
   }
 
   getLanguagesOptions() {

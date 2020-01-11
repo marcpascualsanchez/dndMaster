@@ -1,9 +1,9 @@
 import { Component, h, State, Prop, Event, EventEmitter } from '@stencil/core';
 
-import { baseParams as fighterBase } from '../models/classes/Fighter';
-import { baseParams as barbarianBase } from '../models/classes/Barbarian';
-import { IClass } from '../models/classes/Class';
-import { ICharacterParams } from '../models/Character';
+import { baseParams as fighterBase } from '../../models/classes/Fighter';
+import { baseParams as barbarianBase } from '../../models/classes/Barbarian';
+import { IClass } from '../../models/classes/Class';
+import { ICharacterParams } from '../../models/Character';
 
 @Component({
     tag: 'classes-list',
@@ -24,7 +24,7 @@ export class ClassesList {
     @Prop() step: string;
 
     @State() selectedClass: string = null;
-    public imgBasePath: string = "../../assets/img/classImages";
+    public imgBasePath: string = "../../assets/img/class";
 
     selectClass(data: any) {
         if (this.selectedClass === data.currentTarget.id) {
@@ -37,6 +37,7 @@ export class ClassesList {
 
     confirmClass(characterClass: IClass) {
         this.characterParams.equipmentOptions = this.characterParams.equipmentOptions.concat(characterClass.equipmentOptions);
+        this.characterParams.skillsOptions = this.characterParams.skillsOptions.concat(characterClass.skillsOptions);
         const dataToEmit = { step: 'class', param: characterClass };
         this.selectEmitter.emit(dataToEmit); // this ends flow
     }

@@ -1,5 +1,5 @@
 import { Component, h, Prop, Listen } from '@stencil/core';
-import { ICharacterParams, Character } from '../models/Character';
+import { ICharacterParams, Character } from '../../models/Character';
 
 @Component({
     tag: 'create-new-character',
@@ -7,7 +7,7 @@ import { ICharacterParams, Character } from '../models/Character';
 })
 export class CharactersList {
 
-    private allSteps: string[] = ['race', 'class', 'personal', 'abilities', 'options']; //ordered by appareance
+    private allSteps: string[] = ['race', 'class', 'background', 'options', 'abilities', 'personal']; //ordered by appareance
     private previousStep: string; // TODO: manage backbutton
     private characterParams: ICharacterParams;
 
@@ -28,8 +28,19 @@ export class CharactersList {
         });
     }
 
-    constructor() {
-        this.characterParams = { equipmentOptions: [], languagesOptions: [], languages: [] }; // store params from every step
+    constructor() { // store params from every step
+        this.characterParams = {
+            equipmentOptions: [],
+            languagesOptions: [],
+            languages: [],
+            proficiency: {
+                skillMods: [],
+                savingThrows: [],
+                armors: [],
+                weapons: [],
+            },
+            skillsOptions: [],
+        };
     }
 
     createNewCharacter() {
@@ -50,6 +61,9 @@ export class CharactersList {
                 break;
             case ('abilities'):
                 stepComponent = <create-ability-score characterParams={this.characterParams}></create-ability-score>
+                break;
+            case ('background'):
+                stepComponent = <backgrounds-list isCreating={true} characterParams={this.characterParams}></backgrounds-list>
                 break;
             case ('options'):
                 stepComponent = <choose-options characterParams={this.characterParams}></choose-options>

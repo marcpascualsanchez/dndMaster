@@ -11,7 +11,10 @@ export const baseParams: IHalfOrc = {
         constitution: 1,
     },
     proficiency: {
-        skillMods: ['intimidation'], // TODO: it marks which skills have proficiency (depends on level)
+        savingThrows: [],
+        armors: [],
+        weapons: [],
+        skillMods: ['intimidation'],
     },
     size: 'medium',
     speed: 30,

@@ -1,5 +1,5 @@
 import { Component, h } from '@stencil/core';
-import { ICharacterParams } from '../models/Character';
+import { ICharacterParams } from '../../models/Character';
 
 @Component({
     tag: 'characters-list',
@@ -10,7 +10,6 @@ export class CharactersList {
 
     constructor() {
         this.characters = JSON.parse(localStorage.getItem('characters')) || [];
-        console.log(this.characters);
     }
 
     getCharacterImage(name: string) {

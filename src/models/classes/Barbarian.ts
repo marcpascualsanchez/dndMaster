@@ -11,11 +11,10 @@ export const baseParams: IBarbarian = {
     armorClass: 10,
     classTraits: ['unarmored defense', 'rage'],
     proficiency: {
-        skillModsAble: 2, //TODO: choose n skillMods
-        skillMods: ['animal handling', 'athletics', 'intimidation', 'nature', 'perception', 'survival'],
         savingThrows: ['strenght', 'constitution'],
         armors: ['light armor', 'medium armor', 'shield'],
         weapons: ['simple weapon', 'martial weapon'],
+        skillMods: [],
     },
     equipmentOptions: [
         {
@@ -53,6 +52,14 @@ export const baseParams: IBarbarian = {
                     }
                 ],
             ],
+        },
+    ],
+    skillsOptions: [
+        {
+            list: ['animal handling', 'athletics', 'intimidation', 'nature', 'perception', 'survival'],
+        },
+        {
+            list: ['animal handling', 'athletics', 'intimidation', 'nature', 'perception', 'survival'],
         },
     ],
     description: {

@@ -1,4 +1,4 @@
-import { EAbility } from '../components/models/Character';
+import { EAbility } from '../models/Character';
 
 export class Dice {
     public throw(amount: number, faces: number) {

@@ -1,6 +1,7 @@
 import { IClass, IChoosableEquipment } from "./classes/Class";
 import { IRace } from "./races/Race";
-import { mergeObjects, getUniqueValuesArray } from "../../utils/utils";
+import { mergeObjects, getUniqueValuesArray } from "../utils/utils";
+import { IBackground } from "./backgrounds/Background";
 
 export enum EAbility {
     strength = 'strength',
@@ -24,12 +25,16 @@ export interface IChoosableLanguage {
     list: any; // string | string[]; // array of languages, or 'all' for all, or 'exotic' for exotic
 }
 
+export interface IChoosableSkill {
+    list: any; // string | string[]; // array of skills, or 'all' for all
+}
+
 export interface ICharacterParams {
     _id?: string;
     class?: IClass;
     race?: IRace;
     abilities?: IAbilities,
-    background?: any; // TODO: create background
+    background?: IBackground; // TODO: create background
     personal?: any;
     state?: any; // TODO: design how to manage current state of char
     items?: any;
@@ -37,6 +42,8 @@ export interface ICharacterParams {
     equipment?: IEquipment;
     languages?: string[];
     languagesOptions?: IChoosableLanguage[];
+    proficiency?: ICharacterProficiency;
+    skillsOptions?: IChoosableSkill[];
 }
 
 export interface ISkills {
@@ -205,7 +212,7 @@ export class Character implements ICharacter {
     }
 
     public setProficiency(base: ICharacterParams) {
-        this.proficiency = mergeObjects([base.class.proficiency, base.race.proficiency]);
+        this.proficiency = mergeObjects([base.background.proficiency, base.class.proficiency, base.race.proficiency, base.proficiency]);
     }
 
     public setAbilities(base: ICharacterParams) {

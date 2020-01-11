@@ -12,6 +12,9 @@ export const baseParams: IDragonborn = {
         charisma: 1,
     },
     proficiency: {
+        savingThrows: [],
+        armors: [],
+        weapons: [],
         skillMods: [],
     },
     size: 'medium',

@@ -1,6 +1,6 @@
 import { Component, h, Prop, Event, EventEmitter, State } from '@stencil/core';
 
-import { skills, EAbility, ICharacterParams } from '../../models/Character';
+import { skills, EAbility, ICharacterParams } from '../../../models/Character';
 import { Dice } from '../../../utils/Dice';
 
 @Component({
@@ -24,6 +24,7 @@ export class CreateAbilityScore {
 
     constructor() {
         this.initialize();
+        console.log('base', this.characterParams);
     }
 
     initialize() {
@@ -79,9 +80,13 @@ export class CreateAbilityScore {
         //TODO: check proficiency coming from previous steps
         let isProficiency = false;
         Object.keys(this.characterParams).forEach((cp) => {
+            // Search for a proficiency.skillMod inside every object of char params
             if (
-                this.characterParams[cp].proficiency
-                && this.characterParams[cp].proficiency.skillMods.some((sm) => skill === sm)
+                this.characterParams.proficiency.skillMods.some((sm) => skill === sm)
+                || (
+                    this.characterParams[cp].proficiency
+                    && this.characterParams[cp].proficiency.skillMods.some((sm) => skill === sm)
+                )
             ) {
                 isProficiency = true;
             }
@@ -153,8 +158,10 @@ export class CreateAbilityScore {
             <ion-footer>
                 <ion-toolbar>
                     <ion-buttons slot="end">
-                        <ion-button class="confirm-icon" onClick={() => this.isFormValid ? this.confirmScore() : null}>
-                            <ion-icon name="checkmark-circle" color="success" class={this.isFormValid ? '' : 'disabled'}></ion-icon>
+                        {/* <ion-button class="confirm-icon" onClick={() => this.isFormValid ? this.confirmScore() : null}> */}
+                        <ion-button class="confirm-icon" onClick={() => this.confirmScore()}>
+                            {/* <ion-icon name="checkmark-circle" color="success" class={this.isFormValid ? '' : 'disabled'}></ion-icon> */}
+                            <ion-icon name="checkmark-circle" color="success"></ion-icon>
                         </ion-button>
                     </ion-buttons>
                 </ion-toolbar>
