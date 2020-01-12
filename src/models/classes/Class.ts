@@ -12,7 +12,9 @@ export interface IChoosableEquipment {
 
 export interface IItem {
     name: string;
-    amount: number;
+    amount?: number;
+    weight?: number;
+    price?: number;
 }
 
 export interface IClass {

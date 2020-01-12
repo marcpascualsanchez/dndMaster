@@ -1,4 +1,4 @@
-import { IClass, IChoosableEquipment } from "./classes/Class";
+import { IClass, IChoosableEquipment, IItem } from "./classes/Class";
 import { IRace } from "./races/Race";
 import { mergeObjects, getUniqueValuesArray } from "../utils/utils";
 import { IBackground } from "./backgrounds/Background";
@@ -72,18 +72,20 @@ export interface ICharacterProficiency {
     weapons: string[];
 }
 
-export interface IWeapon {
-    name: string;
+export interface IWeapon extends IItem {
     damage: string;
     bonus: string;
     type: string;
-    amount?: number;
+}
+
+export interface IArmor extends IItem {
+    armorClass: number;
 }
 
 export interface IEquipment {
     weapons: IWeapon[];
-    armors: any[];
-    items: any[];
+    armors: IArmor[];
+    items: IItem[];
 }
 
 export interface ICharacter {
