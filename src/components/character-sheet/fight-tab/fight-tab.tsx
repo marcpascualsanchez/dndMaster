@@ -1,5 +1,5 @@
 import { Component, h, Prop, State } from '@stencil/core';
-import { ICharacter, IWeapon, IEquipment, IArmor } from '../../../models/Character';
+import { ICharacter, IWeapon, IArmor } from '../../../models/Character';
 
 @Component({
   tag: 'fight-tab',
@@ -14,12 +14,14 @@ export class FightTab {
   }) character: ICharacter;
   @State() weapons: IWeapon[];
   @State() armors: IArmor[];
+  @State() equippedArmor: IArmor;
   private mockWeapons: IWeapon[] = [{ name: 'sword', bonus: '+1', damage: '1d6', type: 'punxeta', amount: 1 }, { name: 'porra', bonus: '+0', damage: '3d4', type: 'pupita', amount: 1 }];
   private mockArmors: IArmor[] = [{ name: 'chainmail', armorClass: 16, amount: 1 }, { name: 'iron chest', armorClass: 18, amount: 1 }];
 
   constructor() {
     this.weapons = this.character.equipment.weapons;
     this.armors = this.character.equipment.armors;
+    this.equippedArmor = this.character.equipped.armor;
   }
 
   getWeaponList(weapons: IWeapon[]) {
@@ -51,12 +53,21 @@ export class FightTab {
     }
   }
 
+  equipArmor(armor: IArmor) {
+    if (!this.equippedArmor || this.equippedArmor.name !== armor.name) {
+      this.equippedArmor = armor;
+    } else {
+      this.equippedArmor = null;
+    }
+    this.character.equipped.armor = this.equippedArmor;
+  }
+
   getArmorList(armors: IArmor[]) {
-    return armors.map((w) =>
-      <ion-row custom-value={w}>
-        <ion-col size="1">{w.amount}</ion-col>
-        <ion-col size="8">{w.name}</ion-col>
-        <ion-col size="3">{w.armorClass}</ion-col>
+    return armors.map((a) =>
+      <ion-row custom-value={a} onClick={() => this.equipArmor(a)}>
+        <ion-col size="1">{a.amount}</ion-col>
+        <ion-col size="8">{a.name}</ion-col>
+        <ion-col size="3">{a.armorClass}</ion-col>
       </ion-row>
     );
   }
@@ -78,12 +89,20 @@ export class FightTab {
     }
   }
 
+  getArmorClass() {
+    return this.character.equipped.armor ? this.character.equipped.armor.armorClass : this.character.armorClass;
+  }
+
+  getHealth() {
+    return this.character.baseHealth + this.character.calculateAbilityModifier(this.character.abilities.constitution, false);
+  }
+
   render() {
     return (
       <ion-grid>
         <ion-row>
-          <ion-col size="4">Armor class: {this.character.armorClass}</ion-col>
-          <ion-col size="4">Health: {this.character.baseHealth + this.character.calculateAbilityModifier(this.character.abilities.constitution, false)}</ion-col>
+          <ion-col size="4">Armor class: {this.getArmorClass()}</ion-col>
+          <ion-col size="4">Health: {this.getHealth()}</ion-col>
           <ion-col size="4">Speed: {this.character.speed}ft</ion-col>
         </ion-row>
         <ion-row>

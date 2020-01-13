@@ -88,6 +88,11 @@ export interface IEquipment {
     items: IItem[];
 }
 
+export interface IEquipped {
+    weapons: IWeapon[];
+    armor: IArmor;
+}
+
 export interface ICharacter {
     _id: string;
     abilities: IAbilities;
@@ -105,6 +110,7 @@ export interface ICharacter {
         weapons: string[];
     },
     equipment: IEquipment;
+    equipped: IEquipped;
     languages: any[];
     speed: number;
     saveLocalCharacter: Function;
@@ -143,6 +149,7 @@ export class Character implements ICharacter {
     public hitDiceGrowth: number;
     public armorClass: number;
     public equipment: IEquipment;
+    public equipped: IEquipped;
     public languages: any[];
     public speed: number;
 
@@ -163,6 +170,7 @@ export class Character implements ICharacter {
         this.languages = getUniqueValuesArray(base.languages);
         this.speed = base.race.speed;
         this.equipment = base.equipment;
+        this.equipped = { weapons: [], armor: null};
     }
 
     public setCharacter(character: ICharacter) {
@@ -180,6 +188,7 @@ export class Character implements ICharacter {
         this.languages = character.languages;
         this.speed = character.speed;
         this.equipment = character.equipment;
+        this.equipped = character.equipped;
     }
 
     public setCharacterById(_id: string) {
