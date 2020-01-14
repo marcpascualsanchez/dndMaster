@@ -2,6 +2,7 @@ import { IClass, IChoosableEquipment, IItem } from "./classes/Class";
 import { IRace } from "./races/Race";
 import { mergeObjects, getUniqueValuesArray } from "../utils/utils";
 import { IBackground } from "./backgrounds/Background";
+import { IWeapon } from "../utils/WeaponManager";
 
 export enum EAbility {
     strength = 'strength',
@@ -70,12 +71,6 @@ export interface ICharacterProficiency {
     savingThrows: string[];
     armors: string[];
     weapons: string[];
-}
-
-export interface IWeapon extends IItem {
-    damage: string;
-    bonus: string;
-    type: string;
 }
 
 export interface IArmor extends IItem {

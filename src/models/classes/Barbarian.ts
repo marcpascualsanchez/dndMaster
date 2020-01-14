@@ -13,7 +13,7 @@ export const baseParams: IBarbarian = {
     proficiency: {
         savingThrows: ['strenght', 'constitution'],
         armors: ['light armor', 'medium armor', 'shield'],
-        weapons: ['simple weapon', 'martial weapon'],
+        weapons: ['simple', 'martial'],
         skillMods: [],
     },
     equipmentOptions: [

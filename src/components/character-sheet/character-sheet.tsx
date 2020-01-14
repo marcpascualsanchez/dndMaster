@@ -12,10 +12,6 @@ export class CharacterSheet {
   @State() selectedAbility: EAbility;
   @State() currentTabName: string;
 
-  @Watch('character') onCharacterChange() {
-    this.character.saveLocalCharacter();
-  }
-
   constructor() {
     this.character = new Character();
     this.character.setCharacterById(this.characterId);
@@ -162,6 +158,7 @@ export class CharacterSheet {
   }
 
   render() {
+    this.character.saveLocalCharacter();
     return ([
       <ion-header>
         <ion-toolbar color="primary">

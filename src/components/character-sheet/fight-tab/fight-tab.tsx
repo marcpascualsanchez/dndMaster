@@ -1,5 +1,6 @@
 import { Component, h, Prop, State } from '@stencil/core';
-import { ICharacter, IWeapon, IArmor } from '../../../models/Character';
+import { ICharacter, IArmor } from '../../../models/Character';
+import { IWeapon, WeaponManager } from '../../../utils/WeaponManager';
 
 @Component({
   tag: 'fight-tab',
@@ -15,13 +16,15 @@ export class FightTab {
   @State() weapons: IWeapon[];
   @State() armors: IArmor[];
   @State() equippedArmor: IArmor;
-  private mockWeapons: IWeapon[] = [{ name: 'sword', bonus: '+1', damage: '1d6', type: 'punxeta', amount: 1 }, { name: 'porra', bonus: '+0', damage: '3d4', type: 'pupita', amount: 1 }];
+  
+  private weaponManager: WeaponManager;
   private mockArmors: IArmor[] = [{ name: 'chainmail', armorClass: 16, amount: 1 }, { name: 'iron chest', armorClass: 18, amount: 1 }];
 
   constructor() {
     this.weapons = this.character.equipment.weapons;
     this.armors = this.character.equipment.armors;
     this.equippedArmor = this.character.equipped.armor;
+    this.weaponManager = new WeaponManager();
   }
 
   getWeaponList(weapons: IWeapon[]) {
@@ -29,7 +32,7 @@ export class FightTab {
       <ion-row custom-value={w}>
         <ion-col size="1">{w.amount}</ion-col>
         <ion-col size="3">{w.name}</ion-col>
-        <ion-col size="3">{w.bonus}</ion-col>
+        <ion-col size="3">bonus</ion-col>
         <ion-col size="3">{w.damage}</ion-col>
         <ion-col size="2">{w.type}</ion-col>
       </ion-row>
@@ -41,7 +44,7 @@ export class FightTab {
    */
   showWeaponModal() {
     const ownedWeaponsNames: string[] = this.weapons.map(w => w.name);
-    const nonownedWeapons = this.mockWeapons.filter(w => ownedWeaponsNames.indexOf(w.name) < 0); // replace mock w real weapons
+    const nonownedWeapons = this.weaponManager.getAll().filter(w => ownedWeaponsNames.indexOf(w.name) < 0); // replace mock w real weapons
     const chooseListElement = document.querySelector('#choose-list');
     chooseListElement['elementList'] = this.getWeaponList(nonownedWeapons);
     chooseListElement['title'] = 'Choose a weapon';
@@ -49,7 +52,6 @@ export class FightTab {
     chooseListElement['cb'] = (chosenWeapons: IWeapon[]) => {
       this.weapons = this.weapons.concat(chosenWeapons);
       this.character.equipment.weapons = this.weapons;
-      this.character.saveLocalCharacter();
     }
   }
 
@@ -85,7 +87,6 @@ export class FightTab {
     chooseListElement['cb'] = (chosenArmors: IArmor[]) => {
       this.armors = this.armors.concat(chosenArmors);
       this.character.equipment.armors = this.armors;
-      this.character.saveLocalCharacter();
     }
   }
 
@@ -98,6 +99,7 @@ export class FightTab {
   }
 
   render() {
+    this.character.saveLocalCharacter();
     return (
       <ion-grid>
         <ion-row>

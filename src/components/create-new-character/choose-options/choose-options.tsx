@@ -2,6 +2,8 @@ import { Component, h, Prop, State, EventEmitter, Event } from '@stencil/core';
 import { ICharacterParams, IEquipment } from '../../../models/Character';
 import { IChoosableItemList } from '../../../models/classes/Class';
 import { languages } from '../../../models/Character'
+import { WeaponManager } from '../../../utils/WeaponManager';
+import { IWeapon } from '../../../utils/weaponList';
 
 @Component({
   tag: 'choose-options',
@@ -17,12 +19,18 @@ export class ChooseOptions {
     bubbles: true,
   }) selectEmitter: EventEmitter;
   @Prop() characterParams: ICharacterParams;
-  @State() isFormValid: boolean = false;
+  @State() isFormValid: boolean;
 
+  private weaponManager: WeaponManager;
   private equipment: IEquipment;
   private equipmentInputs: any[];
   private languagesInputs: any[];
   private skillInputs: any[];
+
+  constructor() {
+    this.isFormValid = false;
+    this.weaponManager = new WeaponManager();
+  }
 
   componentDidLoad() {
     this.equipmentInputs = Array.from(document.querySelectorAll('.equipment-options'));
@@ -36,9 +44,19 @@ export class ChooseOptions {
     const chosenList: IChoosableItemList[][] = this.equipmentInputs.map(i => i.value).filter(v => v);
     chosenList.forEach((choosenValues) => {
       choosenValues.forEach((value) => {
-        const chosenItem: any = Object.assign({}, value);
-        delete chosenItem.equipmentType;
-        this.equipment[value.equipmentType].push(chosenItem);
+        switch (value.equipmentType) {
+          case ('weapons'):
+            const chosenWeapon: IWeapon = this.weaponManager.getByName(value.name);
+            chosenWeapon.amount = value.amount;
+            this.equipment.weapons.push(chosenWeapon);
+            break;
+          default:
+            // TODO: standarize armors and items too
+            const chosenItem: any = Object.assign({}, value);
+            delete chosenItem.equipmentType;
+            this.equipment[value.equipmentType].push(chosenItem);
+            break;
+        }
       })
     });
     this.characterParams.equipment = this.equipment;

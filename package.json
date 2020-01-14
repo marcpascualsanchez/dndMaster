@@ -16,7 +16,8 @@
   },
   "dependencies": {
     "@ionic/core": "^4.9.1",
-    "@stencil/sass": "^1.1.1"
+    "@stencil/sass": "^1.1.1",
+    "@types/node": "^13.1.6"
   },
   "devDependencies": {
     "@stencil/core": "^1.5.2"

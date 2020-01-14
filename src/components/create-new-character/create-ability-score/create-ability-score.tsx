@@ -24,7 +24,6 @@ export class CreateAbilityScore {
 
     constructor() {
         this.initialize();
-        console.log('base', this.characterParams);
     }
 
     initialize() {
