@@ -161,6 +161,7 @@ export class CharacterSheet {
     this.character.saveLocalCharacter();
     return ([
       <ion-header>
+        <choose-list id="choose-list" elementList={[]}></choose-list>,
         <ion-toolbar color="primary">
           <ion-buttons slot="start">
             <ion-back-button defaultHref="/" />
@@ -169,7 +170,6 @@ export class CharacterSheet {
         </ion-toolbar>
       </ion-header>,
       <ion-content>
-        <choose-list id="choose-list" elementList={[]}></choose-list>
         {this.getStaticUI()}
         <ion-card>
           {this.getCurrentTabUI(this.currentTabName)}
