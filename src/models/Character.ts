@@ -2,7 +2,7 @@ import { IClass, IChoosableEquipment, IItem } from "./classes/Class";
 import { IRace } from "./races/Race";
 import { mergeObjects, getUniqueValuesArray } from "../utils/utils";
 import { IBackground } from "./backgrounds/Background";
-import { IWeapon } from "../utils/WeaponManager";
+import { IWeapon } from "../utils/weaponList";
 
 export enum EAbility {
     strength = 'strength',
@@ -45,6 +45,7 @@ export interface ICharacterParams {
     languagesOptions?: IChoosableLanguage[];
     proficiency?: ICharacterProficiency;
     skillsOptions?: IChoosableSkill[];
+    money: number;
 }
 
 export interface ISkills {
@@ -108,6 +109,7 @@ export interface ICharacter {
     equipped: IEquipped;
     languages: any[];
     speed: number;
+    money: number;
     saveLocalCharacter: Function;
     calculateAbilityModifier: Function;
 }
@@ -147,6 +149,7 @@ export class Character implements ICharacter {
     public equipped: IEquipped;
     public languages: any[];
     public speed: number;
+    public money: number;
 
     constructor() { }
 
@@ -166,6 +169,7 @@ export class Character implements ICharacter {
         this.speed = base.race.speed;
         this.equipment = base.equipment;
         this.equipped = { weapons: [], armor: null};
+        this.money = base.money;
     }
 
     public setCharacter(character: ICharacter) {
