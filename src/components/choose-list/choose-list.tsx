@@ -11,15 +11,19 @@ export class ChooseList {
   @Prop() public maxChosen: number;
   @Prop() public minChosen: number;
   @Prop() public title: string;
-  @Prop() public visible: boolean = false;
-  @Prop() public valueAttribute: string = 'custom-value';
-  @Prop() public cb: Function = () => {};
+  @Prop() public visible: boolean;
+  @Prop() public valueAttribute: string;
+  @Prop() public cb: Function = () => { };
   @State() private isValid: boolean;
 
   public chosenElements: any[] = [];
   private defaultValueAttribute: string = 'custom-value';
 
   constructor() {
+    this.visible = false;
+    this.valueAttribute = this.defaultValueAttribute;
+    this.maxChosen = 1;
+    this.minChosen = 1;
   }
 
   chooseElement(event, element) {
@@ -37,14 +41,10 @@ export class ChooseList {
   }
 
   checkChosenElements() {
-    if (!this.maxChosen || !this.minChosen) {
+    if (this.chosenElements.length <= this.maxChosen && this.chosenElements.length >= this.minChosen) {
       this.isValid = true;
     } else {
-      if (this.chosenElements.length <= this.maxChosen && this.chosenElements.length >= this.minChosen) {
-        this.isValid = true;
-      } else {
-        this.isValid = false;
-      }
+      this.isValid = false;
     }
   }
 
@@ -62,11 +62,11 @@ export class ChooseList {
     this.chosenElements = [];
     this.elementList = [];
     this.title = null;
-    this.maxChosen = null;
-    this.minChosen = null;
+    this.maxChosen = 1;
+    this.minChosen = 1;
     this.isValid = false;
     this.valueAttribute = this.defaultValueAttribute;
-    this.cb = () => {};
+    this.cb = () => { };
   }
 
   cancel() {

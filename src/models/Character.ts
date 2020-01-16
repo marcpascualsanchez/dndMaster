@@ -188,6 +188,7 @@ export class Character implements ICharacter {
         this.speed = character.speed;
         this.equipment = character.equipment;
         this.equipped = character.equipped;
+        this.money = character.money;
     }
 
     public setCharacterById(_id: string) {

@@ -1,6 +1,7 @@
 import { Component, h, Prop, State } from '@stencil/core';
 import { ICharacter, IArmor } from '../../../models/Character';
-import { IWeapon, WeaponManager } from '../../../utils/WeaponManager';
+import { WeaponManager } from '../../../utils/WeaponManager';
+import { IWeapon } from '../../../utils/weaponList';
 
 @Component({
   tag: 'fight-tab',
@@ -16,7 +17,7 @@ export class FightTab {
   @State() weapons: IWeapon[];
   @State() armors: IArmor[];
   @State() equippedArmor: IArmor;
-  
+
   private weaponManager: WeaponManager;
   private mockArmors: IArmor[] = [{ name: 'chainmail', armorClass: 16, amount: 1 }, { name: 'iron chest', armorClass: 18, amount: 1 }];
 
@@ -27,16 +28,8 @@ export class FightTab {
     this.weaponManager = new WeaponManager();
   }
 
-  getWeaponList(weapons: IWeapon[]) {
-    return weapons.map((w) =>
-      <ion-row custom-value={w}>
-        <ion-col size="1">{w.amount}</ion-col>
-        <ion-col size="3">{w.name}</ion-col>
-        <ion-col size="3">bonus</ion-col>
-        <ion-col size="3">{w.damage}</ion-col>
-        <ion-col size="2">{w.type}</ion-col>
-      </ion-row>
-    );
+  getWeaponList(weapons: IWeapon[], isExtendable: boolean = true) {
+    return weapons.map((w) => <weapon-element weapon={w} character={this.character} isExtendable={isExtendable}></weapon-element>);
   }
 
   /**
@@ -44,9 +37,10 @@ export class FightTab {
    */
   showWeaponModal() {
     const ownedWeaponsNames: string[] = this.weapons.map(w => w.name);
-    const nonownedWeapons = this.weaponManager.getAll().filter(w => ownedWeaponsNames.indexOf(w.name) < 0); // replace mock w real weapons
+    const nonownedWeapons = this.weaponManager.getAll().filter(w => ownedWeaponsNames.indexOf(w.name) < 0);
     const chooseListElement = document.querySelector('#choose-list');
-    chooseListElement['elementList'] = this.getWeaponList(nonownedWeapons);
+    chooseListElement['elementList'] = this.getWeaponList(nonownedWeapons, false);
+    chooseListElement['valueAttribute'] = 'weapon';
     chooseListElement['title'] = 'Choose a weapon';
     chooseListElement['visible'] = true;
     chooseListElement['cb'] = (chosenWeapons: IWeapon[]) => {
@@ -114,12 +108,10 @@ export class FightTab {
             </ion-row>
             <ion-row>
               <ion-col size="1"></ion-col>
-              <ion-col size="3">Name</ion-col>
-              <ion-col size="3">Bonus</ion-col>
+              <ion-col size="8">Name</ion-col>
               <ion-col size="3">Damage</ion-col>
-              <ion-col size="2">Type</ion-col>
             </ion-row>
-            {this.getWeaponList(this.character.equipment.weapons)}
+            {this.getWeaponList(this.character.equipment.weapons, true)}
           </ion-grid>
         </ion-row>
         <ion-row>

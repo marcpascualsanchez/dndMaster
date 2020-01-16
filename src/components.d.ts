@@ -11,6 +11,9 @@ import {
   ICharacter,
   ICharacterParams,
 } from './models/Character';
+import {
+  IWeapon,
+} from './utils/weaponList';
 
 export namespace Components {
   interface AppHome {}
@@ -70,6 +73,11 @@ export namespace Components {
     'characterParams': ICharacterParams;
     'isCreating': boolean;
     'step': string;
+  }
+  interface WeaponElement {
+    'character': ICharacter;
+    'isExtendable': boolean;
+    'weapon': IWeapon;
   }
 }
 
@@ -177,6 +185,12 @@ declare global {
     prototype: HTMLRacesListElement;
     new (): HTMLRacesListElement;
   };
+
+  interface HTMLWeaponElementElement extends Components.WeaponElement, HTMLStencilElement {}
+  var HTMLWeaponElementElement: {
+    prototype: HTMLWeaponElementElement;
+    new (): HTMLWeaponElementElement;
+  };
   interface HTMLElementTagNameMap {
     'app-home': HTMLAppHomeElement;
     'app-profile': HTMLAppProfileElement;
@@ -195,6 +209,7 @@ declare global {
     'misc-tab': HTMLMiscTabElement;
     'profile-tab': HTMLProfileTabElement;
     'races-list': HTMLRacesListElement;
+    'weapon-element': HTMLWeaponElementElement;
   }
 }
 
@@ -263,6 +278,11 @@ declare namespace LocalJSX {
     'onParamSelected'?: (event: CustomEvent<any>) => void;
     'step'?: string;
   }
+  interface WeaponElement {
+    'character'?: ICharacter;
+    'isExtendable'?: boolean;
+    'weapon'?: IWeapon;
+  }
 
   interface IntrinsicElements {
     'app-home': AppHome;
@@ -282,6 +302,7 @@ declare namespace LocalJSX {
     'misc-tab': MiscTab;
     'profile-tab': ProfileTab;
     'races-list': RacesList;
+    'weapon-element': WeaponElement;
   }
 }
 
@@ -308,6 +329,7 @@ declare module "@stencil/core" {
       'misc-tab': LocalJSX.MiscTab & JSXBase.HTMLAttributes<HTMLMiscTabElement>;
       'profile-tab': LocalJSX.ProfileTab & JSXBase.HTMLAttributes<HTMLProfileTabElement>;
       'races-list': LocalJSX.RacesList & JSXBase.HTMLAttributes<HTMLRacesListElement>;
+      'weapon-element': LocalJSX.WeaponElement & JSXBase.HTMLAttributes<HTMLWeaponElementElement>;
     }
   }
 }
