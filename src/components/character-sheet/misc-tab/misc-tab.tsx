@@ -8,7 +8,10 @@ import { IItem } from '../../../models/classes/Class';
   shadow: true
 })
 export class MiscTab {
-  @Prop() character: ICharacter;
+  @Prop({
+    mutable: true,
+    reflect: true,
+  }) character: ICharacter;
   @State() items: IItem[];
 
   constructor() {
@@ -16,31 +19,23 @@ export class MiscTab {
   }
 
   getItemsList(items: IItem[]) {
+    if (!items || items.length === 0) {
+      return <span>There are no items yet</span>
+    }
     return items.map((a) =>
-      <ion-row custom-value={a}>
-        <ion-col size="1">{a.amount}</ion-col>
-        <ion-col size="11">{a.name}</ion-col>
-      </ion-row>
+    <ion-row custom-value={a}>
+      <ion-col size="1">{a.amount}</ion-col>
+      <ion-col size="11">{a.name}</ion-col>
+    </ion-row>
     );
   }
 
   render() {
     this.character.saveLocalCharacter();
-    return (
+    return [
+      <currency-manager character={this.character}></currency-manager>,
       <ion-grid>
         <ion-row>
-          <ion-col size="2">Copper</ion-col>
-          <ion-col size="2">Silver</ion-col>
-          <ion-col size="2">Gold</ion-col>
-          <ion-col size="2">Electrum</ion-col>
-          <ion-col size="2">Platinum</ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="2">{this.character.money}<ion-icon name="cash"></ion-icon></ion-col>
-          <ion-col size="2">{this.character.money}<ion-icon name="cash"></ion-icon></ion-col>
-          <ion-col size="2">{this.character.money}<ion-icon name="cash"></ion-icon></ion-col>
-          <ion-col size="2">{this.character.money}<ion-icon name="cash"></ion-icon></ion-col>
-          <ion-col size="2">{this.character.money}<ion-icon name="cash"></ion-icon></ion-col>
         </ion-row>
         <ion-row>
           <ion-grid>
@@ -52,6 +47,6 @@ export class MiscTab {
           </ion-grid>
         </ion-row>
       </ion-grid>
-    );
+    ];
   }
 }

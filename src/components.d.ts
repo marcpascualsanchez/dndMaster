@@ -57,6 +57,9 @@ export namespace Components {
   interface CreateNewCharacter {
     'step': string;
   }
+  interface CurrencyManager {
+    'character': ICharacter;
+  }
   interface FightTab {
     'character': ICharacter;
   }
@@ -156,6 +159,12 @@ declare global {
     new (): HTMLCreateNewCharacterElement;
   };
 
+  interface HTMLCurrencyManagerElement extends Components.CurrencyManager, HTMLStencilElement {}
+  var HTMLCurrencyManagerElement: {
+    prototype: HTMLCurrencyManagerElement;
+    new (): HTMLCurrencyManagerElement;
+  };
+
   interface HTMLFightTabElement extends Components.FightTab, HTMLStencilElement {}
   var HTMLFightTabElement: {
     prototype: HTMLFightTabElement;
@@ -204,6 +213,7 @@ declare global {
     'classes-list': HTMLClassesListElement;
     'create-ability-score': HTMLCreateAbilityScoreElement;
     'create-new-character': HTMLCreateNewCharacterElement;
+    'currency-manager': HTMLCurrencyManagerElement;
     'fight-tab': HTMLFightTabElement;
     'magic-tab': HTMLMagicTabElement;
     'misc-tab': HTMLMiscTabElement;
@@ -260,6 +270,9 @@ declare namespace LocalJSX {
   interface CreateNewCharacter {
     'step'?: string;
   }
+  interface CurrencyManager {
+    'character'?: ICharacter;
+  }
   interface FightTab {
     'character'?: ICharacter;
   }
@@ -297,6 +310,7 @@ declare namespace LocalJSX {
     'classes-list': ClassesList;
     'create-ability-score': CreateAbilityScore;
     'create-new-character': CreateNewCharacter;
+    'currency-manager': CurrencyManager;
     'fight-tab': FightTab;
     'magic-tab': MagicTab;
     'misc-tab': MiscTab;
@@ -324,6 +338,7 @@ declare module "@stencil/core" {
       'classes-list': LocalJSX.ClassesList & JSXBase.HTMLAttributes<HTMLClassesListElement>;
       'create-ability-score': LocalJSX.CreateAbilityScore & JSXBase.HTMLAttributes<HTMLCreateAbilityScoreElement>;
       'create-new-character': LocalJSX.CreateNewCharacter & JSXBase.HTMLAttributes<HTMLCreateNewCharacterElement>;
+      'currency-manager': LocalJSX.CurrencyManager & JSXBase.HTMLAttributes<HTMLCurrencyManagerElement>;
       'fight-tab': LocalJSX.FightTab & JSXBase.HTMLAttributes<HTMLFightTabElement>;
       'magic-tab': LocalJSX.MagicTab & JSXBase.HTMLAttributes<HTMLMagicTabElement>;
       'misc-tab': LocalJSX.MiscTab & JSXBase.HTMLAttributes<HTMLMiscTabElement>;

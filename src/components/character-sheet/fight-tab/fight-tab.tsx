@@ -29,6 +29,9 @@ export class FightTab {
   }
 
   getWeaponList(weapons: IWeapon[], isExtendable: boolean = true) {
+    if (!weapons || weapons.length === 0) {
+      return <span>There are no weapons yet</span>
+    }
     return weapons.map((w) => <weapon-element weapon={w} character={this.character} isExtendable={isExtendable}></weapon-element>);
   }
 
@@ -59,6 +62,9 @@ export class FightTab {
   }
 
   getArmorList(armors: IArmor[]) {
+    if (!armors || armors.length === 0) {
+      return <span>There are no armors yet</span>
+    }
     return armors.map((a) =>
       <ion-row custom-value={a} onClick={() => this.equipArmor(a)}>
         <ion-col size="1">{a.amount}</ion-col>

@@ -1,6 +1,7 @@
 import { Component, Prop, State, h } from "@stencil/core";
 import { IWeapon } from "../../../../utils/weaponList";
 import { ICharacter } from "../../../../models/Character";
+import { getCurrencyFromTotal } from "../../../../utils/currency";
 
 @Component({
   tag: 'weapon-element',
@@ -33,7 +34,7 @@ export class WeaponElement {
 
   sell() {
     this.isSelected = false;
-    this.character.money += this.weapon.price;
+    this.character.currency = getCurrencyFromTotal(this.weapon.price + this.character.currency.total);
     this.drop();
   }
 

@@ -3,6 +3,7 @@ import { IRace } from "./races/Race";
 import { mergeObjects, getUniqueValuesArray } from "../utils/utils";
 import { IBackground } from "./backgrounds/Background";
 import { IWeapon } from "../utils/weaponList";
+import { ICurrency } from "../components/character-sheet/misc-tab/currency-manager/currency-manager";
 
 export enum EAbility {
     strength = 'strength',
@@ -45,7 +46,7 @@ export interface ICharacterParams {
     languagesOptions?: IChoosableLanguage[];
     proficiency?: ICharacterProficiency;
     skillsOptions?: IChoosableSkill[];
-    money: number;
+    currency: ICurrency;
 }
 
 export interface ISkills {
@@ -109,7 +110,7 @@ export interface ICharacter {
     equipped: IEquipped;
     languages: any[];
     speed: number;
-    money: number;
+    currency: ICurrency;
     saveLocalCharacter: Function;
     calculateAbilityModifier: Function;
 }
@@ -149,7 +150,7 @@ export class Character implements ICharacter {
     public equipped: IEquipped;
     public languages: any[];
     public speed: number;
-    public money: number;
+    public currency: ICurrency;
 
     constructor() { }
 
@@ -169,7 +170,7 @@ export class Character implements ICharacter {
         this.speed = base.race.speed;
         this.equipment = base.equipment;
         this.equipped = { weapons: [], armor: null};
-        this.money = base.money;
+        this.currency = base.currency;
     }
 
     public setCharacter(character: ICharacter) {
@@ -188,7 +189,7 @@ export class Character implements ICharacter {
         this.speed = character.speed;
         this.equipment = character.equipment;
         this.equipped = character.equipped;
-        this.money = character.money;
+        this.currency = character.currency;
     }
 
     public setCharacterById(_id: string) {
