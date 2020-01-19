@@ -19,33 +19,20 @@ export class WeaponElement {
   }) weapon: IWeapon;
   @Prop() isExtendable: boolean;
   @State() amount: number;
-  @State() isSelected: boolean = true;
-
-  // name: string;
-  // damage: string;
-  // type: string;
-  // range: string;
-  // properties: string;
-  // price: number;
-  // weight: number;
+  @State() isSelected: boolean;
 
   constructor() {
     this.amount = this.weapon.amount ? this.weapon.amount : 1;
-    // this.name = this.weapon.name;
-    // this.damage = this.weapon.damage;
-    // this.type = this.weapon.type;
-    // this.range = this.weapon.range;
-    // this.properties = this.weapon.properties;
-
-    // this.price = this.weapon.price;
-    // this.weight = this.weapon.weight;
+    this.isSelected = false;
   }
 
   drop() {
+    this.isSelected = false;
     this.character.equipment.weapons = this.character.equipment.weapons.filter(w => w.name !== this.weapon.name);
   }
 
   sell() {
+    this.isSelected = false;
     this.character.money += this.weapon.price;
     this.drop();
   }
@@ -56,12 +43,20 @@ export class WeaponElement {
         <ion-col size="1"><ion-icon name="arrow-dropdown-circle" onClick={() => this.amount -= 1}></ion-icon></ion-col>
         <ion-col size="1">{this.amount}</ion-col>
         <ion-col size="1"><ion-icon name="arrow-dropup-circle" onClick={() => this.amount += 1}></ion-icon></ion-col>
-        <ion-col size="7">{this.weapon.name}</ion-col>
+        <ion-col size="7" onClick={() => this.select()}>{this.weapon.name}</ion-col>
       </ion-row>,
       <ion-row>
         <ion-col size="4">bonus</ion-col>
         <ion-col size="4">{this.weapon.damage}</ion-col>
-        <ion-col size="4">{this.weapon.type}</ion-col>
+        <ion-col size="4">{this.weapon.type ? this.weapon.type : '-'}</ion-col>
+      </ion-row>,
+      <ion-row>
+        <ion-col size="4">{this.weapon.range} ft</ion-col>
+        <ion-col size="4">{this.weapon.weight} lb</ion-col>
+        <ion-col size="4">{this.weapon.price} €</ion-col>
+      </ion-row>,
+      <ion-row>
+        <ion-col size="12">{this.weapon.properties.toString()}</ion-col>
       </ion-row>,
       <ion-row>
         <ion-col size="4">
@@ -77,9 +72,13 @@ export class WeaponElement {
     ]
   }
 
+  select() {
+    this.isSelected = !this.isSelected;
+  }
+
   getUnextended() {
     return (
-      <ion-row>
+      <ion-row onClick={() => this.select()}>
         <ion-col size="1">{this.weapon.amount}</ion-col>
         <ion-col size="8">{this.weapon.name}</ion-col>
         <ion-col size="3">{this.weapon.damage}</ion-col>
