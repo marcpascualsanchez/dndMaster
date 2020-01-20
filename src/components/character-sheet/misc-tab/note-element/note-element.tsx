@@ -27,7 +27,6 @@ export class NoteElement {
   }
 
   save() {
-    this.isEditing = false;
     this.note.title = document.querySelector('.new-note-title')['value'];
     this.note.body = document.querySelector('.new-note-body')['value'];
     this.delete();
@@ -36,6 +35,7 @@ export class NoteElement {
   }
 
   delete() {
+    this.isEditing = false;
     this.character.notes = this.character.notes.filter(n => n.title !== this.note.title && n.lastModified.toString() !== this.note.lastModified.toString());
   }
 
