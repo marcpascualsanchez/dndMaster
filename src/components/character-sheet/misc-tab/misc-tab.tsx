@@ -1,21 +1,25 @@
 import { Component, h, Prop, State } from '@stencil/core';
 import { ICharacter } from '../../../models/Character';
 import { IItem } from '../../../models/classes/Class';
+import { INote } from './note-element/note-element';
 
 @Component({
   tag: 'misc-tab',
   styleUrl: 'misc-tab.scss',
-  shadow: true
+  shadow: false
 })
 export class MiscTab {
+
   @Prop({
     mutable: true,
     reflect: true,
   }) character: ICharacter;
   @State() items: IItem[];
+  @State() notes: INote[];
 
   constructor() {
     this.items = this.character.equipment.items;
+    this.notes = this.character.notes;
   }
 
   getItemsList(items: IItem[]) {
@@ -23,11 +27,33 @@ export class MiscTab {
       return <span>There are no items yet</span>
     }
     return items.map((a) =>
-    <ion-row custom-value={a}>
-      <ion-col size="1">{a.amount}</ion-col>
-      <ion-col size="11">{a.name}</ion-col>
-    </ion-row>
+      <ion-row custom-value={a}>
+        <ion-col size="1">{a.amount}</ion-col>
+        <ion-col size="11">{a.name}</ion-col>
+      </ion-row>
     );
+  }
+
+  getNotesList(notes: INote[]) {
+    return notes.map(n =>
+      <ion-row>
+        <ion-col size="12">
+          <note-element character={this.character} note={n}></note-element>
+        </ion-col>
+      </ion-row>);
+  }
+
+  createNote() {
+    this.notes = this.notes.concat(this.getDefaultNote());
+    this.character.notes = this.notes;
+  }
+
+  getDefaultNote(): INote {
+    return {
+      title: 'Edit me!',
+      body: 'Write anything you want, and keep track of everything.',
+      lastModified: new Date(),
+    }
   }
 
   render() {
@@ -46,6 +72,10 @@ export class MiscTab {
             {this.getItemsList(this.character.equipment.items)}
           </ion-grid>
         </ion-row>
+        <ion-row>
+          <ion-col><h3>Notes<ion-icon slot="end" name="add-circle" color="primary" onClick={() => this.createNote()}></ion-icon></h3></ion-col>
+        </ion-row>
+        {this.getNotesList(this.notes)}
       </ion-grid>
     ];
   }

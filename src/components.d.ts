@@ -12,6 +12,9 @@ import {
   ICharacterParams,
 } from './models/Character';
 import {
+  INote,
+} from './components/character-sheet/misc-tab/note-element/note-element';
+import {
   IWeapon,
 } from './utils/weaponList';
 
@@ -68,6 +71,10 @@ export namespace Components {
   }
   interface MiscTab {
     'character': ICharacter;
+  }
+  interface NoteElement {
+    'character': ICharacter;
+    'note': INote;
   }
   interface ProfileTab {
     'character': ICharacter;
@@ -183,6 +190,12 @@ declare global {
     new (): HTMLMiscTabElement;
   };
 
+  interface HTMLNoteElementElement extends Components.NoteElement, HTMLStencilElement {}
+  var HTMLNoteElementElement: {
+    prototype: HTMLNoteElementElement;
+    new (): HTMLNoteElementElement;
+  };
+
   interface HTMLProfileTabElement extends Components.ProfileTab, HTMLStencilElement {}
   var HTMLProfileTabElement: {
     prototype: HTMLProfileTabElement;
@@ -217,6 +230,7 @@ declare global {
     'fight-tab': HTMLFightTabElement;
     'magic-tab': HTMLMagicTabElement;
     'misc-tab': HTMLMiscTabElement;
+    'note-element': HTMLNoteElementElement;
     'profile-tab': HTMLProfileTabElement;
     'races-list': HTMLRacesListElement;
     'weapon-element': HTMLWeaponElementElement;
@@ -282,6 +296,10 @@ declare namespace LocalJSX {
   interface MiscTab {
     'character'?: ICharacter;
   }
+  interface NoteElement {
+    'character'?: ICharacter;
+    'note'?: INote;
+  }
   interface ProfileTab {
     'character'?: ICharacter;
   }
@@ -314,6 +332,7 @@ declare namespace LocalJSX {
     'fight-tab': FightTab;
     'magic-tab': MagicTab;
     'misc-tab': MiscTab;
+    'note-element': NoteElement;
     'profile-tab': ProfileTab;
     'races-list': RacesList;
     'weapon-element': WeaponElement;
@@ -342,6 +361,7 @@ declare module "@stencil/core" {
       'fight-tab': LocalJSX.FightTab & JSXBase.HTMLAttributes<HTMLFightTabElement>;
       'magic-tab': LocalJSX.MagicTab & JSXBase.HTMLAttributes<HTMLMagicTabElement>;
       'misc-tab': LocalJSX.MiscTab & JSXBase.HTMLAttributes<HTMLMiscTabElement>;
+      'note-element': LocalJSX.NoteElement & JSXBase.HTMLAttributes<HTMLNoteElementElement>;
       'profile-tab': LocalJSX.ProfileTab & JSXBase.HTMLAttributes<HTMLProfileTabElement>;
       'races-list': LocalJSX.RacesList & JSXBase.HTMLAttributes<HTMLRacesListElement>;
       'weapon-element': LocalJSX.WeaponElement & JSXBase.HTMLAttributes<HTMLWeaponElementElement>;

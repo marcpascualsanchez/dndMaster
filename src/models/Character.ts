@@ -4,6 +4,7 @@ import { mergeObjects, getUniqueValuesArray } from "../utils/utils";
 import { IBackground } from "./backgrounds/Background";
 import { IWeapon } from "../utils/weaponList";
 import { ICurrency } from "../components/character-sheet/misc-tab/currency-manager/currency-manager";
+import { INote } from "../components/character-sheet/misc-tab/note-element/note-element";
 
 export enum EAbility {
     strength = 'strength',
@@ -111,6 +112,7 @@ export interface ICharacter {
     languages: any[];
     speed: number;
     currency: ICurrency;
+    notes: INote[];
     saveLocalCharacter: Function;
     calculateAbilityModifier: Function;
 }
@@ -151,6 +153,7 @@ export class Character implements ICharacter {
     public languages: any[];
     public speed: number;
     public currency: ICurrency;
+    public notes: INote[];
 
     constructor() { }
 
@@ -171,6 +174,7 @@ export class Character implements ICharacter {
         this.equipment = base.equipment;
         this.equipped = { weapons: [], armor: null};
         this.currency = base.currency;
+        this.notes = [];
     }
 
     public setCharacter(character: ICharacter) {
@@ -190,6 +194,7 @@ export class Character implements ICharacter {
         this.equipment = character.equipment;
         this.equipped = character.equipped;
         this.currency = character.currency;
+        this.notes = character.notes;
     }
 
     public setCharacterById(_id: string) {

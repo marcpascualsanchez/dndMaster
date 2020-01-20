@@ -1,9 +1,10 @@
-import { Component, Prop, h, State, Watch } from '@stencil/core';
+import { Component, Prop, h, State } from '@stencil/core';
 import { skills, EAbility, Character } from '../../models/Character';
 
 @Component({
   tag: 'character-sheet',
   styleUrl: 'character-sheet.scss',
+  shadow: false,
 })
 export class CharacterSheet {
 
