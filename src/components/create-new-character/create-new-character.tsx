@@ -40,6 +40,14 @@ export class CharactersList {
                 weapons: [],
             },
             skillsOptions: [],
+            currency: { // TODO: choose money on creation
+                total: 0,
+                copper: 0,
+                silver: 0,
+                electrum: 0,
+                gold: 0,
+                platinum: 0,
+              }
         };
     }
 

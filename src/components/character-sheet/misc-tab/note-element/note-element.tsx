@@ -61,7 +61,7 @@ export class NoteElement {
     return (
       <ion-grid>
         <ion-row>
-          <ion-col size="10"><h3>{this.note.title}</h3></ion-col>
+          <ion-col size="10"><h6>{this.note.title}</h6></ion-col>
           <ion-col size="2"><ion-icon name="create" onClick={() => this.isEditing = true}></ion-icon></ion-col>
         </ion-row>
         <ion-row>
