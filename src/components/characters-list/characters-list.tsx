@@ -46,6 +46,9 @@ export class CharactersList {
     }
 
     getCharacterCards(characters: ICharacterParams[]) {
+        if (characters.length === 0) {
+            return <p>You do not have any character saved, let's <a href="/create-new-character">create one</a></p>
+        }
         return characters.map((ch) => {
             return (
                 <ion-card key={ch._id} href={`character-sheet/${ch._id}`}>

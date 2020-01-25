@@ -5,6 +5,7 @@ import { IBackground } from "./backgrounds/Background";
 import { IWeapon } from "../utils/weaponList";
 import { ICurrency } from "../components/character-sheet/misc-tab/currency-manager/currency-manager";
 import { INote } from "../components/character-sheet/misc-tab/note-element/note-element";
+import { IHealth } from "../components/character-sheet/fight-tab/health-manager/health-manager";
 
 export enum EAbility {
     strength = 'strength',
@@ -91,11 +92,16 @@ export interface IEquipped {
     armor: IArmor;
 }
 
+export interface IState {
+    level: number;
+    health: IHealth;
+}
+
 export interface ICharacter {
     _id: string;
     abilities: IAbilities;
     personal: any;
-    state: any;
+    state: IState;
     race: ICharacterRace;
     class: ICharacterClass;
     baseHealth: number;
@@ -115,6 +121,7 @@ export interface ICharacter {
     notes: INote[];
     saveLocalCharacter: Function;
     calculateAbilityModifier: Function;
+    getMaxHealth: Function;
 }
 
 export const skills: ISkills = {
@@ -141,7 +148,7 @@ export class Character implements ICharacter {
     public _id: string;
     public proficiency: ICharacterProficiency;
     public abilities: IAbilities;
-    public state: any;
+    public state: IState;
     public personal: any;
     public race: ICharacterRace;
     public class: ICharacterClass;
@@ -162,7 +169,7 @@ export class Character implements ICharacter {
         this.setId();
         this.setProficiency(base);
         this.setAbilities(base);
-        this.setState({ level: 1 });
+        this.setState(this.getDefaultState());
         this.setPersonal(base.personal);
         this.setRace(base.race);
         this.setClass(base.class);
@@ -172,7 +179,7 @@ export class Character implements ICharacter {
         this.languages = getUniqueValuesArray(base.languages);
         this.speed = base.race.speed;
         this.equipment = base.equipment;
-        this.equipped = { weapons: [], armor: null};
+        this.equipped = { weapons: [], armor: null };
         this.currency = base.currency;
         this.notes = [];
     }
@@ -206,7 +213,7 @@ export class Character implements ICharacter {
         this._id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     }
 
-    public setState(state: any) {
+    public setState(state: IState) {
         this.state = state;
     }
 
@@ -275,10 +282,21 @@ export class Character implements ICharacter {
             '+10': [30],
         };
         const resultModifier = Object.keys(modifiers).find(m => modifiers[m].indexOf(score) > -1);
-        return isReturnString ? resultModifier : parseInt(resultModifier);
+        return isReturnString ? parseInt(resultModifier) : parseInt(resultModifier);
     }
 
     calculateProficiencyModifier(level: number) {
         return (((level - 1) / 4) | 0) + 2;
+    }
+
+    getMaxHealth() {
+        return this.baseHealth + this.calculateAbilityModifier(parseInt(this.abilities.constitution), false);
+    }
+
+    getDefaultState(): IState {
+        return {
+            level: 1,
+            health: { extra: 0, current: this.getMaxHealth() }
+        }
     }
 }
