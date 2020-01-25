@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">pocketDnD</string>
+    <string name="title_activity_main">pocketDnD</string>
+    <string name="package_name">com.pocketDnD</string>
+    <string name="custom_url_scheme">com.pocketDnD</string>
+</resources>

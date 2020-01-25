@@ -1,0 +1,9 @@
+{
+  "appId": "com.pocketDnD",
+  "appName": "pocketDnD",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "www",
+  "cordova": {},
+  "linuxAndroidStudioPath": "/home/marcpache/android-studio/bin/studio.sh"
+}
