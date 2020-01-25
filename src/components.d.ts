@@ -20,9 +20,6 @@ import {
 
 export namespace Components {
   interface AppHome {}
-  interface AppProfile {
-    'name': string;
-  }
   interface AppRoot {}
   interface BackgroundsList {
     'characterParams': ICharacterParams;
@@ -42,7 +39,7 @@ export namespace Components {
     'elementList': any[];
     'maxChosen': number;
     'minChosen': number;
-    'title': string;
+    'name': string;
     'valueAttribute': string;
     'visible': boolean;
   }
@@ -64,6 +61,9 @@ export namespace Components {
     'character': ICharacter;
   }
   interface FightTab {
+    'character': ICharacter;
+  }
+  interface HealthManager {
     'character': ICharacter;
   }
   interface MagicTab {
@@ -98,12 +98,6 @@ declare global {
   var HTMLAppHomeElement: {
     prototype: HTMLAppHomeElement;
     new (): HTMLAppHomeElement;
-  };
-
-  interface HTMLAppProfileElement extends Components.AppProfile, HTMLStencilElement {}
-  var HTMLAppProfileElement: {
-    prototype: HTMLAppProfileElement;
-    new (): HTMLAppProfileElement;
   };
 
   interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {}
@@ -178,6 +172,12 @@ declare global {
     new (): HTMLFightTabElement;
   };
 
+  interface HTMLHealthManagerElement extends Components.HealthManager, HTMLStencilElement {}
+  var HTMLHealthManagerElement: {
+    prototype: HTMLHealthManagerElement;
+    new (): HTMLHealthManagerElement;
+  };
+
   interface HTMLMagicTabElement extends Components.MagicTab, HTMLStencilElement {}
   var HTMLMagicTabElement: {
     prototype: HTMLMagicTabElement;
@@ -215,7 +215,6 @@ declare global {
   };
   interface HTMLElementTagNameMap {
     'app-home': HTMLAppHomeElement;
-    'app-profile': HTMLAppProfileElement;
     'app-root': HTMLAppRootElement;
     'backgrounds-list': HTMLBackgroundsListElement;
     'character-personal-data': HTMLCharacterPersonalDataElement;
@@ -228,6 +227,7 @@ declare global {
     'create-new-character': HTMLCreateNewCharacterElement;
     'currency-manager': HTMLCurrencyManagerElement;
     'fight-tab': HTMLFightTabElement;
+    'health-manager': HTMLHealthManagerElement;
     'magic-tab': HTMLMagicTabElement;
     'misc-tab': HTMLMiscTabElement;
     'note-element': HTMLNoteElementElement;
@@ -239,9 +239,6 @@ declare global {
 
 declare namespace LocalJSX {
   interface AppHome {}
-  interface AppProfile {
-    'name'?: string;
-  }
   interface AppRoot {}
   interface BackgroundsList {
     'characterParams'?: ICharacterParams;
@@ -263,7 +260,7 @@ declare namespace LocalJSX {
     'elementList'?: any[];
     'maxChosen'?: number;
     'minChosen'?: number;
-    'title'?: string;
+    'name'?: string;
     'valueAttribute'?: string;
     'visible'?: boolean;
   }
@@ -288,6 +285,9 @@ declare namespace LocalJSX {
     'character'?: ICharacter;
   }
   interface FightTab {
+    'character'?: ICharacter;
+  }
+  interface HealthManager {
     'character'?: ICharacter;
   }
   interface MagicTab {
@@ -317,7 +317,6 @@ declare namespace LocalJSX {
 
   interface IntrinsicElements {
     'app-home': AppHome;
-    'app-profile': AppProfile;
     'app-root': AppRoot;
     'backgrounds-list': BackgroundsList;
     'character-personal-data': CharacterPersonalData;
@@ -330,6 +329,7 @@ declare namespace LocalJSX {
     'create-new-character': CreateNewCharacter;
     'currency-manager': CurrencyManager;
     'fight-tab': FightTab;
+    'health-manager': HealthManager;
     'magic-tab': MagicTab;
     'misc-tab': MiscTab;
     'note-element': NoteElement;
@@ -346,7 +346,6 @@ declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
       'app-home': LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
-      'app-profile': LocalJSX.AppProfile & JSXBase.HTMLAttributes<HTMLAppProfileElement>;
       'app-root': LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
       'backgrounds-list': LocalJSX.BackgroundsList & JSXBase.HTMLAttributes<HTMLBackgroundsListElement>;
       'character-personal-data': LocalJSX.CharacterPersonalData & JSXBase.HTMLAttributes<HTMLCharacterPersonalDataElement>;
@@ -359,6 +358,7 @@ declare module "@stencil/core" {
       'create-new-character': LocalJSX.CreateNewCharacter & JSXBase.HTMLAttributes<HTMLCreateNewCharacterElement>;
       'currency-manager': LocalJSX.CurrencyManager & JSXBase.HTMLAttributes<HTMLCurrencyManagerElement>;
       'fight-tab': LocalJSX.FightTab & JSXBase.HTMLAttributes<HTMLFightTabElement>;
+      'health-manager': LocalJSX.HealthManager & JSXBase.HTMLAttributes<HTMLHealthManagerElement>;
       'magic-tab': LocalJSX.MagicTab & JSXBase.HTMLAttributes<HTMLMagicTabElement>;
       'misc-tab': LocalJSX.MiscTab & JSXBase.HTMLAttributes<HTMLMiscTabElement>;
       'note-element': LocalJSX.NoteElement & JSXBase.HTMLAttributes<HTMLNoteElementElement>;
