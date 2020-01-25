@@ -169,7 +169,6 @@ export class Character implements ICharacter {
         this.setId();
         this.setProficiency(base);
         this.setAbilities(base);
-        this.setState(this.getDefaultState());
         this.setPersonal(base.personal);
         this.setRace(base.race);
         this.setClass(base.class);
@@ -182,13 +181,13 @@ export class Character implements ICharacter {
         this.equipped = { weapons: [], armor: null };
         this.currency = base.currency;
         this.notes = [];
+        this.setState(this.getDefaultState());
     }
 
     public setCharacter(character: ICharacter) {
         this._id = character._id;
         this.proficiency = character.proficiency;
         this.abilities = character.abilities;
-        this.state = character.state;
         this.personal = character.personal;
         this.race = character.race;
         this.class = character.class;
@@ -202,6 +201,7 @@ export class Character implements ICharacter {
         this.equipped = character.equipped;
         this.currency = character.currency;
         this.notes = character.notes;
+        this.state = character.state;
     }
 
     public setCharacterById(_id: string) {

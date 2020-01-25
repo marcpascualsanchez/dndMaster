@@ -8,7 +8,7 @@ import { ICharacterParams, Character } from '../../models/Character';
 export class CharactersList {
 
     private allSteps: string[] = ['race', 'class', 'background', 'options', 'abilities', 'personal']; //ordered by appareance
-    // private previousStep: string; // TODO: manage backbutton
+    private previousStep: string; // TODO: manage backbutton
     private characterParams: ICharacterParams;
 
     @Prop() public step: string;
@@ -20,12 +20,12 @@ export class CharactersList {
             window.location.href = `/character-sheet/${newCharId}`;
             return;  // ends flow
         }
-        // this.previousStep = this.allSteps.find((s, idx) => {
-        //     if (s === event.detail.step) {
-        //         this.step = this.allSteps[idx + 1];
-        //         return true;
-        //     }
-        // });
+        this.previousStep = this.allSteps.find((s, idx) => {
+            if (s === event.detail.step) {
+                this.step = this.allSteps[idx + 1];
+                return true;
+            }
+        });
     }
 
     constructor() { // store params from every step
