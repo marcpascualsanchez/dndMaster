@@ -10,7 +10,7 @@ export class ChooseList {
   @Prop() public elementList: any[];
   @Prop() public maxChosen: number;
   @Prop() public minChosen: number;
-  @Prop() public title: string;
+  @Prop() public name: string;
   @Prop() public visible: boolean;
   @Prop() public valueAttribute: string;
   @Prop() public cb: Function = () => { };
@@ -61,7 +61,7 @@ export class ChooseList {
   reset() {
     this.chosenElements = [];
     this.elementList = [];
-    this.title = null;
+    this.name = null;
     this.maxChosen = 1;
     this.minChosen = 1;
     this.isValid = false;
@@ -77,7 +77,7 @@ export class ChooseList {
     return (
       <div class={this.visible ? "wrapper visible" : "wrapper"} onClick={() => this.cancel()}>
         <div class="modal" onClick={(e) => e.stopPropagation()}>
-          <h3 class="title">{this.title ? this.title : 'Choose any'}</h3>
+          <h3 class="title">{this.name ? this.name : 'Choose any'}</h3>
           <div>
             <ion-grid>
               {this.elementList.map((e) => {
