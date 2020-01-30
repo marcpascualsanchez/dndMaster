@@ -1,6 +1,7 @@
 import { Component, Prop, State, h } from "@stencil/core";
 import { ICharacter } from "../../../../models/Character";
 import { IArmor } from "../../../../utils/armorList";
+import { Subscription } from 'rxjs';
 
 @Component({
   tag: 'armor-element',
@@ -20,10 +21,15 @@ export class ArmorElement {
   @Prop() isExtendable: boolean;
   @State() isSelected: boolean;
   @State() lastModified: Date;
+  private characterSubscription: Subscription;
 
   constructor() {
     this.isSelected = false;
-    this.character.onChange.subscribe(() => this.lastModified = new Date());
+    this.characterSubscription = this.character.onChange.subscribe(() => this.lastModified = new Date());
+  }
+
+  componentDidUnload() {
+    this.characterSubscription.unsubscribe();
   }
 
   select() {

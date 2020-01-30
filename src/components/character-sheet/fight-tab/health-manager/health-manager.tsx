@@ -1,5 +1,6 @@
 import { Component, h, Prop, State } from '@stencil/core';
 import { ICharacter } from '../../../../models/Character';
+import { Subscription } from 'rxjs';
 
 export interface IHealth {
   extra: number;
@@ -19,8 +20,14 @@ export class HealthManager {
   }) character: ICharacter;
   @State() lastModified: Date;
 
+  private characterSubscription: Subscription;
+
   constructor() {
     this.character.onChange.subscribe(() => this.lastModified = new Date());
+  }
+
+  componentDidUnload() {
+    this.characterSubscription.unsubscribe();
   }
 
   render() {

@@ -4,6 +4,7 @@ import { WeaponManager } from '../../../utils/WeaponManager';
 import { IWeapon } from '../../../utils/weaponList';
 import { ArmorManager } from '../../../utils/ArmorManager';
 import { IArmor } from '../../../utils/armorList';
+import { Subscription } from 'rxjs';
 
 @Component({
   tag: 'fight-tab',
@@ -20,6 +21,7 @@ export class FightTab {
   @State() armors: IArmor[];
   @State() equippedArmor: IArmor;
   @State() lastModified: Date;
+  private characterSubscription: Subscription;
 
   private weaponManager: WeaponManager;
   private armorManager: ArmorManager;
@@ -30,7 +32,11 @@ export class FightTab {
     this.equippedArmor = this.character.equipped.armor;
     this.weaponManager = new WeaponManager();
     this.armorManager = new ArmorManager();
-    this.character.onChange.subscribe(() => this.lastModified = new Date());
+    this.characterSubscription = this.character.onChange.subscribe(() => this.lastModified = new Date());
+  }
+
+  componentDidUnload() {
+    this.characterSubscription.unsubscribe();
   }
 
   getWeaponList(weapons: IWeapon[], isExtendable: boolean = true) {
