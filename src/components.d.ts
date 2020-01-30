@@ -12,6 +12,9 @@ import {
   ICharacterParams,
 } from './models/Character';
 import {
+  IArmor,
+} from './utils/armorList';
+import {
   INote,
 } from './components/character-sheet/misc-tab/note-element/note-element';
 import {
@@ -21,6 +24,11 @@ import {
 export namespace Components {
   interface AppHome {}
   interface AppRoot {}
+  interface ArmorElement {
+    'armor': IArmor;
+    'character': ICharacter;
+    'isExtendable': boolean;
+  }
   interface BackgroundsList {
     'characterParams': ICharacterParams;
     'isCreating': boolean;
@@ -104,6 +112,12 @@ declare global {
   var HTMLAppRootElement: {
     prototype: HTMLAppRootElement;
     new (): HTMLAppRootElement;
+  };
+
+  interface HTMLArmorElementElement extends Components.ArmorElement, HTMLStencilElement {}
+  var HTMLArmorElementElement: {
+    prototype: HTMLArmorElementElement;
+    new (): HTMLArmorElementElement;
   };
 
   interface HTMLBackgroundsListElement extends Components.BackgroundsList, HTMLStencilElement {}
@@ -216,6 +230,7 @@ declare global {
   interface HTMLElementTagNameMap {
     'app-home': HTMLAppHomeElement;
     'app-root': HTMLAppRootElement;
+    'armor-element': HTMLArmorElementElement;
     'backgrounds-list': HTMLBackgroundsListElement;
     'character-personal-data': HTMLCharacterPersonalDataElement;
     'character-sheet': HTMLCharacterSheetElement;
@@ -240,6 +255,11 @@ declare global {
 declare namespace LocalJSX {
   interface AppHome {}
   interface AppRoot {}
+  interface ArmorElement {
+    'armor'?: IArmor;
+    'character'?: ICharacter;
+    'isExtendable'?: boolean;
+  }
   interface BackgroundsList {
     'characterParams'?: ICharacterParams;
     'isCreating'?: boolean;
@@ -318,6 +338,7 @@ declare namespace LocalJSX {
   interface IntrinsicElements {
     'app-home': AppHome;
     'app-root': AppRoot;
+    'armor-element': ArmorElement;
     'backgrounds-list': BackgroundsList;
     'character-personal-data': CharacterPersonalData;
     'character-sheet': CharacterSheet;
@@ -347,6 +368,7 @@ declare module "@stencil/core" {
     interface IntrinsicElements {
       'app-home': LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
       'app-root': LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+      'armor-element': LocalJSX.ArmorElement & JSXBase.HTMLAttributes<HTMLArmorElementElement>;
       'backgrounds-list': LocalJSX.BackgroundsList & JSXBase.HTMLAttributes<HTMLBackgroundsListElement>;
       'character-personal-data': LocalJSX.CharacterPersonalData & JSXBase.HTMLAttributes<HTMLCharacterPersonalDataElement>;
       'character-sheet': LocalJSX.CharacterSheet & JSXBase.HTMLAttributes<HTMLCharacterSheetElement>;

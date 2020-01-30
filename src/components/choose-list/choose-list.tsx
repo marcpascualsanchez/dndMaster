@@ -18,6 +18,7 @@ export class ChooseList {
 
   public chosenElements: any[] = [];
   private defaultValueAttribute: string = 'custom-value';
+  private defaultName: string = 'Choose any';
 
   constructor() {
     this.visible = false;
@@ -77,7 +78,7 @@ export class ChooseList {
     return (
       <div class={this.visible ? "wrapper visible" : "wrapper"} onClick={() => this.cancel()}>
         <div class="modal" onClick={(e) => e.stopPropagation()}>
-          <h3 class="title">{this.name ? this.name : 'Choose any'}</h3>
+          <h3 class="title">{this.name ? this.name : this.defaultName}</h3>
           <div>
             <ion-grid>
               {this.elementList.map((e) => {

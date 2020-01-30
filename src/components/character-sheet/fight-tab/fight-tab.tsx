@@ -1,7 +1,9 @@
 import { Component, h, Prop, State } from '@stencil/core';
-import { ICharacter, IArmor } from '../../../models/Character';
+import { ICharacter } from '../../../models/Character';
 import { WeaponManager } from '../../../utils/WeaponManager';
 import { IWeapon } from '../../../utils/weaponList';
+import { ArmorManager } from '../../../utils/ArmorManager';
+import { IArmor } from '../../../utils/armorList';
 
 @Component({
   tag: 'fight-tab',
@@ -17,15 +19,18 @@ export class FightTab {
   @State() weapons: IWeapon[];
   @State() armors: IArmor[];
   @State() equippedArmor: IArmor;
+  @State() lastModified: Date;
 
   private weaponManager: WeaponManager;
-  private mockArmors: IArmor[] = [{ name: 'chainmail', armorClass: 16, amount: 1 }, { name: 'iron chest', armorClass: 18, amount: 1 }];
+  private armorManager: ArmorManager;
 
   constructor() {
     this.weapons = this.character.equipment.weapons;
     this.armors = this.character.equipment.armors;
     this.equippedArmor = this.character.equipped.armor;
     this.weaponManager = new WeaponManager();
+    this.armorManager = new ArmorManager();
+    this.character.onChange.subscribe(() => this.lastModified = new Date());
   }
 
   getWeaponList(weapons: IWeapon[], isExtendable: boolean = true) {
@@ -44,7 +49,7 @@ export class FightTab {
     const chooseListElement = document.querySelector('#choose-list');
     chooseListElement['elementList'] = this.getWeaponList(nonownedWeapons, false);
     chooseListElement['valueAttribute'] = 'weapon';
-    chooseListElement['title'] = 'Choose a weapon';
+    chooseListElement['name'] = 'Choose a weapon';
     chooseListElement['visible'] = true;
     chooseListElement['cb'] = (chosenWeapons: IWeapon[]) => {
       this.weapons = this.weapons.concat(chosenWeapons);
@@ -52,37 +57,23 @@ export class FightTab {
     }
   }
 
-  equipArmor(armor: IArmor) {
-    if (!this.equippedArmor || this.equippedArmor.name !== armor.name) {
-      this.equippedArmor = armor;
-    } else {
-      this.equippedArmor = null;
-    }
-    this.character.equipped.armor = this.equippedArmor;
-  }
-
-  getArmorList(armors: IArmor[]) {
+  getArmorList(armors: IArmor[], isExtendable: boolean = true) {
     if (!armors || armors.length === 0) {
       return <span>There are no armors yet</span>
     }
-    return armors.map((a) =>
-      <ion-row custom-value={a} onClick={() => this.equipArmor(a)}>
-        <ion-col size="1">{a.amount}</ion-col>
-        <ion-col size="8">{a.name}</ion-col>
-        <ion-col size="3">{a.armorClass}</ion-col>
-      </ion-row>
-    );
+    return armors.map(a => <armor-element armor={a} character={this.character} isExtendable={isExtendable}></armor-element>);
   }
 
   /**
    * Show armor choose-list with only armor that are not owned by character
    */
   showArmorModal() {
-    const ownedArmorsNames: string[] = this.armors.map(a => a.name);
-    const nonownedArmors = this.mockArmors.filter(a => ownedArmorsNames.indexOf(a.name) < 0);
+    const ownedArmorsNames: string[] = this.character.equipment.armors.map(a => a.name);
+    const nonownedArmors = this.armorManager.getAll().filter(a => ownedArmorsNames.indexOf(a.name) < 0);
     const chooseListElement = document.querySelector('#choose-list');
-    chooseListElement['elementList'] = this.getArmorList(nonownedArmors);
-    chooseListElement['title'] = 'Choose an armor';
+    chooseListElement['elementList'] = this.getArmorList(nonownedArmors, false);
+    chooseListElement['valueAttribute'] = 'armor';
+    chooseListElement['name'] = 'Choose an armor';
     chooseListElement['visible'] = true;
     chooseListElement['cb'] = (chosenArmors: IArmor[]) => {
       this.armors = this.armors.concat(chosenArmors);
@@ -90,16 +81,12 @@ export class FightTab {
     }
   }
 
-  getArmorClass() {
-    return this.character.equipped.armor ? this.character.equipped.armor.armorClass : this.character.armorClass;
-  }
-
   render() {
     this.character.saveLocalCharacter();
     return (
       <ion-grid>
         <ion-row>
-          <ion-col size="4">Armor class: {this.getArmorClass()}</ion-col>
+          <ion-col size="4">Armor class: {this.character.armorClass}</ion-col>
           <ion-col size="4">Health: <health-manager character={this.character}></health-manager></ion-col>
           <ion-col size="4">Speed: {this.character.speed}ft</ion-col>
         </ion-row>

@@ -6,6 +6,9 @@ import { IWeapon } from "../utils/weaponList";
 import { ICurrency } from "../components/character-sheet/misc-tab/currency-manager/currency-manager";
 import { INote } from "../components/character-sheet/misc-tab/note-element/note-element";
 import { IHealth } from "../components/character-sheet/fight-tab/health-manager/health-manager";
+import { Subject } from 'rxjs';
+import { IArmor } from "../utils/armorList";
+import { getCurrencyFromTotal } from "../utils/currency";
 
 export enum EAbility {
     strength = 'strength',
@@ -63,6 +66,7 @@ export interface ISkills {
 export interface ICharacterClass {
     name: string;
     traits: string[];
+    armorClass: number;
 }
 
 export interface ICharacterRace {
@@ -75,10 +79,6 @@ export interface ICharacterProficiency {
     savingThrows: string[];
     armors: string[];
     weapons: string[];
-}
-
-export interface IArmor extends IItem {
-    armorClass: number;
 }
 
 export interface IEquipment {
@@ -119,9 +119,19 @@ export interface ICharacter {
     speed: number;
     currency: ICurrency;
     notes: INote[];
+    lastModified: Date;
     saveLocalCharacter: Function;
     calculateAbilityModifier: Function;
     getMaxHealth: Function;
+    heal: Function;
+    damage: Function;
+    addExtraHealth: Function;
+    setArmorClass: Function;
+    dropArmor: Function;
+    sellArmor: Function;
+    equipArmor: Function;
+    setArmorAmount: Function;
+    onChange: Subject<ICharacter>;
 }
 
 export const skills: ISkills = {
@@ -161,6 +171,8 @@ export class Character implements ICharacter {
     public speed: number;
     public currency: ICurrency;
     public notes: INote[];
+    public lastModified: Date;
+    public onChange: Subject<ICharacter>;
 
     constructor() { }
 
@@ -182,6 +194,8 @@ export class Character implements ICharacter {
         this.currency = base.currency;
         this.notes = [];
         this.setState(this.getDefaultState());
+        this.lastModified = new Date();
+        this.onChange = new Subject<undefined>();
     }
 
     public setCharacter(character: ICharacter) {
@@ -202,6 +216,8 @@ export class Character implements ICharacter {
         this.currency = character.currency;
         this.notes = character.notes;
         this.state = character.state;
+        this.lastModified = new Date(character.lastModified);
+        this.onChange = new Subject<undefined>();
     }
 
     public setCharacterById(_id: string) {
@@ -221,6 +237,10 @@ export class Character implements ICharacter {
         this.personal = personal;
     }
 
+    /**
+     * Filters only useful data from race
+     * @param race race object used to create character
+     */
     public setRace(race: IRace) {
         this.race = {
             name: race.name,
@@ -228,10 +248,15 @@ export class Character implements ICharacter {
         }
     }
 
+    /**
+     * Filters only useful data from class
+     * @param classData class object used to create character
+     */
     public setClass(classData: IClass) {
         this['class'] = {
             name: classData.name,
             traits: classData.classTraits,
+            armorClass: classData.armorClass,
         }
     }
 
@@ -248,6 +273,8 @@ export class Character implements ICharacter {
     // ***** END SETTERS *****
 
     public saveLocalCharacter() {
+        this.lastModified = new Date();
+        this.onChange.next(this);
         const charactersItem = localStorage.getItem('characters');
         if (charactersItem) {
             let characters: ICharacter[] = JSON.parse(charactersItem);
@@ -255,7 +282,9 @@ export class Character implements ICharacter {
             if (prevCharacter) {
                 characters = characters.filter(ch => ch._id !== this._id);
             }
-            characters.unshift(this);
+            const savedCharacter = { ... this };
+            delete savedCharacter.onChange;
+            characters.unshift(savedCharacter);
             localStorage.setItem('characters', JSON.stringify(characters));
         } else { // if character local storage was empty
             localStorage.setItem('characters', JSON.stringify([this]));
@@ -285,18 +314,80 @@ export class Character implements ICharacter {
         return isReturnString ? parseInt(resultModifier) : parseInt(resultModifier);
     }
 
-    calculateProficiencyModifier(level: number) {
+    public calculateProficiencyModifier(level: number) {
         return (((level - 1) / 4) | 0) + 2;
     }
 
-    getMaxHealth() {
+    private getDefaultState(): IState {
+        return {
+            level: 1,
+            health: { extra: 0, current: this.getMaxHealth() },
+        }
+    }
+
+    // ***** HEALTH *****
+    public getMaxHealth() {
         return this.baseHealth + this.calculateAbilityModifier(parseInt(this.abilities.constitution), false);
     }
 
-    getDefaultState(): IState {
-        return {
-            level: 1,
-            health: { extra: 0, current: this.getMaxHealth() }
+    public heal(amount: number) {
+        this.state.health.current += amount;
+        if (this.state.health.current > this.getMaxHealth()) {
+            this.state.health.current = this.getMaxHealth();
         }
+        this.saveLocalCharacter();
     }
+
+    public damage(amount: number) {
+        this.state.health.current -= amount;
+        if (this.state.health.current <= 0) {
+            this.state.health.current = 0;
+            // TODO: set KO state
+        }
+        this.saveLocalCharacter();
+    }
+
+    public addExtraHealth(amount: number) {
+        this.state.health.extra += amount;
+        if (this.state.health.extra <= 0) {
+            this.state.health.extra = 0;
+        }
+        this.saveLocalCharacter();
+    }
+    // ***** END HEALTH *****
+
+    // ***** ARMOR *****
+    public setArmorClass() {
+        this.armorClass = this.equipped.armor ? this.equipped.armor.armorClass : this.class.armorClass;
+    }
+
+    public dropArmor(armor: IArmor) {
+        if (armor.name === this.equipped.armor.name) {
+            this.equipped.armor = null;
+        }
+        this.equipment.armors = this.equipment.armors.filter(a => a.name !== armor.name);
+        this.saveLocalCharacter();
+    }
+
+    public sellArmor(armor: IArmor) {
+        this.currency = getCurrencyFromTotal(armor.price + this.currency.total);
+        this.dropArmor(armor);
+    }
+
+    public equipArmor(armor: IArmor) {
+        if (this.equipped.armor && this.equipped.armor.name === armor.name) {
+            this.equipped.armor = null;
+        } else {
+            this.equipped.armor = armor;
+        }
+        this.setArmorClass();
+        this.saveLocalCharacter();
+    }
+
+    public setArmorAmount(name: string, amount: number) {
+        const armor: IArmor = this.equipment.armors.find(a => a.name === name);
+        armor.amount = amount;
+        this.saveLocalCharacter();
+    }
+    // ***** END ARMOR *****
 }
