@@ -23,7 +23,7 @@ export class HealthManager {
   private characterSubscription: Subscription;
 
   constructor() {
-    this.character.onChange.subscribe(() => this.lastModified = new Date());
+    this.characterSubscription = this.character.onChange.subscribe(() => this.lastModified = new Date());
   }
 
   componentDidUnload() {
