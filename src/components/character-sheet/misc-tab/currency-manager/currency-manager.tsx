@@ -50,7 +50,6 @@ export class CurrencyManager {
   }
 
   setCoins(type: string, amount: number) {
-    console.log('h');
     const coins = {};
     coins[type] = amount;
     this.currency = getCurrency(coins, this.currency);
