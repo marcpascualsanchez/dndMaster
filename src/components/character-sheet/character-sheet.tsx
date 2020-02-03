@@ -165,7 +165,7 @@ export class CharacterSheet {
       <ion-header>
         <ion-toolbar color="primary">
           <ion-buttons slot="start">
-            <ion-back-button defaultHref="/" />
+            <ion-back-button defaultHref="/" onClick={() => this.character.saveLocalCharacter()} />
           </ion-buttons>
           <ion-title text-capitalize>{this.character.personal.name}</ion-title>
         </ion-toolbar>
