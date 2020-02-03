@@ -43,11 +43,11 @@ export function getTotalFromCoins(coins: ICoinType): number {
 
 export function getCurrency(coins: any, currency: ICurrency): ICurrency {
     const newCoins: ICoinType = {
-        copper: coins.copper ? coins.copper : currency.copper,
-        silver: coins.silver ? coins.silver : currency.silver,
-        electrum: coins.electrum ? coins.electrum : currency.electrum,
-        gold: coins.gold ? coins.gold : currency.gold,
-        platinum: coins.platinum ? coins.platinum : currency.platinum,
+        copper: coins.copper !== undefined ? coins.copper : currency.copper,
+        silver: coins.silver !== undefined ? coins.silver : currency.silver,
+        electrum: coins.electrum !== undefined ? coins.electrum : currency.electrum,
+        gold: coins.gold !== undefined ? coins.gold : currency.gold,
+        platinum: coins.platinum !== undefined ? coins.platinum : currency.platinum,
     }
     return { ...{ isAuto: currency.isAuto, total: getTotalFromCoins(newCoins) }, ...newCoins };
 }

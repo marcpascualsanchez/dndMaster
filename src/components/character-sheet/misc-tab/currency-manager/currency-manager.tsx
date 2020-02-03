@@ -78,11 +78,11 @@ export class CurrencyManager {
         </ion-row>
         <ion-row>
           <ion-col size="1"></ion-col>
-          <ion-col size="2"><ion-input value={this.currency.platinum.toString()} onIonChange={e => this.setCoins('platinum', parseInt(e.detail.value))} type="number"></ion-input><ion-icon name="cash" class="platinum"></ion-icon></ion-col>
-          <ion-col size="2"><ion-input value={this.currency.gold.toString()} onIonChange={e => this.setCoins('gold', parseInt(e.detail.value))} type="number"></ion-input><ion-icon name="cash" class="gold"></ion-icon></ion-col>
-          <ion-col size="2"><ion-input value={this.currency.electrum.toString()} onIonChange={e => this.setCoins('electrum', parseInt(e.detail.value))} type="number"></ion-input><ion-icon name="cash" class="electrum"></ion-icon></ion-col>
-          <ion-col size="2"><ion-input value={this.currency.silver.toString()} onIonChange={e => this.setCoins('silver', parseInt(e.detail.value))} type="number"></ion-input><ion-icon name="cash" class="silver"></ion-icon></ion-col>
-          <ion-col size="2"><ion-input value={this.currency.copper.toString()} onIonChange={e => this.setCoins('copper', parseInt(e.detail.value))} type="number"></ion-input><ion-icon name="cash" class="copper"></ion-icon></ion-col>
+          <ion-col size="2"><ion-input value={this.currency.platinum.toString()} onIonChange={e => this.setCoins('platinum', parseInt(e.detail.value) || 0)} type="number"></ion-input><ion-icon name="cash" class="platinum"></ion-icon></ion-col>
+          <ion-col size="2"><ion-input value={this.currency.gold.toString()} onIonChange={e => this.setCoins('gold', parseInt(e.detail.value) || 0)} type="number"></ion-input><ion-icon name="cash" class="gold"></ion-icon></ion-col>
+          <ion-col size="2"><ion-input value={this.currency.electrum.toString()} onIonChange={e => this.setCoins('electrum', parseInt(e.detail.value) || 0)} type="number"></ion-input><ion-icon name="cash" class="electrum"></ion-icon></ion-col>
+          <ion-col size="2"><ion-input value={this.currency.silver.toString()} onIonChange={e => this.setCoins('silver', parseInt(e.detail.value) || 0)} type="number"></ion-input><ion-icon name="cash" class="silver"></ion-icon></ion-col>
+          <ion-col size="2"><ion-input value={this.currency.copper.toString()} onIonChange={e => this.setCoins('copper', parseInt(e.detail.value) || 0)} type="number"></ion-input><ion-icon name="cash" class="copper"></ion-icon></ion-col>
           <ion-col size="1"></ion-col>
         </ion-row>
         <ion-row>
