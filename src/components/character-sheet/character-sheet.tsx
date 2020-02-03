@@ -9,7 +9,7 @@ import { skills, EAbility, Character } from '../../models/Character';
 export class CharacterSheet {
 
   @Prop() characterId: string;
-  @Prop({mutable: true}) character: Character;
+  @Prop({ mutable: true }) character: Character;
   @State() selectedAbility: EAbility;
   @State() currentTabName: string;
 
@@ -69,11 +69,12 @@ export class CharacterSheet {
             <ion-grid no-padding>
               <ion-row no-padding>
                 {Object.keys(EAbility).map((ability) => {
+                  const abilityMod = this.character.calculateAbilityModifier(this.character.abilities[ability]);
                   return (
                     <ion-col size="4">
                       <div class="ability-container" onClick={() => this.setSelectedAbility(EAbility[ability])}>
                         <span class="ability-label">{ability.substr(0, 3).toUpperCase()}</span>
-                        <span class="ability-mod">{this.character.calculateAbilityModifier(this.character.abilities[ability])}</span>
+                        <span class="ability-mod">{abilityMod >= 0 ? '+' : '-'}{abilityMod}</span>
                         <div class="right-down-triangle"></div>
                       </div>
                     </ion-col>
@@ -176,7 +177,7 @@ export class CharacterSheet {
         </ion-card>
       </ion-content>,
       <ion-footer>
-      <choose-list id="choose-list" elementList={[]}></choose-list>,
+        <choose-list id="choose-list" elementList={[]}></choose-list>,
         <ion-segment onIonChange={(e) => this.currentTabName = e.detail.value} value="profile">
           <ion-segment-button value="profile">
             <ion-icon name="person"></ion-icon>
