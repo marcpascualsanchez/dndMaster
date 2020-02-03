@@ -168,6 +168,9 @@ export class CharacterSheet {
             <ion-back-button defaultHref="/" onClick={() => this.character.saveLocalCharacter()} />
           </ion-buttons>
           <ion-title text-capitalize>{this.character.personal.name}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button onClick={() => this.character.removeLocalCharacter()} href="/"/><ion-icon name="trash"></ion-icon>
+          </ion-buttons>
         </ion-toolbar>
       </ion-header>,
       <ion-content>

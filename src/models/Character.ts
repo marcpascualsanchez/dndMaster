@@ -291,6 +291,15 @@ export class Character implements ICharacter {
         }
     }
 
+    public removeLocalCharacter() {
+        this.lastModified = new Date();
+        const charactersItem = localStorage.getItem('characters');
+        if (charactersItem) {
+            let characters: ICharacter[] = JSON.parse(charactersItem).filter(ch => ch._id !== this._id);
+            localStorage.setItem('characters', JSON.stringify(characters));
+        }
+    }
+
     public calculateAbilityModifier(score: number, isReturnString: boolean = true) {
         const modifiers = { // Oh God of Code, please forgive me for my sins
             '-5': [1],
