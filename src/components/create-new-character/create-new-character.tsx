@@ -1,6 +1,28 @@
 import { Component, h, Prop, Listen } from '@stencil/core';
 import { ICharacterParams, Character } from '../../models/Character';
 
+const defaultCharacterParams = {
+    equipmentOptions: [],
+    languagesOptions: [],
+    languages: [],
+    proficiency: {
+        skillMods: [],
+        savingThrows: [],
+        armors: [],
+        weapons: [],
+    },
+    skillsOptions: [],
+    currency: { // TODO: choose money on creation
+        isAuto: false,
+        total: 0,
+        copper: 0,
+        silver: 0,
+        electrum: 0,
+        gold: 0,
+        platinum: 0,
+      }
+};
+
 @Component({
     tag: 'create-new-character',
     styleUrl: 'create-new-character.scss'
@@ -29,26 +51,7 @@ export class CharactersList {
     }
 
     constructor() { // store params from every step
-        this.characterParams = {
-            equipmentOptions: [],
-            languagesOptions: [],
-            languages: [],
-            proficiency: {
-                skillMods: [],
-                savingThrows: [],
-                armors: [],
-                weapons: [],
-            },
-            skillsOptions: [],
-            currency: { // TODO: choose money on creation
-                total: 0,
-                copper: 0,
-                silver: 0,
-                electrum: 0,
-                gold: 0,
-                platinum: 0,
-              }
-        };
+        this.characterParams = defaultCharacterParams;
     }
 
     createNewCharacter() {

@@ -16,8 +16,10 @@ export class ProfileTab {
         <ion-row>
           <ion-col size="12">
             <h3>Proficiencies</h3>
-            <p>Abilities: {this.character.proficiency.skillMods.toString()}</p>
-            <p>Skills: {this.character.proficiency.savingThrows.toString()}</p>
+            <p>Skills: {this.character.proficiency.skillMods.toString()}</p>
+            <p>Abilities: {this.character.proficiency.savingThrows.toString()}</p>
+            <p>Weapons: {this.character.proficiency.weapons.toString()}</p>
+            <p>Armors: {this.character.proficiency.armors.toString()}</p>
           </ion-col>
         </ion-row>
         <ion-row>
