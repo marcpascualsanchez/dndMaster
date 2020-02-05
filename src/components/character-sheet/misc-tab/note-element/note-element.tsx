@@ -43,7 +43,7 @@ export class NoteElement {
     return (
       <ion-grid>
         <ion-row>
-          <ion-col size="8"><ion-textarea value={this.note.title} class="new-note-title"></ion-textarea></ion-col>
+          <ion-col size="8"><ion-input type="text" value={this.note.title} class="new-note-title"></ion-input></ion-col>
           <ion-col size="2"><ion-icon name="trash" onClick={() => this.delete()}></ion-icon></ion-col>
           <ion-col size="2"><ion-icon name="save" onClick={() => this.save()}></ion-icon></ion-col>
         </ion-row>

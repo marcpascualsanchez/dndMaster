@@ -12,29 +12,31 @@ export class ProfileTab {
 
   render() {
     return (
-      <ion-grid>
-        <ion-row>
-          <ion-col size="12">
-            <h3>Proficiencies</h3>
-            <p>Skills: {this.character.proficiency.skillMods.toString()}</p>
-            <p>Abilities: {this.character.proficiency.savingThrows.toString()}</p>
-            <p>Weapons: {this.character.proficiency.weapons.toString()}</p>
-            <p>Armors: {this.character.proficiency.armors.toString()}</p>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="12">
-            <h3>Languages</h3>
-            <p>{this.character.languages.toString()}</p>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col size="12">
-            <h3>Feats and Traits</h3>
-            <p>{this.character.race.specialAbilities.toString()}</p>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
+      <ion-card>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="12">
+              <h3>Proficiencies</h3>
+              <p>Skills: {this.character.proficiency.skillMods.toString()}</p>
+              <p>Abilities: {this.character.proficiency.savingThrows.toString()}</p>
+              <p>Weapons: {this.character.proficiency.weapons.toString()}</p>
+              <p>Armors: {this.character.proficiency.armors.toString()}</p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <h3>Languages</h3>
+              <p>{this.character.languages.toString()}</p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <h3>Feats and Traits</h3>
+              <p>{this.character.race.specialAbilities.toString()}</p>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
     );
   }
 

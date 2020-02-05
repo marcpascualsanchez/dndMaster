@@ -18,6 +18,9 @@ import {
   INote,
 } from './components/character-sheet/misc-tab/note-element/note-element';
 import {
+  ISpell,
+} from './components/character-sheet/spell-tab/spell-element/spell-element';
+import {
   IWeapon,
 } from './utils/weaponList';
 
@@ -74,9 +77,6 @@ export namespace Components {
   interface HealthManager {
     'character': ICharacter;
   }
-  interface MagicTab {
-    'character': ICharacter;
-  }
   interface MiscTab {
     'character': ICharacter;
   }
@@ -91,6 +91,14 @@ export namespace Components {
     'characterParams': ICharacterParams;
     'isCreating': boolean;
     'step': string;
+  }
+  interface SpellElement {
+    'character': ICharacter;
+    'level': string;
+    'spell': ISpell;
+  }
+  interface SpellTab {
+    'character': ICharacter;
   }
   interface WeaponElement {
     'character': ICharacter;
@@ -192,12 +200,6 @@ declare global {
     new (): HTMLHealthManagerElement;
   };
 
-  interface HTMLMagicTabElement extends Components.MagicTab, HTMLStencilElement {}
-  var HTMLMagicTabElement: {
-    prototype: HTMLMagicTabElement;
-    new (): HTMLMagicTabElement;
-  };
-
   interface HTMLMiscTabElement extends Components.MiscTab, HTMLStencilElement {}
   var HTMLMiscTabElement: {
     prototype: HTMLMiscTabElement;
@@ -222,6 +224,18 @@ declare global {
     new (): HTMLRacesListElement;
   };
 
+  interface HTMLSpellElementElement extends Components.SpellElement, HTMLStencilElement {}
+  var HTMLSpellElementElement: {
+    prototype: HTMLSpellElementElement;
+    new (): HTMLSpellElementElement;
+  };
+
+  interface HTMLSpellTabElement extends Components.SpellTab, HTMLStencilElement {}
+  var HTMLSpellTabElement: {
+    prototype: HTMLSpellTabElement;
+    new (): HTMLSpellTabElement;
+  };
+
   interface HTMLWeaponElementElement extends Components.WeaponElement, HTMLStencilElement {}
   var HTMLWeaponElementElement: {
     prototype: HTMLWeaponElementElement;
@@ -243,11 +257,12 @@ declare global {
     'currency-manager': HTMLCurrencyManagerElement;
     'fight-tab': HTMLFightTabElement;
     'health-manager': HTMLHealthManagerElement;
-    'magic-tab': HTMLMagicTabElement;
     'misc-tab': HTMLMiscTabElement;
     'note-element': HTMLNoteElementElement;
     'profile-tab': HTMLProfileTabElement;
     'races-list': HTMLRacesListElement;
+    'spell-element': HTMLSpellElementElement;
+    'spell-tab': HTMLSpellTabElement;
     'weapon-element': HTMLWeaponElementElement;
   }
 }
@@ -310,9 +325,6 @@ declare namespace LocalJSX {
   interface HealthManager {
     'character'?: ICharacter;
   }
-  interface MagicTab {
-    'character'?: ICharacter;
-  }
   interface MiscTab {
     'character'?: ICharacter;
   }
@@ -328,6 +340,14 @@ declare namespace LocalJSX {
     'isCreating'?: boolean;
     'onParamSelected'?: (event: CustomEvent<any>) => void;
     'step'?: string;
+  }
+  interface SpellElement {
+    'character'?: ICharacter;
+    'level'?: string;
+    'spell'?: ISpell;
+  }
+  interface SpellTab {
+    'character'?: ICharacter;
   }
   interface WeaponElement {
     'character'?: ICharacter;
@@ -351,11 +371,12 @@ declare namespace LocalJSX {
     'currency-manager': CurrencyManager;
     'fight-tab': FightTab;
     'health-manager': HealthManager;
-    'magic-tab': MagicTab;
     'misc-tab': MiscTab;
     'note-element': NoteElement;
     'profile-tab': ProfileTab;
     'races-list': RacesList;
+    'spell-element': SpellElement;
+    'spell-tab': SpellTab;
     'weapon-element': WeaponElement;
   }
 }
@@ -381,11 +402,12 @@ declare module "@stencil/core" {
       'currency-manager': LocalJSX.CurrencyManager & JSXBase.HTMLAttributes<HTMLCurrencyManagerElement>;
       'fight-tab': LocalJSX.FightTab & JSXBase.HTMLAttributes<HTMLFightTabElement>;
       'health-manager': LocalJSX.HealthManager & JSXBase.HTMLAttributes<HTMLHealthManagerElement>;
-      'magic-tab': LocalJSX.MagicTab & JSXBase.HTMLAttributes<HTMLMagicTabElement>;
       'misc-tab': LocalJSX.MiscTab & JSXBase.HTMLAttributes<HTMLMiscTabElement>;
       'note-element': LocalJSX.NoteElement & JSXBase.HTMLAttributes<HTMLNoteElementElement>;
       'profile-tab': LocalJSX.ProfileTab & JSXBase.HTMLAttributes<HTMLProfileTabElement>;
       'races-list': LocalJSX.RacesList & JSXBase.HTMLAttributes<HTMLRacesListElement>;
+      'spell-element': LocalJSX.SpellElement & JSXBase.HTMLAttributes<HTMLSpellElementElement>;
+      'spell-tab': LocalJSX.SpellTab & JSXBase.HTMLAttributes<HTMLSpellTabElement>;
       'weapon-element': LocalJSX.WeaponElement & JSXBase.HTMLAttributes<HTMLWeaponElementElement>;
     }
   }

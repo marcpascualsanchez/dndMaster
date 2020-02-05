@@ -146,8 +146,8 @@ export class CharacterSheet {
       case ('fight'):
         tabComponent = <fight-tab character={this.character}></fight-tab>;
         break;
-      case ('magic'):
-        tabComponent = <magic-tab character={this.character}></magic-tab>;
+      case ('spell'):
+        tabComponent = <spell-tab character={this.character}></spell-tab>;
         break;
       case ('misc'):
         tabComponent = <misc-tab character={this.character}></misc-tab>;
@@ -169,15 +169,13 @@ export class CharacterSheet {
           </ion-buttons>
           <ion-title text-capitalize>{this.character.personal.name}</ion-title>
           <ion-buttons slot="end">
-            <ion-button onClick={() => this.character.removeLocalCharacter()} href="/"/><ion-icon name="trash"></ion-icon>
+            <ion-button onClick={() => this.character.removeLocalCharacter()} href="/" /><ion-icon name="trash"></ion-icon>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>,
       <ion-content>
         {this.getStaticUI()}
-        <ion-card>
-          {this.getCurrentTabUI(this.currentTabName)}
-        </ion-card>
+        {this.getCurrentTabUI(this.currentTabName)}
       </ion-content>,
       <ion-footer>
         <choose-list id="choose-list" elementList={[]}></choose-list>,
@@ -190,9 +188,9 @@ export class CharacterSheet {
             <ion-icon name="fitness"></ion-icon>
             <ion-label text-capitalize>Fight</ion-label>
           </ion-segment-button>
-          <ion-segment-button value="magic">
+          <ion-segment-button value="spell">
             <ion-icon name="flame"></ion-icon>
-            <ion-label text-capitalize>Magic</ion-label>
+            <ion-label text-capitalize>Spells</ion-label>
           </ion-segment-button>
           <ion-segment-button value="misc">
             <ion-icon name="apps"></ion-icon>

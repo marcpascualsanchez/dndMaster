@@ -90,39 +90,41 @@ export class FightTab {
   render() {
     this.character.saveLocalCharacter();
     return (
-      <ion-grid>
-        <ion-row>
-          <ion-col size="4">Armor class: {this.character.armorClass}</ion-col>
-          <ion-col size="4">Health: <health-manager character={this.character}></health-manager></ion-col>
-          <ion-col size="4">Speed: {this.character.speed}ft</ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-grid>
-            <ion-row>
-              <h3>Weapons<ion-icon slot="end" name="add-circle" color="primary" onClick={() => this.showWeaponModal()}></ion-icon></h3>
-            </ion-row>
-            <ion-row>
-              <ion-col size="1"></ion-col>
-              <ion-col size="8">Name</ion-col>
-              <ion-col size="3">Damage</ion-col>
-            </ion-row>
-            {this.getWeaponList(this.character.equipment.weapons, true)}
-          </ion-grid>
-        </ion-row>
-        <ion-row>
-          <ion-grid>
-            <ion-row>
-              <h3>Armors<ion-icon slot="end" name="add-circle" color="primary" onClick={() => this.showArmorModal()}></ion-icon></h3>
-            </ion-row>
-            <ion-row>
-              <ion-col size="1"></ion-col>
-              <ion-col size="8">Name</ion-col>
-              <ion-col size="3">Class</ion-col>
-            </ion-row>
-            {this.getArmorList(this.character.equipment.armors)}
-          </ion-grid>
-        </ion-row>
-      </ion-grid>
+      <ion-card>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="4">Armor class: {this.character.armorClass}</ion-col>
+            <ion-col size="4">Health: <health-manager character={this.character}></health-manager></ion-col>
+            <ion-col size="4">Speed: {this.character.speed}ft</ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-grid>
+              <ion-row>
+                <h3>Weapons<ion-icon slot="end" name="add-circle" color="primary" onClick={() => this.showWeaponModal()}></ion-icon></h3>
+              </ion-row>
+              <ion-row>
+                <ion-col size="1"></ion-col>
+                <ion-col size="8">Name</ion-col>
+                <ion-col size="3">Damage</ion-col>
+              </ion-row>
+              {this.getWeaponList(this.character.equipment.weapons, true)}
+            </ion-grid>
+          </ion-row>
+          <ion-row>
+            <ion-grid>
+              <ion-row>
+                <h3>Armors<ion-icon slot="end" name="add-circle" color="primary" onClick={() => this.showArmorModal()}></ion-icon></h3>
+              </ion-row>
+              <ion-row>
+                <ion-col size="1"></ion-col>
+                <ion-col size="8">Name</ion-col>
+                <ion-col size="3">Class</ion-col>
+              </ion-row>
+              {this.getArmorList(this.character.equipment.armors)}
+            </ion-grid>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
     );
   }
 

@@ -9,6 +9,7 @@ import { IHealth } from "../components/character-sheet/fight-tab/health-manager/
 import { Subject } from 'rxjs';
 import { IArmor } from "../utils/armorList";
 import { getCurrencyFromTotal } from "../utils/currency";
+import { ISpell } from "../components/character-sheet/spell-tab/spell-tab";
 
 export enum EAbility {
     strength = 'strength',
@@ -52,6 +53,7 @@ export interface ICharacterParams {
     proficiency?: ICharacterProficiency;
     skillsOptions?: IChoosableSkill[];
     currency: ICurrency;
+    spells: ICharacterSpells;
 }
 
 export interface ISkills {
@@ -95,6 +97,20 @@ export interface IEquipped {
 export interface IState {
     level: number;
     health: IHealth;
+    mana: number;
+}
+
+export interface ICharacterSpells {
+    cantrips: ISpell[];
+    1: ISpell[];
+    2: ISpell[];
+    3: ISpell[];
+    4: ISpell[];
+    5: ISpell[];
+    6: ISpell[];
+    7: ISpell[];
+    8: ISpell[];
+    9: ISpell[];
 }
 
 export interface ICharacter {
@@ -120,6 +136,7 @@ export interface ICharacter {
     currency: ICurrency;
     notes: INote[];
     lastModified: Date;
+    spells: ICharacterSpells;
     saveLocalCharacter: Function;
     calculateAbilityModifier: Function;
     getMaxHealth: Function;
@@ -172,6 +189,7 @@ export class Character implements ICharacter {
     public currency: ICurrency;
     public notes: INote[];
     public lastModified: Date;
+    public spells: ICharacterSpells;
     public onChange: Subject<ICharacter>;
 
     constructor() { }
@@ -194,6 +212,7 @@ export class Character implements ICharacter {
         this.currency = base.currency;
         this.notes = [];
         this.setState(this.getDefaultState());
+        this.spells = base.spells;
         this.lastModified = new Date();
         this.onChange = new Subject<undefined>();
     }
@@ -216,6 +235,7 @@ export class Character implements ICharacter {
         this.currency = character.currency;
         this.notes = character.notes;
         this.state = character.state;
+        this.spells = character.spells;
         this.lastModified = new Date(character.lastModified);
         this.onChange = new Subject<undefined>();
     }
@@ -331,6 +351,7 @@ export class Character implements ICharacter {
         return {
             level: 1,
             health: { extra: 0, current: this.getMaxHealth() },
+            mana: 3, //TODO: calculate max mana
         }
     }
 

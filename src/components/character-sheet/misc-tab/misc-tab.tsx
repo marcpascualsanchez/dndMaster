@@ -17,9 +17,16 @@ export class MiscTab {
   @State() items: IItem[];
   @State() notes: INote[];
 
+  public defaultNote: INote;
+
   constructor() {
     this.items = this.character.equipment.items;
     this.notes = this.character.notes;
+    this.defaultNote = {
+      title: 'Edit me!',
+      body: 'Write anything you want, and keep track of everything.',
+      lastModified: new Date(),
+    };
   }
 
   getItemsList(items: IItem[]) {
@@ -44,39 +51,33 @@ export class MiscTab {
   }
 
   createNote() {
-    this.notes = this.notes.concat(this.getDefaultNote());
+    this.notes = this.notes.concat(this.defaultNote);
     this.character.notes = this.notes;
-  }
-
-  getDefaultNote(): INote {
-    return {
-      title: 'Edit me!',
-      body: 'Write anything you want, and keep track of everything.',
-      lastModified: new Date(),
-    }
   }
 
   render() {
     this.character.saveLocalCharacter();
-    return [
-      <currency-manager character={this.character}></currency-manager>,
+    return (
+      <ion-card>
+        <currency-manager character={this.character}></currency-manager>,
       <ion-grid>
-        <ion-row>
-        </ion-row>
-        <ion-row>
-          <ion-grid>
-            <ion-row>
-              {/* <h3>Items<ion-icon slot="end" name="add-circle" color="primary" onClick={() => this.showItemsModal()}></ion-icon></h3> */}
-              <h3>Items</h3>
-            </ion-row>
-            {this.getItemsList(this.character.equipment.items)}
-          </ion-grid>
-        </ion-row>
-        <ion-row>
-          <ion-col><h3>Notes<ion-icon slot="end" name="add-circle" color="primary" onClick={() => this.createNote()}></ion-icon></h3></ion-col>
-        </ion-row>
-        {this.getNotesList(this.notes)}
-      </ion-grid>
-    ];
+          <ion-row>
+          </ion-row>
+          <ion-row>
+            <ion-grid>
+              <ion-row>
+                {/* <h3>Items<ion-icon slot="end" name="add-circle" color="primary" onClick={() => this.showItemsModal()}></ion-icon></h3> */}
+                <h3>Items</h3>
+              </ion-row>
+              {this.getItemsList(this.character.equipment.items)}
+            </ion-grid>
+          </ion-row>
+          <ion-row>
+            <ion-col><h3>Notes<ion-icon slot="end" name="add-circle" color="primary" onClick={() => this.createNote()}></ion-icon></h3></ion-col>
+          </ion-row>
+          {this.getNotesList(this.notes)}
+        </ion-grid>
+      </ion-card>
+    );
   }
 }
