@@ -13,7 +13,7 @@ export interface ISpell {
 @Component({
     tag: 'spell-element',
     styleUrl: 'spell-element.scss',
-    shadow: true
+    shadow: false
 })
 export class SpellElement {
 
@@ -30,15 +30,15 @@ export class SpellElement {
     }
 
     save() {
-        this.spell.name = document.querySelector('.new-spell-name')['value'];
+        this.spell.name = document.querySelector('.new-spell-name')['value']; // TODO: only init value is working since it cannot be changed
         this.spell.description = document.querySelector('.new-spell-description')['value'];
         this.delete();
-        this.character.spells[this.level].unshift(this.spell);
+        this.character.spells.list[this.level].unshift(this.spell);
     }
 
     delete() {
         this.isEditing = false;
-        this.character.spells = this.character.spells[this.level].filter(s => s.name !== this.spell.name);
+        this.character.spells.list[this.level] = this.character.spells.list[this.level].filter(s => s.name !== this.spell.name);
     }
 
     getEditSpell() {
@@ -59,7 +59,7 @@ export class SpellElement {
                     <ion-col size="12">Components: {this.spell.components.toString()}</ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col size="12"><ion-textarea value={this.spell.description}></ion-textarea></ion-col>
+                    <ion-col size="12"><ion-textarea value={this.spell.description} class="new-spell-description"></ion-textarea></ion-col>
                 </ion-row>
             </ion-grid>
         );
@@ -69,7 +69,7 @@ export class SpellElement {
         return (
             <ion-grid>
                 <ion-row>
-                    <ion-col size="10">{this.spell.name}</ion-col>
+                    <ion-col size="8">{this.spell.name}</ion-col>
                     <ion-col size="2"><ion-icon name="create" onClick={() => this.isEditing = true}></ion-icon></ion-col>
                 </ion-row>
                 <ion-row>

@@ -20,19 +20,22 @@ const defaultCharacterParams = {
         electrum: 0,
         gold: 0,
         platinum: 0,
-      },
-      spells: {
-        cantrips: [],
-        1: [],
-        2: [],
-        3: [],
-        4: [],
-        5: [],
-        6: [],
-        7: [],
-        8: [],
-        9: [],
-      }
+    },
+    spells: {
+        slots: [],
+        list: {
+            cantrips: [], // TODO: consider warlock when adding initial spell choose
+            1: [],
+            2: [],
+            3: [],
+            4: [],
+            5: [],
+            6: [],
+            7: [],
+            8: [],
+            9: [],
+        }
+    }
 };
 
 @Component({

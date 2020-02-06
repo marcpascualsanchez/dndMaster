@@ -1,11 +1,11 @@
 import { Component, h, Prop, State } from '@stencil/core';
-import { ICharacter, ICharacterSpells } from '../../../models/Character';
+import { ICharacter, ISpellList } from '../../../models/Character';
 import { ISpell } from './spell-element/spell-element';
 
 @Component({
   tag: 'spell-tab',
   styleUrl: 'spell-tab.scss',
-  shadow: true
+  shadow: false
 })
 export class MagicTab {
 
@@ -13,56 +13,67 @@ export class MagicTab {
     mutable: true,
     reflect: true,
   }) character: ICharacter;
-  @State() spells: ICharacterSpells;
+  @State() spellsList: ISpellList;
+  @State() spellSlots: number[];
 
   public defaultSpell: ISpell;
 
   constructor() {
-    this.spells = this.character.spells;
+    this.spellsList = this.character.spells.list;
     this.defaultSpell = {
       name: 'This is a spell',
       description: 'Spells are very useful! They can damage, heal, or buff your character',
       range: 10,
       duration: '1 day',
       castingTime: '1 action',
-      components: ['imagination', 'magic'],
+      components: ['imagination'],
     }
   }
 
-  createSpell(level: string) {
-    this.character.spells[level] = this.character.spells[level].concat(this.defaultSpell);
+  createSpell(level: number | string) {
+    this.character.spells.list[level] = this.character.spells.list[level].concat(this.defaultSpell);
   }
 
-  getSpells(level: string) {
-    const spells: ISpell[] = this.character.spells[level];
-    return spells.map(s => <ion-row><spell-element spell={s} character={this.character} level={level}></spell-element></ion-row>);
+  getSpells(level: number | string) {
+    const spells: ISpell[] = this.character.spells.list[level];
+    return spells.map(s => <ion-row><spell-element spell={s} character={this.character} level={level.toString()}></spell-element></ion-row>);
   }
 
   getSpellSlots() {
-    return Object.keys(this.character.spells).map((level) => {
-      return (
-        <ion-grid>
-          <ion-row>
-            <ion-col size="10"><h3>{level}</h3></ion-col>
-            <ion-col size="2"><ion-icon name="add-circle" color="primary" onClick={() => this.createSpell(level)}></ion-icon></ion-col>
-          </ion-row>
-          {this.getSpells(level)}
-        </ion-grid>
-      );
+    const spellSlots = [];
+    this.character.spells.slots.forEach((slot, level) => {
+      if (slot) {
+        spellSlots.push(
+          <ion-grid>
+            <ion-row>
+              <ion-col size="6"><h3>Level {level + 1}</h3></ion-col>
+              <ion-col size="2"><ion-icon name="add-circle" color="primary" onClick={() => this.createSpell(level + 1)}></ion-icon></ion-col>
+              <ion-col size="4"><h3>{this.character.state.spellSlots[level]}/{slot}</h3></ion-col>
+            </ion-row>
+            {this.getSpells(level + 1)}
+          </ion-grid>
+        );
+      }
     });
+    spellSlots.unshift(
+      <ion-grid>
+        <ion-row>
+          <ion-col size="6"><h3>Cantrips</h3></ion-col>
+          <ion-col size="2"><ion-icon name="add-circle" color="primary" onClick={() => this.createSpell('cantrips')}></ion-icon></ion-col>
+          <ion-col size="4"><ion-icon name="infinite"></ion-icon></ion-col>
+        </ion-row>
+        {this.getSpells('cantrips')}
+      </ion-grid>
+    );
+    return spellSlots;
   }
 
   render() {
     this.character.saveLocalCharacter();
-    return [
+    return (
       <ion-card>
-        <ion-card-content>
-          <span>Mana: {this.character.state.mana}</span>
-        </ion-card-content>
-      </ion-card>,
-      <ion-card>
-          {this.getSpellSlots()}
+        {this.getSpellSlots()}
       </ion-card>
-    ]
+    )
   }
 }

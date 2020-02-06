@@ -9,7 +9,8 @@ import { IHealth } from "../components/character-sheet/fight-tab/health-manager/
 import { Subject } from 'rxjs';
 import { IArmor } from "../utils/armorList";
 import { getCurrencyFromTotal } from "../utils/currency";
-import { ISpell } from "../components/character-sheet/spell-tab/spell-tab";
+import { ISpell } from "../components/character-sheet/spell-tab/spell-element/spell-element";
+import { getSpellSlots } from "../utils/spell";
 
 export enum EAbility {
     strength = 'strength',
@@ -97,10 +98,10 @@ export interface IEquipped {
 export interface IState {
     level: number;
     health: IHealth;
-    mana: number;
+    spellSlots: number[];
 }
 
-export interface ICharacterSpells {
+export interface ISpellList {
     cantrips: ISpell[];
     1: ISpell[];
     2: ISpell[];
@@ -111,6 +112,11 @@ export interface ICharacterSpells {
     7: ISpell[];
     8: ISpell[];
     9: ISpell[];
+}
+
+export interface ICharacterSpells {
+    slots: number[];
+    list: ISpellList;
 }
 
 export interface ICharacter {
@@ -212,7 +218,8 @@ export class Character implements ICharacter {
         this.currency = base.currency;
         this.notes = [];
         this.setState(this.getDefaultState());
-        this.spells = base.spells;
+        //TODO: choose spells in char creation
+        this.setSpells(base);
         this.lastModified = new Date();
         this.onChange = new Subject<undefined>();
     }
@@ -290,8 +297,14 @@ export class Character implements ICharacter {
             this.abilities[s] += base.race.statMods[s];
         });
     }
-    // ***** END SETTERS *****
 
+    public setSpells(base: ICharacterParams) {
+        const slots = getSpellSlots(this.class.name, this.state.level);
+        const list = base.spells.list;
+        this.spells = { slots, list };
+    }
+
+    // ***** END SETTERS *****
     public saveLocalCharacter() {
         this.lastModified = new Date();
         this.onChange.next(this);
@@ -351,7 +364,7 @@ export class Character implements ICharacter {
         return {
             level: 1,
             health: { extra: 0, current: this.getMaxHealth() },
-            mana: 3, //TODO: calculate max mana
+            spellSlots: getSpellSlots(this.class.name, 1),
         }
     }
 
