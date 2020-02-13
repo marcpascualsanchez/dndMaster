@@ -87,7 +87,7 @@ export class CharacterPersonalData {
         </ion-item>
         <ion-item>
           <ion-label position="stacked">Title</ion-label>
-          <ion-input name="title"></ion-input>
+          <ion-input class="personal-data-input" name="title"></ion-input>
         </ion-item>
       </ion-list>,
       this.getSelectButton(),

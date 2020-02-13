@@ -34,8 +34,8 @@ export class CharactersList {
             <ion-item>
                 <ion-grid class="character-info">
                     <ion-row class="ion-padding-top">
-                        <ion-text class="name ion-text-capitalize">{character.personal.name},&nbsp;</ion-text>
-                        <ion-text class="title ion-text-capitalize">{character.personal.title}</ion-text>
+                        <ion-text class="name ion-text-capitalize">{character.personal.name}</ion-text>
+                        {character.personal.title ? <ion-text class="title ion-text-capitalize">,&nbsp;{character.personal.title}</ion-text> : null}
                     </ion-row>
                     <ion-row class="ion-padding-top">
                         <ion-text class="subtitle ion-text-capitalize">{character.class.name}&nbsp;{character.race.name}</ion-text>
