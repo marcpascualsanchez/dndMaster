@@ -1,0 +1,21 @@
+.hidden {
+    display: none;
+}
+
+.avatar-container {
+    width: 85vw;
+    height: 500px;
+}
+
+.body, .weapon {
+    position: absolute;
+    width: 85vw;
+}
+
+.body {
+    z-index: 1;
+}
+
+.weapon {
+    z-index: 2;
+}

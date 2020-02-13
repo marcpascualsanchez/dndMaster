@@ -24,9 +24,12 @@ export class SpellElement {
     @Prop() spell: ISpell;
     @Prop() level: string;
     @State() isEditing: boolean;
+    @State() spellSlots: number[];
 
     constructor() {
         this.isEditing = false;
+        console.log('initial lvl ', this.level);
+        this.spellSlots = this.character.state.spellSlots;
     }
 
     save() {
@@ -39,6 +42,15 @@ export class SpellElement {
     delete() {
         this.isEditing = false;
         this.character.spells.list[this.level] = this.character.spells.list[this.level].filter(s => s.name !== this.spell.name);
+    }
+
+    useSpell() {
+        // TODO: allow spend lower level spell slots, with warning
+        if (this.level !== 'cantrips' && this.spellSlots[parseInt(this.level) - 1] > 0) {
+            this.spellSlots[parseInt(this.level) - 1] -= 1;
+            this.character.state.spellSlots = this.spellSlots;
+            this.spellSlots = this.spellSlots.slice();
+        }
     }
 
     getEditSpell() {
@@ -71,6 +83,10 @@ export class SpellElement {
                 <ion-row>
                     <ion-col size="8">{this.spell.name}</ion-col>
                     <ion-col size="2"><ion-icon name="create" onClick={() => this.isEditing = true}></ion-icon></ion-col>
+                    <ion-col size="2">
+                        <ion-button size="small" onClick={() => this.useSpell()} disabled={this.character.state.spellSlots[this.level] > 0}>
+                            Use<ion-icon name="flash"></ion-icon></ion-button>
+                    </ion-col>
                 </ion-row>
                 <ion-row>
                     <ion-col size="6">Casting time: {this.spell.castingTime}</ion-col>

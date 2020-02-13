@@ -32,6 +32,7 @@ export namespace Components {
     'character': ICharacter;
     'isExtendable': boolean;
   }
+  interface AvatarCustomizer {}
   interface BackgroundsList {
     'characterParams': ICharacterParams;
     'isCreating': boolean;
@@ -126,6 +127,12 @@ declare global {
   var HTMLArmorElementElement: {
     prototype: HTMLArmorElementElement;
     new (): HTMLArmorElementElement;
+  };
+
+  interface HTMLAvatarCustomizerElement extends Components.AvatarCustomizer, HTMLStencilElement {}
+  var HTMLAvatarCustomizerElement: {
+    prototype: HTMLAvatarCustomizerElement;
+    new (): HTMLAvatarCustomizerElement;
   };
 
   interface HTMLBackgroundsListElement extends Components.BackgroundsList, HTMLStencilElement {}
@@ -245,6 +252,7 @@ declare global {
     'app-home': HTMLAppHomeElement;
     'app-root': HTMLAppRootElement;
     'armor-element': HTMLArmorElementElement;
+    'avatar-customizer': HTMLAvatarCustomizerElement;
     'backgrounds-list': HTMLBackgroundsListElement;
     'character-personal-data': HTMLCharacterPersonalDataElement;
     'character-sheet': HTMLCharacterSheetElement;
@@ -275,6 +283,7 @@ declare namespace LocalJSX {
     'character'?: ICharacter;
     'isExtendable'?: boolean;
   }
+  interface AvatarCustomizer {}
   interface BackgroundsList {
     'characterParams'?: ICharacterParams;
     'isCreating'?: boolean;
@@ -359,6 +368,7 @@ declare namespace LocalJSX {
     'app-home': AppHome;
     'app-root': AppRoot;
     'armor-element': ArmorElement;
+    'avatar-customizer': AvatarCustomizer;
     'backgrounds-list': BackgroundsList;
     'character-personal-data': CharacterPersonalData;
     'character-sheet': CharacterSheet;
@@ -390,6 +400,7 @@ declare module "@stencil/core" {
       'app-home': LocalJSX.AppHome & JSXBase.HTMLAttributes<HTMLAppHomeElement>;
       'app-root': LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
       'armor-element': LocalJSX.ArmorElement & JSXBase.HTMLAttributes<HTMLArmorElementElement>;
+      'avatar-customizer': LocalJSX.AvatarCustomizer & JSXBase.HTMLAttributes<HTMLAvatarCustomizerElement>;
       'backgrounds-list': LocalJSX.BackgroundsList & JSXBase.HTMLAttributes<HTMLBackgroundsListElement>;
       'character-personal-data': LocalJSX.CharacterPersonalData & JSXBase.HTMLAttributes<HTMLCharacterPersonalDataElement>;
       'character-sheet': LocalJSX.CharacterSheet & JSXBase.HTMLAttributes<HTMLCharacterSheetElement>;

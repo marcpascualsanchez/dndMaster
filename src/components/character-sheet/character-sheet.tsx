@@ -91,7 +91,7 @@ export class CharacterSheet {
 
   getProfile() {
     // TODO: set custom image
-    return (
+    return [
       <ion-row padding-top>
         <ion-col no-padding size="3">
           <div class="static-info left-up">
@@ -124,8 +124,13 @@ export class CharacterSheet {
             <div class="left-up-triangle"></div>
           </div>
         </ion-col>
+      </ion-row>,
+      <ion-row>
+        <ion-col size="12">
+          <ion-icon name="bed" onClick={() => this.character.rest()}></ion-icon>
+        </ion-col>
       </ion-row>
-    );
+    ];
   }
 
   getStaticUI() {

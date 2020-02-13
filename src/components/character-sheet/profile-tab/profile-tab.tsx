@@ -36,6 +36,11 @@ export class ProfileTab {
             </ion-col>
           </ion-row>
         </ion-grid>
+        <ion-grid>
+          <ion-row>
+            <avatar-customizer></avatar-customizer>
+          </ion-row>
+        </ion-grid>
       </ion-card>
     );
   }

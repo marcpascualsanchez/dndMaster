@@ -433,4 +433,11 @@ export class Character implements ICharacter {
         this.saveLocalCharacter();
     }
     // ***** END ARMOR *****
+
+    rest() {
+        this.state.health.current = this.getMaxHealth();
+        this.state.health.extra = 0;
+        this.state.spellSlots = getSpellSlots(this.class.name, this.state.level);
+        this.saveLocalCharacter();
+    }
 }
