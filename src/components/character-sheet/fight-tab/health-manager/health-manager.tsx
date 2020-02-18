@@ -18,12 +18,11 @@ export class HealthManager {
     mutable: true,
     reflect: true,
   }) character: ICharacter;
-  @State() lastModified: Date;
 
   private characterSubscription: Subscription;
 
   constructor() {
-    this.characterSubscription = this.character.onChange.subscribe(() => this.lastModified = new Date());
+    this.characterSubscription = this.character.onChange.subscribe(c => this.character = c);
   }
 
   componentDidUnload() {

@@ -15,21 +15,20 @@ export class ArmorElement {
     reflect: true,
   }) character: ICharacter;
   @Prop({
-    mutable: false,
-    reflect: false,
+    mutable: true,
+    reflect: true,
   }) armor: IArmor;
   @Prop() isExtendable: boolean;
   @State() isSelected: boolean;
-  @State() lastModified: Date;
-  private characterSubscription: Subscription;
+  private equipmentSubscription: Subscription;
 
   constructor() {
     this.isSelected = false;
-    this.characterSubscription = this.character.onChange.subscribe(() => this.lastModified = new Date());
+    this.equipmentSubscription = this.character.onEquipmentChange.subscribe(e => this.armor = {...e.armors.find(a => this.armor.name === a.name)});
   }
 
   componentDidUnload() {
-    this.characterSubscription.unsubscribe();
+    this.equipmentSubscription.unsubscribe();
   }
 
   select() {

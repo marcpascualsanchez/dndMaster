@@ -149,12 +149,15 @@ export interface ICharacter {
     heal: Function;
     damage: Function;
     addExtraHealth: Function;
+    addWeapons: Function;
+    addArmors: Function;
     setArmorClass: Function;
     dropArmor: Function;
     sellArmor: Function;
     equipArmor: Function;
     setArmorAmount: Function;
-    onChange: Subject<ICharacter>;
+    onChange?: Subject<ICharacter>;
+    onEquipmentChange?: Subject<IEquipment>;
 }
 
 export const skills: ISkills = {
@@ -197,6 +200,7 @@ export class Character implements ICharacter {
     public lastModified: Date;
     public spells: ICharacterSpells;
     public onChange: Subject<ICharacter>;
+    public onEquipmentChange: Subject<IEquipment>;
 
     constructor() { }
 
@@ -221,7 +225,8 @@ export class Character implements ICharacter {
         //TODO: choose spells in char creation
         this.setSpells(base);
         this.lastModified = new Date();
-        this.onChange = new Subject<undefined>();
+        this.onChange = new Subject<ICharacter>();
+        this.onEquipmentChange = new Subject<IEquipment>();
     }
 
     public setCharacter(character: ICharacter) {
@@ -244,7 +249,8 @@ export class Character implements ICharacter {
         this.state = character.state;
         this.spells = character.spells;
         this.lastModified = new Date(character.lastModified);
-        this.onChange = new Subject<undefined>();
+        this.onChange = new Subject<ICharacter>();
+        this.onEquipmentChange = new Subject<IEquipment>();
     }
 
     public setCharacterById(_id: string) {
@@ -305,9 +311,15 @@ export class Character implements ICharacter {
     }
 
     // ***** END SETTERS *****
+    private removeObservables(): ICharacter {
+        const newCharacter = { ...this };
+        delete newCharacter.onChange;
+        delete newCharacter.onEquipmentChange;
+        return newCharacter;
+    }
+
     public saveLocalCharacter() {
         this.lastModified = new Date();
-        this.onChange.next(this);
         const charactersItem = localStorage.getItem('characters');
         if (charactersItem) {
             let characters: ICharacter[] = JSON.parse(charactersItem);
@@ -315,8 +327,8 @@ export class Character implements ICharacter {
             if (prevCharacter) {
                 characters = characters.filter(ch => ch._id !== this._id);
             }
-            const savedCharacter = { ... this };
-            delete savedCharacter.onChange;
+            const savedCharacter = this.removeObservables();;
+            this.onChange.next(savedCharacter);
             characters.unshift(savedCharacter);
             localStorage.setItem('characters', JSON.stringify(characters));
         } else { // if character local storage was empty
@@ -399,17 +411,34 @@ export class Character implements ICharacter {
     }
     // ***** END HEALTH *****
 
+    // ***** WEAPON *****
+    public addWeapons(weapons: IWeapon[]) {
+        this.equipment.weapons = [...this.equipment.weapons, ...weapons];
+        this.onEquipmentChange.next({ ... this.equipment });
+    }
+    // ***** END WEAPON *****
+
     // ***** ARMOR *****
+
+    public addArmors(armors: IArmor[]) {
+        this.equipment.armors = [...this.equipment.armors, ...armors];
+        this.onEquipmentChange.next({ ... this.equipment });
+    }
     public setArmorClass() {
         this.armorClass = this.equipped.armor ? this.equipped.armor.armorClass : this.class.armorClass;
     }
 
-    public dropArmor(armor: IArmor) {
-        if (armor.name === this.equipped.armor.name) {
+    public unequipArmor(armor: IArmor) {
+        if (this.equipped.armor && armor.name === this.equipped.armor.name) {
             this.equipped.armor = null;
         }
+    }
+
+    public dropArmor(armor: IArmor) {
+        this.unequipArmor(armor);
         this.equipment.armors = this.equipment.armors.filter(a => a.name !== armor.name);
         this.saveLocalCharacter();
+        this.onEquipmentChange.next({ ... this.equipment });
     }
 
     public sellArmor(armor: IArmor) {
@@ -431,6 +460,8 @@ export class Character implements ICharacter {
         const armor: IArmor = this.equipment.armors.find(a => a.name === name);
         armor.amount = amount;
         this.saveLocalCharacter();
+        this.onEquipmentChange.next({ ... this.equipment });
+
     }
     // ***** END ARMOR *****
 

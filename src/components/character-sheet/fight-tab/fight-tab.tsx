@@ -1,5 +1,5 @@
 import { Component, h, Prop, State } from '@stencil/core';
-import { ICharacter } from '../../../models/Character';
+import { ICharacter, IEquipment } from '../../../models/Character';
 import { WeaponManager } from '../../../utils/WeaponManager';
 import { IWeapon } from '../../../utils/weaponList';
 import { ArmorManager } from '../../../utils/ArmorManager';
@@ -17,26 +17,24 @@ export class FightTab {
     mutable: true,
     reflect: true,
   }) character: ICharacter;
-  @State() weapons: IWeapon[];
-  @State() armors: IArmor[];
+  @State() equipment: IEquipment;
   @State() equippedArmor: IArmor;
   @State() lastModified: Date;
-  private characterSubscription: Subscription;
+  private equipmentSubscription: Subscription;
 
   private weaponManager: WeaponManager;
   private armorManager: ArmorManager;
 
   constructor() {
-    this.weapons = this.character.equipment.weapons;
-    this.armors = this.character.equipment.armors;
+    this.equipment = this.character.equipment;
     this.equippedArmor = this.character.equipped.armor;
     this.weaponManager = new WeaponManager();
     this.armorManager = new ArmorManager();
-    this.characterSubscription = this.character.onChange.subscribe(() => this.lastModified = new Date());
+    this.equipmentSubscription = this.character.onEquipmentChange.subscribe(e => this.equipment = e);
   }
 
   componentDidUnload() {
-    this.characterSubscription.unsubscribe();
+    this.equipmentSubscription.unsubscribe();
   }
 
   getWeaponList(weapons: IWeapon[], isExtendable: boolean = true) {
@@ -50,17 +48,14 @@ export class FightTab {
    * Show weapon choose-list with only weapons that are not owned by character
    */
   showWeaponModal() {
-    const ownedWeaponsNames: string[] = this.weapons.map(w => w.name);
+    const ownedWeaponsNames: string[] = this.character.equipment.weapons.map(w => w.name);
     const nonownedWeapons = this.weaponManager.getAll().filter(w => ownedWeaponsNames.indexOf(w.name) < 0);
     const chooseListElement = document.querySelector('#choose-list');
     chooseListElement['elementList'] = this.getWeaponList(nonownedWeapons, false);
     chooseListElement['valueAttribute'] = 'weapon';
     chooseListElement['name'] = 'Choose a weapon';
     chooseListElement['visible'] = true;
-    chooseListElement['cb'] = (chosenWeapons: IWeapon[]) => {
-      this.weapons = this.weapons.concat(chosenWeapons);
-      this.character.equipment.weapons = this.weapons;
-    }
+    chooseListElement['cb'] = (chosenWeapons: IWeapon[]) => this.character.addWeapons(chosenWeapons);
   }
 
   getArmorList(armors: IArmor[], isExtendable: boolean = true) {
@@ -75,16 +70,13 @@ export class FightTab {
    */
   showArmorModal() {
     const ownedArmorsNames: string[] = this.character.equipment.armors.map(a => a.name);
-    const nonownedArmors = this.armorManager.getAll().filter(a => ownedArmorsNames.indexOf(a.name) < 0);
+    const nonownedArmors = this.armorManager.getAll().filter(a => ownedArmorsNames.indexOf(a.name) < 0).map(a => ({ ...a, amount: 1 }));
     const chooseListElement = document.querySelector('#choose-list');
     chooseListElement['elementList'] = this.getArmorList(nonownedArmors, false);
     chooseListElement['valueAttribute'] = 'armor';
     chooseListElement['name'] = 'Choose an armor';
     chooseListElement['visible'] = true;
-    chooseListElement['cb'] = (chosenArmors: IArmor[]) => {
-      this.armors = this.armors.concat(chosenArmors);
-      this.character.equipment.armors = this.armors;
-    }
+    chooseListElement['cb'] = (chosenArmors: IArmor[]) => this.character.addArmors(chosenArmors);
   }
 
   render() {

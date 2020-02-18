@@ -8,7 +8,7 @@ export class ArmorManager {
     }
     
     public getAll() {
-        return this.getLight().concat(this.getMedium(), this.getHeavy());
+        return [...this.getLight(), ...this.getMedium(), ...this.getHeavy()];
     }
 
     public getByName(name: string) {

@@ -8,7 +8,7 @@ export class WeaponManager {
     }
     
     public getAll() {
-        return this.getMelee().concat(this.getRanged());
+        return [...this.getMelee(), ...this.getRanged()];
     }
 
     public getByName(name: string) {
@@ -16,18 +16,18 @@ export class WeaponManager {
     }
 
     public getSimple() {
-        return this.weapons.simple.melee.concat(this.weapons.simple.ranged);
+        return [...this.weapons.simple.melee, ...this.weapons.simple.ranged];
     }
 
     public getMartial() {
-        return this.weapons.martial.melee.concat(this.weapons.martial.ranged);
+        return [...this.weapons.martial.melee, ...this.weapons.martial.ranged];
     }
 
     public getMelee() {
-        return this.weapons.martial.melee.concat(this.weapons.simple.melee);
+        return [...this.weapons.martial.melee, ...this.weapons.simple.melee];
     }
 
     public getRanged() {
-        return this.weapons.martial.ranged.concat(this.weapons.simple.ranged);
+        return [...this.weapons.martial.ranged, ...this.weapons.simple.ranged];
     }
 }
