@@ -19,7 +19,6 @@ export class FightTab {
   }) character: ICharacter;
   @State() equipment: IEquipment;
   @State() equippedArmor: IArmor;
-  @State() lastModified: Date;
   private equipmentSubscription: Subscription;
 
   private weaponManager: WeaponManager;
@@ -49,7 +48,7 @@ export class FightTab {
    */
   showWeaponModal() {
     const ownedWeaponsNames: string[] = this.character.equipment.weapons.map(w => w.name);
-    const nonownedWeapons = this.weaponManager.getAll().filter(w => ownedWeaponsNames.indexOf(w.name) < 0);
+    const nonownedWeapons = this.weaponManager.getAll().filter(w => ownedWeaponsNames.indexOf(w.name) < 0).map(w => ({ ...w, amount: 1 }));;
     const chooseListElement = document.querySelector('#choose-list');
     chooseListElement['elementList'] = this.getWeaponList(nonownedWeapons, false);
     chooseListElement['valueAttribute'] = 'weapon';

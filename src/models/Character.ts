@@ -150,6 +150,9 @@ export interface ICharacter {
     damage: Function;
     addExtraHealth: Function;
     addWeapons: Function;
+    dropWeapon: Function;
+    sellWeapon: Function;
+    setWeaponAmount: Function;
     addArmors: Function;
     setArmorClass: Function;
     dropArmor: Function;
@@ -158,6 +161,7 @@ export interface ICharacter {
     setArmorAmount: Function;
     onChange?: Subject<ICharacter>;
     onEquipmentChange?: Subject<IEquipment>;
+    onStateChange?: Subject<IState>;
 }
 
 export const skills: ISkills = {
@@ -201,6 +205,7 @@ export class Character implements ICharacter {
     public spells: ICharacterSpells;
     public onChange: Subject<ICharacter>;
     public onEquipmentChange: Subject<IEquipment>;
+    public onStateChange: Subject<IState>;
 
     constructor() { }
 
@@ -227,6 +232,7 @@ export class Character implements ICharacter {
         this.lastModified = new Date();
         this.onChange = new Subject<ICharacter>();
         this.onEquipmentChange = new Subject<IEquipment>();
+        this.onStateChange = new Subject<IState>();
     }
 
     public setCharacter(character: ICharacter) {
@@ -251,6 +257,7 @@ export class Character implements ICharacter {
         this.lastModified = new Date(character.lastModified);
         this.onChange = new Subject<ICharacter>();
         this.onEquipmentChange = new Subject<IEquipment>();
+        this.onStateChange = new Subject<IState>();
     }
 
     public setCharacterById(_id: string) {
@@ -315,6 +322,7 @@ export class Character implements ICharacter {
         const newCharacter = { ...this };
         delete newCharacter.onChange;
         delete newCharacter.onEquipmentChange;
+        delete newCharacter.onStateChange;
         return newCharacter;
     }
 
@@ -391,6 +399,7 @@ export class Character implements ICharacter {
             this.state.health.current = this.getMaxHealth();
         }
         this.saveLocalCharacter();
+        this.onStateChange.next({ ...this.state });
     }
 
     public damage(amount: number) {
@@ -400,6 +409,7 @@ export class Character implements ICharacter {
             // TODO: set KO state
         }
         this.saveLocalCharacter();
+        this.onStateChange.next({ ...this.state });
     }
 
     public addExtraHealth(amount: number) {
@@ -408,6 +418,7 @@ export class Character implements ICharacter {
             this.state.health.extra = 0;
         }
         this.saveLocalCharacter();
+        this.onStateChange.next({ ...this.state });
     }
     // ***** END HEALTH *****
 
@@ -415,6 +426,25 @@ export class Character implements ICharacter {
     public addWeapons(weapons: IWeapon[]) {
         this.equipment.weapons = [...this.equipment.weapons, ...weapons];
         this.onEquipmentChange.next({ ... this.equipment });
+    }
+
+    public dropWeapon(weapon: IWeapon) {
+        this.equipment.weapons = this.equipment.weapons.filter(a => a.name !== weapon.name);
+        this.saveLocalCharacter();
+        this.onEquipmentChange.next({ ... this.equipment });
+    }
+
+    public sellWeapon(weapon: IWeapon) {
+        this.currency = getCurrencyFromTotal(weapon.price + this.currency.total);
+        this.dropWeapon(weapon);
+    }
+
+    public setWeaponAmount(name: string, amount: number) {
+        const weapon: IWeapon = this.equipment.weapons.find(a => a.name === name);
+        weapon.amount = amount;
+        this.saveLocalCharacter();
+        this.onEquipmentChange.next({ ... this.equipment });
+
     }
     // ***** END WEAPON *****
 
@@ -424,6 +454,7 @@ export class Character implements ICharacter {
         this.equipment.armors = [...this.equipment.armors, ...armors];
         this.onEquipmentChange.next({ ... this.equipment });
     }
+
     public setArmorClass() {
         this.armorClass = this.equipped.armor ? this.equipped.armor.armorClass : this.class.armorClass;
     }
@@ -470,5 +501,6 @@ export class Character implements ICharacter {
         this.state.health.extra = 0;
         this.state.spellSlots = getSpellSlots(this.class.name, this.state.level);
         this.saveLocalCharacter();
+        this.onStateChange.next({ ...this.state });
     }
 }

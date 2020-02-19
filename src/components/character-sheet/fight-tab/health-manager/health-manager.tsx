@@ -1,5 +1,5 @@
 import { Component, h, Prop, State } from '@stencil/core';
-import { ICharacter } from '../../../../models/Character';
+import { ICharacter, IState } from '../../../../models/Character';
 import { Subscription } from 'rxjs';
 
 export interface IHealth {
@@ -18,15 +18,17 @@ export class HealthManager {
     mutable: true,
     reflect: true,
   }) character: ICharacter;
+  @State() characterState: IState;
 
-  private characterSubscription: Subscription;
+  private stateSubscription: Subscription;
 
   constructor() {
-    this.characterSubscription = this.character.onChange.subscribe(c => this.character = c);
+    this.characterState = this.character.state;
+    this.stateSubscription = this.character.onStateChange.subscribe(s => this.characterState = s);
   }
 
   componentDidUnload() {
-    this.characterSubscription.unsubscribe();
+    this.stateSubscription.unsubscribe();
   }
 
   render() {
@@ -37,8 +39,8 @@ export class HealthManager {
           <ion-col size="6"><ion-icon name="arrow-dropup-circle" onClick={() => this.character.addExtraHealth(1)}></ion-icon></ion-col>
         </ion-row>
         <ion-row>
-          <ion-col size="6">{this.character.state.health.current}</ion-col>
-          <ion-col size="6" class={`${this.character.state.health.extra > 0 ? '' : 'disabled'}`}>{this.character.state.health.extra}</ion-col>
+          <ion-col size="6">{this.characterState.health.current}</ion-col>
+          <ion-col size="6" class={`${this.characterState.health.extra > 0 ? '' : 'disabled'}`}>{this.characterState.health.extra}</ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="6"><ion-icon name="arrow-dropdown-circle" onClick={() => this.character.damage(1)}></ion-icon></ion-col>
