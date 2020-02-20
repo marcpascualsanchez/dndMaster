@@ -10,6 +10,7 @@ import { IArmor } from "../utils/armorList";
 import { getCurrencyFromTotal, getCurrency, coinTypes, ICurrency } from "../utils/currency";
 import { ISpell } from "../components/character-sheet/spell-tab/spell-element/spell-element";
 import { getSpellSlots } from "../utils/spell";
+import { experienceLevels } from "../utils/level";
 
 export enum EAbility {
     strength = 'strength',
@@ -96,6 +97,7 @@ export interface IEquipped {
 
 export interface IState {
     level: number;
+    experience: number;
     health: IHealth;
     spellSlots: number[];
 }
@@ -165,6 +167,8 @@ export interface ICharacter {
     addNote: Function;
     editNote: Function;
     removeNote: Function;
+    setLevel: Function;
+    setExperience: Function;
     onChange?: Subject<ICharacter>;
     onEquipmentChange?: Subject<IEquipment>;
     onStateChange?: Subject<IState>;
@@ -388,7 +392,8 @@ export class Character implements ICharacter {
 
     private getDefaultState(): IState {
         return {
-            level: 1,
+            level: 0,
+            experience: 0,
             health: { extra: 0, current: this.getMaxHealth() },
             spellSlots: getSpellSlots(this.class.name, 1),
         }
@@ -550,6 +555,30 @@ export class Character implements ICharacter {
         this.saveLocalCharacter();
     }
     // ***** END NOTES *****
+    public setLevel(level: number) {
+        this.state.level = level;
+        this.setSpellsSlots();
+        this.saveLocalCharacter();
+    }
+
+    public getLevelByExperience(experience) {
+        let level;
+        experienceLevels.forEach((e, idx) => {
+            if (e <= experience) {
+                level = idx;
+            }
+        })
+        return level;
+    }
+
+    public setSpellsSlots() {
+        this.spells.slots = getSpellSlots(this.class.name, this.state.level);
+    }
+
+    public setExperience(experience: number) {
+        this.state.experience = experience;
+        this.setLevel(this.getLevelByExperience(experience));
+    }
 
     rest() {
         this.state.health.current = this.getMaxHealth();

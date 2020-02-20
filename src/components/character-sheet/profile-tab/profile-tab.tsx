@@ -14,6 +14,9 @@ export class ProfileTab {
     return (
       <ion-card>
         <ion-grid>
+          <ion-grid>
+            <level-manager character={this.character}></level-manager>
+          </ion-grid>
           <ion-row>
             <ion-col size="12">
               <h3>Proficiencies</h3>
