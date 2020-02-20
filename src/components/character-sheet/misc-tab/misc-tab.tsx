@@ -1,3 +1,4 @@
+import { Subscription } from 'rxjs';
 import { Component, h, Prop, State } from '@stencil/core';
 import { ICharacter } from '../../../models/Character';
 import { IItem } from '../../../models/classes/Class';
@@ -18,11 +19,23 @@ export class MiscTab {
   @State() notes: INote[];
 
   public defaultNote: INote;
+  private characterSubscription: Subscription;
 
   constructor() {
     this.items = this.character.equipment.items;
     this.notes = this.character.notes;
-    this.defaultNote = {
+    this.characterSubscription = this.character.onChange.subscribe((c) => {
+      this.items = [...c.equipment.items];
+      this.notes = [...c.notes];
+    });
+  }
+
+  componentDidUnload() {
+    this.characterSubscription.unsubscribe();
+  }
+
+  getDefaultNote() {
+    return {
       title: 'Edit me!',
       body: 'Write anything you want, and keep track of everything.',
       lastModified: new Date(),
@@ -50,13 +63,7 @@ export class MiscTab {
       </ion-row>);
   }
 
-  createNote() {
-    this.notes = this.notes.concat(this.defaultNote);
-    this.character.notes = this.notes;
-  }
-
   render() {
-    this.character.saveLocalCharacter();
     return (
       <ion-card>
         <currency-manager character={this.character}></currency-manager>,
@@ -73,7 +80,7 @@ export class MiscTab {
             </ion-grid>
           </ion-row>
           <ion-row>
-            <ion-col><h3>Notes<ion-icon slot="end" name="add-circle" color="primary" onClick={() => this.createNote()}></ion-icon></h3></ion-col>
+            <ion-col><h3>Notes<ion-icon slot="end" name="add-circle" color="primary" onClick={() => this.character.addNote(this.getDefaultNote())}></ion-icon></h3></ion-col>
           </ion-row>
           {this.getNotesList(this.notes)}
         </ion-grid>

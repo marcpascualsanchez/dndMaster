@@ -3,12 +3,11 @@ import { IRace } from "./races/Race";
 import { mergeObjects, getUniqueValuesArray } from "../utils/utils";
 import { IBackground } from "./backgrounds/Background";
 import { IWeapon } from "../utils/weaponList";
-import { ICurrency } from "../components/character-sheet/misc-tab/currency-manager/currency-manager";
 import { INote } from "../components/character-sheet/misc-tab/note-element/note-element";
 import { IHealth } from "../components/character-sheet/fight-tab/health-manager/health-manager";
 import { Subject } from 'rxjs';
 import { IArmor } from "../utils/armorList";
-import { getCurrencyFromTotal } from "../utils/currency";
+import { getCurrencyFromTotal, getCurrency, coinTypes, ICurrency } from "../utils/currency";
 import { ISpell } from "../components/character-sheet/spell-tab/spell-element/spell-element";
 import { getSpellSlots } from "../utils/spell";
 
@@ -159,6 +158,13 @@ export interface ICharacter {
     sellArmor: Function;
     equipArmor: Function;
     setArmorAmount: Function;
+    setAuto: Function;
+    addCoins: Function;
+    setCoins: Function;
+    getNote: Function;
+    addNote: Function;
+    editNote: Function;
+    removeNote: Function;
     onChange?: Subject<ICharacter>;
     onEquipmentChange?: Subject<IEquipment>;
     onStateChange?: Subject<IState>;
@@ -495,6 +501,55 @@ export class Character implements ICharacter {
 
     }
     // ***** END ARMOR *****
+
+    // ***** CURRENCY *****
+    public setAuto(isAuto: boolean) {
+        this.currency.isAuto = isAuto;
+        if (isAuto) {
+            this.currency = getCurrencyFromTotal(this.currency.total);
+        }
+        this.saveLocalCharacter();
+    }
+
+    public addCoins(type: string = 'copper', amount: number = 1) {
+        if (this.currency.isAuto) {
+            this.currency = getCurrencyFromTotal(this.currency.total + amount * coinTypes[type]);
+        } else {
+            const coins = {};
+            coins[type] = amount + this.currency[type];
+            this.currency = getCurrency(coins, this.currency);
+        }
+        this.saveLocalCharacter();
+    }
+
+    public setCoins(type: string, amount: number) {
+        const coins = {};
+        coins[type] = amount;
+        this.currency = getCurrency(coins, this.currency);
+        this.saveLocalCharacter();
+    }
+    // ***** END CURRENCY *****
+
+    // ***** NOTES *****
+    public getNote(title: string, lastModified: Date) {
+        return this.notes.find(n => n.title === title && n.lastModified === lastModified)
+    }
+    public addNote(note: INote) {
+        this.notes.unshift(note);
+        this.saveLocalCharacter();
+    }
+
+    public removeNote(note: INote) {
+        this.notes = this.notes.filter(n => !(n.title === note.title && n.lastModified === note.lastModified));
+        this.saveLocalCharacter();
+    }
+
+    public editNote(oldNote: INote, newNote: INote) {
+        this.removeNote(oldNote);
+        this.notes.unshift(newNote);
+        this.saveLocalCharacter();
+    }
+    // ***** END NOTES *****
 
     rest() {
         this.state.health.current = this.getMaxHealth();

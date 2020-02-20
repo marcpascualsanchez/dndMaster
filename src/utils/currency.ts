@@ -1,4 +1,15 @@
-import { ICurrency, ICoinType } from "../components/character-sheet/misc-tab/currency-manager/currency-manager";
+export interface ICoinType {
+    copper: number;
+    silver: number;
+    electrum: number;
+    gold: number;
+    platinum: number;
+}
+
+export interface ICurrency extends ICoinType {
+    total: number;
+    isAuto: boolean; // to make auto currency 'promotion'
+}
 
 export const coinTypes: ICoinType = {
     copper: 1, // basic unit
