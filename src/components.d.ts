@@ -15,6 +15,9 @@ import {
   IArmor,
 } from './utils/armorList';
 import {
+  IItem,
+} from './utils/itemList';
+import {
   INote,
 } from './components/character-sheet/misc-tab/note-element/note-element';
 import {
@@ -72,11 +75,17 @@ export namespace Components {
   interface CurrencyManager {
     'character': ICharacter;
   }
+  interface CustomItemCreator {}
   interface FightTab {
     'character': ICharacter;
   }
   interface HealthManager {
     'character': ICharacter;
+  }
+  interface ItemElement {
+    'character': ICharacter;
+    'isExtendable': boolean;
+    'item': IItem;
   }
   interface LevelManager {
     'character': ICharacter;
@@ -198,6 +207,12 @@ declare global {
     new (): HTMLCurrencyManagerElement;
   };
 
+  interface HTMLCustomItemCreatorElement extends Components.CustomItemCreator, HTMLStencilElement {}
+  var HTMLCustomItemCreatorElement: {
+    prototype: HTMLCustomItemCreatorElement;
+    new (): HTMLCustomItemCreatorElement;
+  };
+
   interface HTMLFightTabElement extends Components.FightTab, HTMLStencilElement {}
   var HTMLFightTabElement: {
     prototype: HTMLFightTabElement;
@@ -208,6 +223,12 @@ declare global {
   var HTMLHealthManagerElement: {
     prototype: HTMLHealthManagerElement;
     new (): HTMLHealthManagerElement;
+  };
+
+  interface HTMLItemElementElement extends Components.ItemElement, HTMLStencilElement {}
+  var HTMLItemElementElement: {
+    prototype: HTMLItemElementElement;
+    new (): HTMLItemElementElement;
   };
 
   interface HTMLLevelManagerElement extends Components.LevelManager, HTMLStencilElement {}
@@ -272,8 +293,10 @@ declare global {
     'create-ability-score': HTMLCreateAbilityScoreElement;
     'create-new-character': HTMLCreateNewCharacterElement;
     'currency-manager': HTMLCurrencyManagerElement;
+    'custom-item-creator': HTMLCustomItemCreatorElement;
     'fight-tab': HTMLFightTabElement;
     'health-manager': HTMLHealthManagerElement;
+    'item-element': HTMLItemElementElement;
     'level-manager': HTMLLevelManagerElement;
     'misc-tab': HTMLMiscTabElement;
     'note-element': HTMLNoteElementElement;
@@ -338,11 +361,17 @@ declare namespace LocalJSX {
   interface CurrencyManager {
     'character'?: ICharacter;
   }
+  interface CustomItemCreator {}
   interface FightTab {
     'character'?: ICharacter;
   }
   interface HealthManager {
     'character'?: ICharacter;
+  }
+  interface ItemElement {
+    'character'?: ICharacter;
+    'isExtendable'?: boolean;
+    'item'?: IItem;
   }
   interface LevelManager {
     'character'?: ICharacter;
@@ -392,8 +421,10 @@ declare namespace LocalJSX {
     'create-ability-score': CreateAbilityScore;
     'create-new-character': CreateNewCharacter;
     'currency-manager': CurrencyManager;
+    'custom-item-creator': CustomItemCreator;
     'fight-tab': FightTab;
     'health-manager': HealthManager;
+    'item-element': ItemElement;
     'level-manager': LevelManager;
     'misc-tab': MiscTab;
     'note-element': NoteElement;
@@ -425,8 +456,10 @@ declare module "@stencil/core" {
       'create-ability-score': LocalJSX.CreateAbilityScore & JSXBase.HTMLAttributes<HTMLCreateAbilityScoreElement>;
       'create-new-character': LocalJSX.CreateNewCharacter & JSXBase.HTMLAttributes<HTMLCreateNewCharacterElement>;
       'currency-manager': LocalJSX.CurrencyManager & JSXBase.HTMLAttributes<HTMLCurrencyManagerElement>;
+      'custom-item-creator': LocalJSX.CustomItemCreator & JSXBase.HTMLAttributes<HTMLCustomItemCreatorElement>;
       'fight-tab': LocalJSX.FightTab & JSXBase.HTMLAttributes<HTMLFightTabElement>;
       'health-manager': LocalJSX.HealthManager & JSXBase.HTMLAttributes<HTMLHealthManagerElement>;
+      'item-element': LocalJSX.ItemElement & JSXBase.HTMLAttributes<HTMLItemElementElement>;
       'level-manager': LocalJSX.LevelManager & JSXBase.HTMLAttributes<HTMLLevelManagerElement>;
       'misc-tab': LocalJSX.MiscTab & JSXBase.HTMLAttributes<HTMLMiscTabElement>;
       'note-element': LocalJSX.NoteElement & JSXBase.HTMLAttributes<HTMLNoteElementElement>;

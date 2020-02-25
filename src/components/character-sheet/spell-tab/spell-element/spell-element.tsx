@@ -28,7 +28,6 @@ export class SpellElement {
 
     constructor() {
         this.isEditing = false;
-        console.log('initial lvl ', this.level);
         this.spellSlots = this.character.state.spellSlots;
     }
 
@@ -84,7 +83,7 @@ export class SpellElement {
                     <ion-col size="8">{this.spell.name}</ion-col>
                     <ion-col size="2"><ion-icon name="create" onClick={() => this.isEditing = true}></ion-icon></ion-col>
                     <ion-col size="2">
-                        <ion-button size="small" onClick={() => this.useSpell()} disabled={this.character.state.spellSlots[this.level] > 0}>
+                        <ion-button size="small" onClick={() => this.useSpell()} disabled={this.character.state.spellSlots[parseInt(this.level) - 1] <= 0 && this.level !== 'cantrips'}>
                             Use<ion-icon name="flash"></ion-icon></ion-button>
                     </ion-col>
                 </ion-row>

@@ -1,4 +1,4 @@
-import { IClass, IChoosableEquipment, IItem } from "./classes/Class";
+import { IClass, IChoosableEquipment } from "./classes/Class";
 import { IRace } from "./races/Race";
 import { mergeObjects, getUniqueValuesArray } from "../utils/utils";
 import { IBackground } from "./backgrounds/Background";
@@ -11,6 +11,7 @@ import { getCurrencyFromTotal, getCurrency, coinTypes, ICurrency } from "../util
 import { ISpell } from "../components/character-sheet/spell-tab/spell-element/spell-element";
 import { getSpellSlots } from "../utils/spell";
 import { experienceLevels } from "../utils/level";
+import { IItem } from "../utils/itemList";
 
 export enum EAbility {
     strength = 'strength',
@@ -169,6 +170,10 @@ export interface ICharacter {
     removeNote: Function;
     setLevel: Function;
     setExperience: Function;
+    addItems: Function;
+    dropItem: Function;
+    sellItem: Function;
+    setItemAmount: Function;
     onChange?: Subject<ICharacter>;
     onEquipmentChange?: Subject<IEquipment>;
     onStateChange?: Subject<IState>;
@@ -460,9 +465,9 @@ export class Character implements ICharacter {
     // ***** END WEAPON *****
 
     // ***** ARMOR *****
-
     public addArmors(armors: IArmor[]) {
         this.equipment.armors = [...this.equipment.armors, ...armors];
+        this.saveLocalCharacter();
         this.onEquipmentChange.next({ ... this.equipment });
     }
 
@@ -474,6 +479,7 @@ export class Character implements ICharacter {
         if (this.equipped.armor && armor.name === this.equipped.armor.name) {
             this.equipped.armor = null;
         }
+        this.setArmorClass();
     }
 
     public dropArmor(armor: IArmor) {
@@ -506,6 +512,32 @@ export class Character implements ICharacter {
 
     }
     // ***** END ARMOR *****
+
+    // ***** ITEM *****
+    public addItems(items: IItem[]) {
+        this.equipment.items = [...this.equipment.items, ...items];
+        this.saveLocalCharacter();
+        this.onEquipmentChange.next({ ... this.equipment });
+    }
+
+    public dropItem(item: IItem) {
+        this.equipment.items = this.equipment.items.filter(a => a.name !== item.name);
+        this.saveLocalCharacter();
+        this.onEquipmentChange.next({ ... this.equipment });
+    }
+
+    public sellItem(item: IItem) {
+        this.currency = getCurrencyFromTotal(item.price + this.currency.total);
+        this.dropItem(item);
+    }
+
+    public setItemAmount(name: string, amount: number) {
+        const item: IItem = this.equipment.items.find(i => i.name === name);
+        item.amount = amount;
+        this.saveLocalCharacter();
+        this.onEquipmentChange.next({ ... this.equipment });
+    }
+    // ***** END ITEM *****
 
     // ***** CURRENCY *****
     public setAuto(isAuto: boolean) {

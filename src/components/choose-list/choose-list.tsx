@@ -82,14 +82,21 @@ export class ChooseList {
           <div>
             <ion-grid>
               {this.elementList.map((e) => {
-                const elementValue = e.$attrs$[this.valueAttribute];
-                return (
-                  <ion-row>
-                    <ion-col size="10">{e}</ion-col>
-                    <ion-col size="2">
-                      <ion-icon name="checkmark-circle" class="unselected" onClick={(e) => this.chooseElement(e, elementValue)}></ion-icon>
-                    </ion-col>
-                  </ion-row>)
+                const elementValue = e.$attrs$ ? e.$attrs$[this.valueAttribute] : null;
+                if (elementValue) {
+                  return (
+                    <ion-row>
+                      <ion-col size="10">{e}</ion-col>
+                      <ion-col size="2">
+                        <ion-icon name="checkmark-circle" class="unselected" onClick={(e) => this.chooseElement(e, elementValue)}></ion-icon>
+                      </ion-col>
+                    </ion-row>);
+                } else {
+                  return (
+                    <ion-row>
+                      <ion-col size="12">No options available</ion-col>
+                    </ion-row>);
+                }
               })}
             </ion-grid>
           </div>

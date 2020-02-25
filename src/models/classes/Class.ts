@@ -10,13 +10,6 @@ export interface IChoosableEquipment {
     list: IChoosableItemList[][];
 }
 
-export interface IItem {
-    name: string;
-    amount?: number;
-    weight?: number;
-    price?: number;
-}
-
 export interface IClass {
     name: string;
     baseHealth: number;

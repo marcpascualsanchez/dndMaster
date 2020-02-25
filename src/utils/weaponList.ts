@@ -1,4 +1,4 @@
-import { IItem } from '../models/classes/Class';
+import { IItem } from "./itemList";
 
 export interface IWeapon extends IItem {
     damage: string;

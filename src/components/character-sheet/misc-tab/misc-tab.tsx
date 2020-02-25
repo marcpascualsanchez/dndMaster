@@ -1,8 +1,9 @@
 import { Subscription } from 'rxjs';
 import { Component, h, Prop, State } from '@stencil/core';
 import { ICharacter } from '../../../models/Character';
-import { IItem } from '../../../models/classes/Class';
 import { INote } from './note-element/note-element';
+import { IItem } from '../../../utils/itemList';
+import { ItemManager } from '../../../utils/ItemManager';
 
 @Component({
   tag: 'misc-tab',
@@ -19,10 +20,12 @@ export class MiscTab {
   @State() notes: INote[];
 
   public defaultNote: INote;
+  private itemManager: ItemManager;
   private characterSubscription: Subscription;
 
   constructor() {
     this.items = this.character.equipment.items;
+    this.itemManager = new ItemManager();
     this.notes = this.character.notes;
     this.characterSubscription = this.character.onChange.subscribe((c) => {
       this.items = [...c.equipment.items];
@@ -34,7 +37,7 @@ export class MiscTab {
     this.characterSubscription.unsubscribe();
   }
 
-  getDefaultNote() {
+  getDefaultNote(): INote {
     return {
       title: 'Edit me!',
       body: 'Write anything you want, and keep track of everything.',
@@ -42,16 +45,25 @@ export class MiscTab {
     };
   }
 
-  getItemsList(items: IItem[]) {
+  getItemsList(items: IItem[], isExtendable: boolean = true) {
     if (!items || items.length === 0) {
-      return <span>There are no items yet</span>
+      return [<span>There are no items yet</span>]
     }
-    return items.map((a) =>
-      <ion-row custom-value={a}>
-        <ion-col size="1">{a.amount}</ion-col>
-        <ion-col size="11">{a.name}</ion-col>
-      </ion-row>
-    );
+    return items.map(i => <item-element character={this.character} item={i} isExtendable={isExtendable}></item-element>);
+  }
+
+  /**
+   * Show armor choose-list with only armor that are not owned by character
+   */
+  showItemModal() {
+    const ownedItemsNames: string[] = this.character.equipment.items.map(a => a.name);
+    const nonownedItems = this.itemManager.getAll().filter(a => ownedItemsNames.indexOf(a.name) < 0).map(a => ({ ...a, amount: 1 }));
+    const chooseListElement = document.querySelector('#choose-list');
+    chooseListElement['elementList'] = this.getItemsList(nonownedItems, false);
+    chooseListElement['valueAttribute'] = 'item';
+    chooseListElement['name'] = <div>Choose an item<a href="/create-new-item"><ion-icon slot="end" name="add-circle" color="primary"></ion-icon></a></div>;
+    chooseListElement['visible'] = true;
+    chooseListElement['cb'] = (chosenItems: IItem[]) => this.character.addItems(chosenItems);
   }
 
   getNotesList(notes: INote[]) {
@@ -73,8 +85,7 @@ export class MiscTab {
           <ion-row>
             <ion-grid>
               <ion-row>
-                {/* <h3>Items<ion-icon slot="end" name="add-circle" color="primary" onClick={() => this.showItemsModal()}></ion-icon></h3> */}
-                <h3>Items</h3>
+                <h3>Items<ion-icon slot="end" name="add-circle" color="primary" onClick={() => this.showItemModal()}></ion-icon></h3>
               </ion-row>
               {this.getItemsList(this.character.equipment.items)}
             </ion-grid>

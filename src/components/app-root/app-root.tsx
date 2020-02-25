@@ -11,12 +11,11 @@ export class AppRoot {
       <ion-app>
         <ion-router useHash={false}>
           <ion-route url="/" component="characters-list" />
-          <ion-route url="/profile/:name" component="app-profile" />
           <ion-route url="/races" component="races-list" />
-          <ion-route url="/new-ability-score" component="new-ability-score" />
+          <ion-route url="/classes" component="classes-list" />
           <ion-route url="/create-new-character" component="create-new-character" />
           <ion-route url="/character-sheet/:characterId" component="character-sheet" />
-          <ion-route url="/character-personal-data" component="character-personal-data" />
+          <ion-route url="/create-new-item" component="custom-item-creator" />
         </ion-router>
         <ion-nav />
       </ion-app>

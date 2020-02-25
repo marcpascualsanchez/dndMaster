@@ -1,4 +1,4 @@
-import { IItem } from '../models/classes/Class';
+import { IItem } from "./itemList";
 
 export interface IArmor extends IItem {
     armorClass: number;
