@@ -101,6 +101,7 @@ export interface IState {
     experience: number;
     health: IHealth;
     spellSlots: number[];
+    armorClass: number;
 }
 
 export interface ISpellList {
@@ -130,7 +131,6 @@ export interface ICharacter {
     class: ICharacterClass;
     baseHealth: number;
     hitDiceGrowth: number;
-    armorClass: number;
     proficiency: {
         skillMods: string[];
         savingThrows: string[];
@@ -209,7 +209,6 @@ export class Character implements ICharacter {
     public class: ICharacterClass;
     public baseHealth: number;
     public hitDiceGrowth: number;
-    public armorClass: number;
     public equipment: IEquipment;
     public equipped: IEquipped;
     public languages: any[];
@@ -234,14 +233,13 @@ export class Character implements ICharacter {
         this.setClass(base.class);
         this.baseHealth = base.class.baseHealth;
         this.hitDiceGrowth = base.class.hitDiceGrowth;
-        this.armorClass = base.class.armorClass;
         this.languages = getUniqueValuesArray(base.languages);
         this.speed = base.race.speed;
         this.equipment = base.equipment;
         this.equipped = { weapons: [], armor: null };
         this.currency = base.currency;
         this.notes = [];
-        this.setState(this.getDefaultState());
+        this.setState(this.getDefaultState(base));
         //TODO: choose spells in char creation
         this.setSpells(base);
         this.lastModified = new Date();
@@ -259,7 +257,6 @@ export class Character implements ICharacter {
         this.class = character.class;
         this.baseHealth = character.baseHealth;
         this.hitDiceGrowth = character.hitDiceGrowth;
-        this.armorClass = character.armorClass;
         this.equipment = character.equipment;
         this.languages = character.languages;
         this.speed = character.speed;
@@ -395,12 +392,13 @@ export class Character implements ICharacter {
         return (((level - 1) / 4) | 0) + 2;
     }
 
-    private getDefaultState(): IState {
+    private getDefaultState(base: ICharacterParams): IState {
         return {
             level: 0,
             experience: 0,
             health: { extra: 0, current: this.getMaxHealth() },
             spellSlots: getSpellSlots(this.class.name, 1),
+            armorClass: base.class.armorClass,
         }
     }
 
@@ -472,7 +470,8 @@ export class Character implements ICharacter {
     }
 
     public setArmorClass() {
-        this.armorClass = this.equipped.armor ? this.equipped.armor.armorClass : this.class.armorClass;
+        this.state.armorClass = this.equipped.armor ? this.equipped.armor.armorClass : this.class.armorClass;
+        this.saveLocalCharacter();
     }
 
     public unequipArmor(armor: IArmor) {

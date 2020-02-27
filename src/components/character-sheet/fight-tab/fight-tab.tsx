@@ -19,7 +19,8 @@ export class FightTab {
   }) character: ICharacter;
   @State() equipment: IEquipment;
   @State() equippedArmor: IArmor;
-  private equipmentSubscription: Subscription;
+  @State() armorClass: number;
+  private characterSubscription: Subscription;
 
   private weaponManager: WeaponManager;
   private armorManager: ArmorManager;
@@ -27,13 +28,18 @@ export class FightTab {
   constructor() {
     this.equipment = this.character.equipment;
     this.equippedArmor = this.character.equipped.armor;
+    this.armorClass = this.character.state.armorClass;
     this.weaponManager = new WeaponManager();
     this.armorManager = new ArmorManager();
-    this.equipmentSubscription = this.character.onEquipmentChange.subscribe(e => this.equipment = e);
+    this.characterSubscription = this.character.onChange.subscribe((c) => {
+      this.equipment = c.equipment;
+      this.equippedArmor = c.equipped.armor;
+      this.armorClass = c.state.armorClass;
+    });
   }
 
   componentDidUnload() {
-    this.equipmentSubscription.unsubscribe();
+    this.characterSubscription.unsubscribe();
   }
 
   getWeaponList(weapons: IWeapon[], isExtendable: boolean = true) {
@@ -79,12 +85,11 @@ export class FightTab {
   }
 
   render() {
-    this.character.saveLocalCharacter();
     return (
       <ion-card>
         <ion-grid>
           <ion-row>
-            <ion-col size="4">Armor class: {this.character.armorClass}</ion-col>
+            <ion-col size="4">Armor class: {this.armorClass}</ion-col>
             <ion-col size="4">Health: <health-manager character={this.character}></health-manager></ion-col>
             <ion-col size="4">Speed: {this.character.speed}ft</ion-col>
           </ion-row>

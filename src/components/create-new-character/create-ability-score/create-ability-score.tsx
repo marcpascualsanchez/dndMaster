@@ -157,10 +157,10 @@ export class CreateAbilityScore {
             <ion-footer>
                 <ion-toolbar>
                     <ion-buttons slot="end">
-                        {/* <ion-button class="confirm-icon" onClick={() => this.isFormValid ? this.confirmScore() : null}> */}
-                        <ion-button class="confirm-icon" onClick={() => this.confirmScore()}>
-                            {/* <ion-icon name="checkmark-circle" color="success" class={this.isFormValid ? '' : 'disabled'}></ion-icon> */}
-                            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+                        <ion-button class="confirm-icon" onClick={() => this.isFormValid ? this.confirmScore() : null}>
+                        {/* <ion-button class="confirm-icon" onClick={() => this.confirmScore()}> */}
+                            <ion-icon name="checkmark-circle" color="success" class={this.isFormValid ? '' : 'disabled'}></ion-icon>
+                            {/* <ion-icon name="checkmark-circle" color="success"></ion-icon> */}
                         </ion-button>
                     </ion-buttons>
                 </ion-toolbar>

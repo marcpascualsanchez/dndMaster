@@ -27,7 +27,7 @@ export const baseParams: IFighter = {
                     }],
                 [
                     {
-                        name: 'leather armor',
+                        name: 'leather',
                         amount: 1,
                         equipmentType: 'armors',
                     },

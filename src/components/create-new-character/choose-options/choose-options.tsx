@@ -4,6 +4,8 @@ import { IChoosableItemList } from '../../../models/classes/Class';
 import { languages } from '../../../models/Character'
 import { WeaponManager } from '../../../utils/WeaponManager';
 import { IWeapon } from '../../../utils/weaponList';
+import { ArmorManager } from '../../../utils/ArmorManager';
+import { IArmor } from '../../../utils/armorList';
 
 @Component({
   tag: 'choose-options',
@@ -22,6 +24,7 @@ export class ChooseOptions {
   @State() isFormValid: boolean;
 
   private weaponManager: WeaponManager;
+  private armorManager: ArmorManager;
   private equipment: IEquipment;
   private equipmentInputs: any[];
   private languagesInputs: any[];
@@ -30,6 +33,7 @@ export class ChooseOptions {
   constructor() {
     this.isFormValid = false;
     this.weaponManager = new WeaponManager();
+    this.armorManager = new ArmorManager();
   }
 
   componentDidLoad() {
@@ -49,6 +53,11 @@ export class ChooseOptions {
             const chosenWeapon: IWeapon = this.weaponManager.getByName(value.name);
             chosenWeapon.amount = value.amount;
             this.equipment.weapons.push(chosenWeapon);
+            break;
+          case ('armors'):
+            const chosenArmor: IArmor = this.armorManager.getByName(value.name);
+            chosenArmor.amount = value.amount;
+            this.equipment.armors.push(chosenArmor);
             break;
           default:
             // TODO: standarize armors and items too
