@@ -2,8 +2,8 @@ import { Component, h, Prop, State } from '@stencil/core';
 import { ICharacter, IEquipment } from '../../../models/Character';
 import { WeaponManager } from '../../../utils/WeaponManager';
 import { IWeapon } from '../../../utils/weaponList';
-import { ArmorManager } from '../../../utils/ArmorManager';
 import { IArmor } from '../../../utils/armorList';
+import { getAllArmors } from '../../../utils/armorManager';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -23,14 +23,12 @@ export class FightTab {
   private characterSubscription: Subscription;
 
   private weaponManager: WeaponManager;
-  private armorManager: ArmorManager;
 
   constructor() {
     this.equipment = this.character.equipment;
     this.equippedArmor = this.character.equipped.armor;
     this.armorClass = this.character.state.armorClass;
     this.weaponManager = new WeaponManager();
-    this.armorManager = new ArmorManager();
     this.characterSubscription = this.character.onChange.subscribe((c) => {
       this.equipment = c.equipment;
       this.equippedArmor = c.equipped.armor;
@@ -75,7 +73,7 @@ export class FightTab {
    */
   showArmorModal() {
     const ownedArmorsNames: string[] = this.character.equipment.armors.map(a => a.name);
-    const nonownedArmors = this.armorManager.getAll().filter(a => ownedArmorsNames.indexOf(a.name) < 0).map(a => ({ ...a, amount: 1 }));
+    const nonownedArmors = getAllArmors().filter(a => ownedArmorsNames.indexOf(a.name) < 0).map(a => ({ ...a, amount: 1 }));
     const chooseListElement = document.querySelector('#choose-list');
     chooseListElement['elementList'] = this.getArmorList(nonownedArmors, false);
     chooseListElement['valueAttribute'] = 'armor';

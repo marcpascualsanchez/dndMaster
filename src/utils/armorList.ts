@@ -1,5 +1,11 @@
 import { IItem } from "./itemList";
 
+export enum EArmorType {
+    light = 'light',
+    medium = 'medium',
+    heavy = 'heavy',
+}
+
 export interface IArmor extends IItem {
     armorClass: number;
     stealthDisadvange: boolean;

@@ -6,12 +6,13 @@ import { IWeapon } from "../utils/weaponList";
 import { INote } from "../components/character-sheet/misc-tab/note-element/note-element";
 import { IHealth } from "../components/character-sheet/fight-tab/health-manager/health-manager";
 import { Subject } from 'rxjs';
-import { IArmor } from "../utils/armorList";
+import { IArmor, EArmorType } from "../utils/armorList";
 import { getCurrencyFromTotal, getCurrency, coinTypes, ICurrency } from "../utils/currency";
 import { ISpell } from "../components/character-sheet/spell-tab/spell-element/spell-element";
 import { getSpellSlots } from "../utils/spell";
 import { experienceLevels } from "../utils/level";
 import { IItem } from "../utils/itemList";
+import { getArmorType } from "../utils/armorManager";
 
 export enum EAbility {
     strength = 'strength',
@@ -469,8 +470,28 @@ export class Character implements ICharacter {
         this.onEquipmentChange.next({ ... this.equipment });
     }
 
+    /** Each type of armor in IArmorList (light, heavy, medium) have different modifiers. */
+    public calculateArmorArmorClass(armor: IArmor) {
+        const armorType: EArmorType = getArmorType(armor);
+        let calculatedArmorClass = armor.armorClass;
+        let modifier = 0;
+        switch (armorType) {
+            case EArmorType.light:
+                modifier = this.calculateAbilityModifier(parseInt(this.abilities.dexterity), false);
+                calculatedArmorClass = armor.armorClass + modifier;
+                break;
+            case EArmorType.light:
+                modifier = this.calculateAbilityModifier(parseInt(this.abilities.dexterity), false);
+                calculatedArmorClass = armor.armorClass + (modifier > 2 ? 2 : modifier); // cap modifier to +2
+                break;
+            default:
+                break;
+        }
+        return calculatedArmorClass;
+    }
+
     public setArmorClass() {
-        this.state.armorClass = this.equipped.armor ? this.equipped.armor.armorClass : this.class.armorClass;
+        this.state.armorClass = this.equipped.armor ? this.calculateArmorArmorClass(this.equipped.armor) : this.class.armorClass;
         this.saveLocalCharacter();
     }
 
